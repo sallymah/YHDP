@@ -1,0 +1,12 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+Version: 1.0.0
+Date: 2007-01-08
+-->
+<beans>
+<bean id="ProcCreditFee" class="tw.com.hyweb.svc.yhdp.batch.fee.creditFee.ProcCreditFee" init-method="">
+    <property name="commitCount"><value>1000</value></property>
+    <property name="sleepTime"><value>500</value></property>
+    <property name="creditId"><value>CREDIT</value></property>
+</bean>
+</beans>

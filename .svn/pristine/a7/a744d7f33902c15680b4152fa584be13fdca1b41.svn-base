@@ -1,0 +1,44 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+<!--Resource Properties -->
+
+<bean id="BatchResultDecorator" class="tw.com.hyweb.core.cp.batch.framework.BatchResultDecorator" init-method="init">
+	<property name="batchMediator"><ref bean="BatchFilesInDecorator" /></property>
+	<property name="procName"><value>FilesInDemo</value></property>
+</bean>
+
+<bean id="BatchFilesInDecorator" class="tw.com.hyweb.core.cp.batch.framework.BatchFilesInDecorator" init-method="init">
+	<property name="batchMediator"><ref bean="FilesCopyDirector" /></property>
+</bean>
+
+<bean id="FilesCopyDirector" class="tw.com.hyweb.core.cp.batch.framework.FilesCopyDirector" init-method="init">
+	<property name="fileSource"><ref bean="FilesInDemo" /></property>
+	<property name="fileTarget"><ref bean="FilesInDemo" /></property>
+</bean>
+
+<bean id="FilesInDemo" class="tw.com.hyweb.core.cp.batch.test.FilesInDemo" init-method="init">
+        <property name="moveFilenames">
+            <list>
+                <value>TEST</value>
+                <value>HOTBIN</value>
+            </list>
+        </property>
+        <property name="filenameParser">
+            <list>
+                <ref bean="XParser"/>
+                <ref bean="BParser"/>
+            </list>
+        </property>
+        <!--<property name="moveFileTypes"><value>X</value></property>-->
+        <property name="isDeleteAfterMove"><value>false</value></property>
+</bean>
+
+<bean id="XParser" class="tw.com.hyweb.core.cp.batch.test.FileTypeXParser">
+    <property name="keyName"><value>TEST</value></property>
+</bean>
+
+<bean id="BParser" class="tw.com.hyweb.core.cp.batch.test.FileTypeBParser">
+    <property name="keyName"><value>HOTBIN</value></property>
+</bean>
+</beans>

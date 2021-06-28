@@ -1,0 +1,3 @@
+[main] 20200312 16:00:16 WARN  ImpBMEM              L:305  - ImpBMEM run fail:0
+java.lang.ArrayIndexOutOfBoundsException: 0
+	at tw.com.hyweb.svc.yhdp.batch.impfiles.ImpBMEM.ImpBMEM.main(ImpBMEM.java:293)

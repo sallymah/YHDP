@@ -1,0 +1,11 @@
+<isomsg>
+  <field id="0" value="0200"/>
+  <field id="3" value="888888"/>
+<!--  <field id="4" value="000000209900"/>-->
+<!--  <field id="11" value="777777"/>-->
+  <field id="41" value="77777777"/>
+  <field id="42" value="777777777777777"/>
+  <field id="48" value="FF21027667FF2203000097FF2506105433810004FF260421080101FF290720070518123130FF2B050000006666FF2E020344FF450143" type="binary"/>
+  <field id="63" value="FF3D0A73000000070000000100" type="binary"/><!--Host Coupon Transaction Area-->
+
+</isomsg>

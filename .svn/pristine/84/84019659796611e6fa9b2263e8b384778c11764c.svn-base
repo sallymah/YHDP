@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+    
+	<bean id="LockCardBlacklistValidator" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.validator.BlackListValidator"/>
+
+    <bean id="FieldsFormatValidator" class="tw.com.hyweb.online.validator.FieldsFormatValidator">
+        <property name="fields">
+            <props>
+                <!--
+                first digit is Alpha; second digit is Numeric; third digit is Space.
+                ex. 010: only Numeric allowed; 110: Alpha and Numeric value is allowed;
+                -->
+                <prop key="3" >010</prop>
+                <prop key="11">010</prop>
+                <prop key="39">110</prop>
+                <prop key="41">110</prop>
+                <prop key="42">110</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--Reload Controller validators-->
+        <bean id="MFieldsValidator" class="tw.com.hyweb.online.validator.MFieldsValidator">
+        <property name="fields">
+            <props>
+            	<prop key="0100">3 11 41 42</prop>
+                <prop key="0110">3 11 39 64</prop>
+                <prop key="0200">3 11 41 42 64</prop>
+                <prop key="0210">3 11 39 41 42 64</prop>
+<!--                 <prop key="0220">3 11 41 42 64</prop>
+                <prop key="0230">3 11 39 64</prop> -->
+                <prop key="0300">3 11 41 42 64</prop>
+                <prop key="0310">3 11 39 64</prop>
+                <prop key="0320">3 11 41 42 64</prop>
+                <prop key="0330">3 11 39 64</prop>
+                <prop key="0400">3 11 41 42 64</prop>
+                <prop key="0410">3 11 39 41 42 64</prop>
+                <prop key="0500">3 11 41 42 64</prop>
+                <prop key="0510">3 11 39 41 42 64</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="Field58FormatValidator" class="tw.com.hyweb.svc.yhdp.online.validator.TlvFormatValidator">
+        <property name="tags">
+            <props>
+                <!--
+                first digit is Alpha; second digit is Numeric; third digit is Space.
+                ex. 010: only Numeric allowed; 110: Alpha and Numeric value is allowed;
+                -->
+                <prop key="FF21">010</prop>
+                <prop key="FF22">010</prop>
+                <prop key="FF23">010</prop>
+                <prop key="FF24">111</prop>
+                <prop key="FF25">010</prop>
+                <prop key="FF26">010</prop>
+                <prop key="FF27">010</prop>
+                <prop key="FF29">010</prop>
+                <prop key="FF2A">010</prop>
+                <prop key="FF2C">110</prop>
+                <!--<prop key="FF2D">010</prop>-->
+                <prop key="FF2E">010</prop>
+                <prop key="FF2F">010</prop>
+                <prop key="FF31">010</prop>
+                <prop key="FF32">010</prop>
+                <prop key="FF34">010</prop>
+                <prop key="FF35">110</prop>
+                <prop key="FF36">010</prop>
+                <prop key="FF37">010</prop>
+                <prop key="FF38">010</prop>
+                <prop key="FF39">010</prop>
+                <prop key="FF3A">010</prop>
+                <prop key="FF3B">010</prop>
+                <prop key="FF3D">010</prop>
+                <prop key="FF3E">010</prop>
+                <prop key="FF3F">010</prop>
+                <prop key="FF40">110</prop>
+                <!--<prop key="FF41">010</prop>-->
+                <prop key="FF42">010</prop>
+                <prop key="FF43">010</prop>
+                <prop key="FF44">110</prop>
+                <prop key="FF45">110</prop>
+                <prop key="FF49">010</prop>
+                <prop key="FF4A">010</prop>
+                <prop key="FF4B">010</prop>
+                <prop key="FF4C">110</prop>
+                <prop key="FF4D">010</prop>
+                <prop key="FF4E">110</prop>
+                <prop key="FF4F">010</prop>
+                <prop key="FF53">110</prop>
+                <!--<prop key="FF57">010</prop>-->
+                <!--<prop key="FF58">010</prop>-->
+                <prop key="FF59">010</prop>
+                <prop key="FF5A">010</prop>
+                <prop key="FF62">010</prop>
+                <prop key="FF63">010</prop>
+                <prop key="FF64">010</prop>
+                <prop key="FF6B">010</prop>
+                <prop key="FF6C">010</prop>
+                <prop key="FF6D">010</prop>
+                <prop key="FF6E">010</prop>
+                <prop key="FF6F">010</prop>
+            </props>
+        </property>
+    </bean>
+     
+    <!--Reload Controller validators-->
+    <bean id="Field58MTagValidator" class="tw.com.hyweb.svc.yhdp.online.validator.TlvTagValidator">
+        <property name="tags">
+            <!--request validator-->
+            <props>
+                <!--Active Card (field60檢查) -->
+                <prop key="02007117">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2B FF2F FF38 FF3D FF45 FF57 FF58 FF50</prop>
+                
+                 <!--Active Card Reversal-->
+                <prop key="04007117">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2B FF2F FF38 FF3D FF45 FF57 FF58 FF50</prop>
+                
+                <!-- Connect Validator -->
+                <prop key="02007257">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF45 FF58</prop>
+                
+                <!-- Card Register -->
+                <prop key="02007267">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF45 FF58</prop>
+                
+                <!-- Come Store Award -->
+                <prop key="02007807">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF38 FF39 FF45 FF57 FF58 FF50</prop>
+                
+                <!-- Come Store Award Reversal -->
+                <prop key="04007807">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF38 FF39 FF45 FF57 FF58 FF50</prop>
+                
+                <!-- Purchase Award -->
+                <prop key="02007887">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2B FF2F FF45 FF58</prop>
+                
+                <!-- Purchase Award Reversal -->
+                <prop key="04007887">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2B FF2F FF45 FF58</prop>
+                
+                <!-- ReActive Card -->
+                <prop key="02007247">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF3D FF45 FF58</prop>
+                
+                <!-- ReActive Card Reversal -->
+                <prop key="04007247">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF3D FF45 FF58</prop>
+                
+                <!-- Refund Card -->
+                <prop key="02007527">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2B FF2F FF3D FF45 FF38 FF39 FF58</prop>
+                
+                <!-- Refund Card Reversal -->
+                <prop key="04007527">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2B FF2F FF3D FF45 FF38 FF39 FF58 </prop>
+                
+                <!-- Refund Card Void -->
+                <prop key="02007528">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                
+                <!-- Refund Card Void Reversal -->
+                <prop key="04007528">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                
+                <!-- SAM Logon -->
+                <prop key="01007367">FF21 FF2D FF46 FF47</prop>
+                
+                <!-- Apponint Reload -->
+                <prop key="02007307">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF38 FF39 FF45 FF57 FF58 FF50</prop>
+                
+                <!-- Apponint Reload Reversal-->
+                <prop key="04007307">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF38 FF39 FF45 FF57 FF58 FF50</prop>
+                
+                 <!-- Repair -->
+                <prop key="02007507">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF38 FF39 FF45 FF57 FF58 FF50</prop>
+                
+                <!--  Repair -->
+                <prop key="04007507">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF38 FF39 FF45 FF57 FF58 FF50</prop>
+                
+                 <!--Earning Repair -->
+                <prop key="02007537">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF38 FF39 FF45 FF57 FF58 FF50</prop>
+                
+                <!-- Earning Repair-->
+                <prop key="04007537">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF38 FF39 FF45 FF57 FF58 FF50</prop>
+                
+                <!--LMS Parameter Download -->
+                <prop key="03007337">FF21 FF22 FF29 FF64 DF66</prop>
+                
+                <!--LMS BlackList Download -->
+                <prop key="03007357">FF21 FF22 FF29 FF64 DF65</prop>
+                
+                <!-- Sam Logon1 -->
+                <prop key="01007367">FF21 FF2D FF41 FF47</prop>
+                
+                <!-- Sam Logon2 -->
+                <prop key="01007377">FF21 FF2D FF46 FF60</prop>
+                
+                <!-- Reload -->
+                <prop key="02007707">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2B FF2F FF38 FF39 FF45 FF57 FF58 FF50</prop>
+                <prop key="02007747">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2B FF2F FF38 FF39 FF45 FF57 FF58 FF50</prop>
+                <prop key="02007757">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2B FF2F FF38 FF39 FF45 FF57 FF58 FF50</prop>
+                
+                <!-- Reload Reversal -->
+                <prop key="04007707">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2B FF2F FF38 FF39 FF45 FF57 FF58 FF50</prop>
+                <prop key="04007747">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2B FF2F FF38 FF39 FF45 FF57 FF58 FF50</prop>
+                <prop key="04007757">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2B FF2F FF38 FF39 FF45 FF57 FF58 FF50</prop>
+                
+                <!-- Reload void -->
+                <prop key="02007708">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                <prop key="02007748">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                <prop key="02007758">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                
+                <!-- Reload void Reversal -->
+                <prop key="04007708">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                <prop key="04007748">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                <prop key="04007758">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                
+                <!-- sale void -->
+                <prop key="02007208">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                <prop key="02007218">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                <prop key="02007648">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                
+                <!-- sale void Reversal -->
+                <prop key="04007208">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                <prop key="04007218">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                <prop key="04007648">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                
+                <!-- sale Refune -->
+                <prop key="02007206">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                <prop key="02007216">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                <prop key="02007646">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                
+                <!-- sale Refune Reversal -->
+                <prop key="04007206">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                <prop key="04007216">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                <prop key="04007646">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58 FF50</prop>
+                
+                 <!-- balance transfer -->
+                <prop key="02007347">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF38 FF39 FF40 FF45 FF57 FF58 FF50</prop>
+                <prop key="04007347">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF38 FF39 FF40 FF45 FF57 FF58 FF50</prop>
+                
+                <!-- settlement -->
+                <prop key="05007327">FF21 FF22 FF29 FF41 FF63 DF66 DF65</prop>
+                
+                <!-- balance transfer Redeem -->
+                <prop key="02007398">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58</prop>
+                <prop key="04007398">FF21 FF22 FF23 FF25 FF26 FF27 FF28 FF29 FF30 FF2F FF34 FF38 FF45 FF57 FF58</prop>
+                
+                <!-- Offline Advice -->
+             <!--    <prop key="03207207">FF3C FF4A</prop>
+                <prop key="03207217">FF3C FF4A</prop>
+                <prop key="03207647">FF3C FF4A</prop>
+                <prop key="03207517">FF3C FF4A</prop>
+                <prop key="03207547">FF3C FF4A</prop>
+                <prop key="03207387">FF3C FF4A</prop> -->
+
+            </props>
+        </property>
+    </bean>
+
+    <!--Controller validators-->
+    <bean id="CardValidator" class="tw.com.hyweb.svc.yhdp.online.validator.CardValidator">
+    	<property name="ignoreChipCardStatus"><value>72470400 71170400</value></property>
+    </bean>        
+    
+    <!--Controller validators-->
+    <bean id="IssuerValidator" class="tw.com.hyweb.svc.yhdp.online.validator.IssuerValidator"/>
+    
+    <!--Controller validators-->
+    <bean id="MerchantValidator" class="tw.com.hyweb.svc.yhdp.online.validator.MerchantValidator"/>
+    
+    <!--Controller validators-->
+    <bean id="TerminalValidator" class="tw.com.hyweb.svc.yhdp.online.validator.TerminalValidator"/>
+    
+    <!-- Controller validators -->
+    <bean id="BlacklistValidator" class="tw.com.hyweb.svc.yhdp.online.validator.BlacklistValidator"/>
+    
+    <!--Controller validators-->
+    <bean id="SamValidator" class="tw.com.hyweb.svc.yhdp.online.validator.SamValidator"/>
+    
+    <!--Controller validators-->
+    <bean id="MacValidator" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.validator.MacValidator">
+        <property name="macKeyID"><value>SingleTAC</value></property>
+        <property name="ignoreMemberGroup"><value>00012 00024 00025 00026 00027 00028 00029 00031</value></property>
+    </bean>
+    
+    <bean id="validationTP" class="tw.com.hyweb.svc.yhdp.online.validator.validationTP">
+        <property name="macKeyID"><value>NCAK</value></property>
+        <property name="isCheck"><value>true</value></property>
+    </bean>
+    
+    <!--Controller validators-->
+    <bean id="AcquireValidator" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.validator.AcquireValidator"/>
+    
+    <bean id ="ReloadCardValidator" class="tw.com.hyweb.svc.yhdp.online.controller.reload.CardValidator" />
+    
+    <!--ReActivate Card validators-->
+    <bean id="ReActivateCardValidator" class="tw.com.hyweb.svc.yhdp.online.validator.ReActivateCardValidator">
+    	<property name="ignoreChipCardStatus"><value>75270400</value></property>
+    </bean>        
+    
+    <!-- Activate Card validators-->
+    <bean id="ActivateCardValidator" class="tw.com.hyweb.svc.yhdp.online.validator.ActivateCardValidator"/>        
+    
+    <!-- Reversal Activate Card validators -->
+    <bean id="RvActivateCardValidator" class="tw.com.hyweb.svc.yhdp.online.validator.RvActivateCardValidator"/>
+    
+    <bean id="TransferValidator" class="tw.com.hyweb.svc.yhdp.online.validator.TransferValidator"/>
+    
+    <bean id="LptsamValidator" class="tw.com.hyweb.svc.yhdp.online.validator.LptsamValidator"/>
+    
+    <bean id="TransDupValidator" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.validator.TxnDupValidator"/>
+    
+</beans>

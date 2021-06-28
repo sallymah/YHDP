@@ -1,0 +1,106 @@
+[main] 20200414 11:08:50 INFO  AbstractBatchBasic   L:109  - begin running
+[main] 20200414 11:08:57 WARN  DBService            L:794  - DBCP borrow connection time: 6277 ms. batch
+[main] 20200414 11:08:57 DEBUG TbBatchResultMgr     L:60   - sql: INSERT INTO TB_BATCH_RESULT(PROGRAM_NAME, START_DATE, START_TIME, END_DATE, END_TIME, WORK_FLAG, RCODE, ERROR_DESC, PAR_MON, PAR_DAY, LINK_CONTROL, JOB_ID, JOB_TIME, MEM_ID, RECOVER_VALUE) VALUES ('ProcUpdateTmpTrans', '20200414', '110850', '', '', '0', '0000', '', '04', '14', 'N', '000', '000000', '', '')
+[main] 20200414 11:08:57 DEBUG TbBatchResultMgr     L:64   - TB_BATCH_RESULT: 1 record inserted
+[main] 20200414 11:08:57 DEBUG TbBatchResultMgr     L:65   - [TbBatchResultInfo  sProgramName:ProcUpdateTmpTrans sStartDate:20200414 sStartTime:110850 sEndDate: sEndTime: sWorkFlag:0 sRcode:0000 sErrorDesc: sParMon:04 sParDay:14 sLinkControl:N sJobId:000 sJobTime:000000 sMemId: sRecoverValue:]
+[main] 20200414 11:08:57 INFO  ProcUpdateTmpTrans   L:142  - batchDate:20170331
+[main] 20200414 11:08:57 INFO  ProcUpdateTmpTrans   L:149  - init() ok.
+
+[main] 20200414 11:08:57 DEBUG DBService            L:1155 - UPDATE TB_TMP_TRANS SET REGEN_STATUS = '2' , REGEN_SOURCE_DATE= '20170331', APRV_DATE = '20170331', UPT_SRC = B WHERE RCODE = '1007' AND IMP_DATE = '20170331' AND ACQ_MEM_ID IN (SELECT 1 FROM TB_MEMBER WHERE IGNORE_MAC_INVLIAD ='1' 
+[main] 20200414 11:08:57 INFO  ProcUpdateTmpTrans   L:216  - rollback!
+[main] 20200414 11:08:57 ERROR AbstractBatchBasic   L:118  - run batch fail:action() SQL execute failed. java.sql.SQLException: updateprocess() update TB_TMP_TRANS failed.java.sql.SQLException: sql:UPDATE TB_TMP_TRANS SET REGEN_STATUS = '2' , REGEN_SOURCE_DATE= '20170331', APRV_DATE = '20170331', UPT_SRC = B WHERE RCODE = '1007' AND IMP_DATE = '20170331' AND ACQ_MEM_ID IN (SELECT 1 FROM TB_MEMBER WHERE IGNORE_MAC_INVLIAD ='1' 
+ORA-00907: 움�|쩵쳾많
+
+java.lang.Exception: action() SQL execute failed. java.sql.SQLException: updateprocess() update TB_TMP_TRANS failed.java.sql.SQLException: sql:UPDATE TB_TMP_TRANS SET REGEN_STATUS = '2' , REGEN_SOURCE_DATE= '20170331', APRV_DATE = '20170331', UPT_SRC = B WHERE RCODE = '1007' AND IMP_DATE = '20170331' AND ACQ_MEM_ID IN (SELECT 1 FROM TB_MEMBER WHERE IGNORE_MAC_INVLIAD ='1' 
+ORA-00907: 움�|쩵쳾많
+
+	at tw.com.hyweb.svc.yhdp.batch.ProcUpdateTmpTrans.ProcUpdateTmpTrans.action(ProcUpdateTmpTrans.java:163)
+	at tw.com.hyweb.svc.yhdp.batch.ProcUpdateTmpTrans.ProcUpdateTmpTrans.process(ProcUpdateTmpTrans.java:112)
+	at tw.com.hyweb.core.cp.batch.framework.AbstractBatchBasic.run(AbstractBatchBasic.java:114)
+	at tw.com.hyweb.svc.yhdp.batch.ProcUpdateTmpTrans.ProcUpdateTmpTrans.main(ProcUpdateTmpTrans.java:90)
+[main] 20200414 11:08:57 ERROR AbstractBatchBasic   L:275  - [programName:ProcUpdateTmpTrans, rcode:2999, errorDesc:java.lang.Exception: action() SQL execute failed. java.sql.SQLException: updateprocess() update TB_TMP_TRANS failed.java.sql.SQLException: sql:UPDATE TB_TMP_TRANS SET REGEN_STATUS = '2' , REGEN_SOURCE_DATE= '20170331', APRV_DATE = '20170331', UPT_SRC]
+[main] 20200414 11:08:57 DEBUG TbBatchResultMgr     L:147  - sql: UPDATE TB_BATCH_RESULT SET END_DATE = '20200414', END_TIME = '110857', WORK_FLAG = '9', RCODE = '2999', ERROR_DESC = 'java.lang.Exception: action() SQL execute failed. java.sql.SQLException: updateprocess() update TB_TMP_TRANS failed.java.sql.SQLException: sql:UPDATE TB_TMP_TRANS SET REGEN_STATUS = ''2'' , REGEN_SOURCE_DATE= ''20170331'', APRV_DATE = ''20170331'', UPT_SRC', PAR_MON = '04', PAR_DAY = '14', LINK_CONTROL = 'N', MEM_ID = '', RECOVER_VALUE = '' WHERE PROGRAM_NAME = 'ProcUpdateTmpTrans' AND START_DATE = '20200414' AND START_TIME = '110850' AND JOB_ID = '000' AND JOB_TIME = '000000'
+[main] 20200414 11:08:57 DEBUG TbBatchResultMgr     L:151  - TB_BATCH_RESULT: 1 record updated
+[main] 20200414 11:08:57 DEBUG TbBatchResultMgr     L:152  - [TbBatchResultInfo  sProgramName:ProcUpdateTmpTrans sStartDate:20200414 sStartTime:110850 sEndDate:20200414 sEndTime:110857 sWorkFlag:9 sRcode:2999 sErrorDesc:java.lang.Exception: action() SQL execute failed. java.sql.SQLException: updateprocess() update TB_TMP_TRANS failed.java.sql.SQLException: sql:UPDATE TB_TMP_TRANS SET REGEN_STATUS = '2' , REGEN_SOURCE_DATE= '20170331', APRV_DATE = '20170331', UPT_SRC sParMon:04 sParDay:14 sLinkControl:N sJobId:000 sJobTime:000000 sMemId: sRecoverValue:]
+[main] 20200414 11:08:57 INFO  AbstractBatchBasic   L:150  - end running
+
+[main] 20200414 11:09:55 INFO  AbstractBatchBasic   L:109  - begin running
+[main] 20200414 11:10:01 WARN  DBService            L:794  - DBCP borrow connection time: 6022 ms. batch
+[main] 20200414 11:10:01 DEBUG TbBatchResultMgr     L:60   - sql: INSERT INTO TB_BATCH_RESULT(PROGRAM_NAME, START_DATE, START_TIME, END_DATE, END_TIME, WORK_FLAG, RCODE, ERROR_DESC, PAR_MON, PAR_DAY, LINK_CONTROL, JOB_ID, JOB_TIME, MEM_ID, RECOVER_VALUE) VALUES ('ProcUpdateTmpTrans', '20200414', '110955', '', '', '0', '0000', '', '04', '14', 'N', '000', '000000', '', '')
+[main] 20200414 11:10:01 DEBUG TbBatchResultMgr     L:64   - TB_BATCH_RESULT: 1 record inserted
+[main] 20200414 11:10:01 DEBUG TbBatchResultMgr     L:65   - [TbBatchResultInfo  sProgramName:ProcUpdateTmpTrans sStartDate:20200414 sStartTime:110955 sEndDate: sEndTime: sWorkFlag:0 sRcode:0000 sErrorDesc: sParMon:04 sParDay:14 sLinkControl:N sJobId:000 sJobTime:000000 sMemId: sRecoverValue:]
+[main] 20200414 11:10:01 INFO  ProcUpdateTmpTrans   L:142  - batchDate:20170331
+[main] 20200414 11:10:01 INFO  ProcUpdateTmpTrans   L:149  - init() ok.
+
+[main] 20200414 11:10:01 DEBUG DBService            L:1155 - UPDATE TB_TMP_TRANS SET REGEN_STATUS = '2',REGEN_SOURCE_DATE= '20170331',APRV_DATE = '20170331',UPT_SRC = 'B' WHERE RCODE = '1007' AND IMP_DATE = '20170331' AND ACQ_MEM_ID IN (SELECT 1 FROM TB_MEMBER WHERE IGNORE_MAC_INVLIAD ='1' )
+[main] 20200414 11:10:01 WARN  DBService            L:1179 - SQL stmt update time: 262 ms[UPDATE TB_TMP_TRANS SET REGEN_STATUS = '2',REGEN_SOURCE_DATE= '20170331',APRV_DATE = '20170331',UPT_SRC = 'B' WHERE RCODE = '1007' AND IMP_DATE = '20170331' AND ACQ_MEM_ID IN (SELECT 1 FROM TB_MEMBER WHERE IGNORE_MAC_INVLIAD ='1' )]
+[main] 20200414 11:10:01 DEBUG DBService            L:1183 - update(insert) count:0
+[main] 20200414 11:10:01 DEBUG TbBatchResultMgr     L:147  - sql: UPDATE TB_BATCH_RESULT SET END_DATE = '20200414', END_TIME = '111001', WORK_FLAG = '1', RCODE = '0000', ERROR_DESC = '', PAR_MON = '04', PAR_DAY = '14', LINK_CONTROL = 'N', MEM_ID = '', RECOVER_VALUE = '' WHERE PROGRAM_NAME = 'ProcUpdateTmpTrans' AND START_DATE = '20200414' AND START_TIME = '110955' AND JOB_ID = '000' AND JOB_TIME = '000000'
+[main] 20200414 11:10:01 DEBUG TbBatchResultMgr     L:151  - TB_BATCH_RESULT: 1 record updated
+[main] 20200414 11:10:01 DEBUG TbBatchResultMgr     L:152  - [TbBatchResultInfo  sProgramName:ProcUpdateTmpTrans sStartDate:20200414 sStartTime:110955 sEndDate:20200414 sEndTime:111001 sWorkFlag:1 sRcode:0000 sErrorDesc: sParMon:04 sParDay:14 sLinkControl:N sJobId:000 sJobTime:000000 sMemId: sRecoverValue:]
+[main] 20200414 11:10:01 INFO  AbstractBatchBasic   L:150  - end running
+
+[main] 20200414 11:10:51 INFO  AbstractBatchBasic   L:109  - begin running
+[main] 20200414 11:10:57 WARN  DBService            L:794  - DBCP borrow connection time: 5920 ms. batch
+[main] 20200414 11:10:57 DEBUG TbBatchResultMgr     L:60   - sql: INSERT INTO TB_BATCH_RESULT(PROGRAM_NAME, START_DATE, START_TIME, END_DATE, END_TIME, WORK_FLAG, RCODE, ERROR_DESC, PAR_MON, PAR_DAY, LINK_CONTROL, JOB_ID, JOB_TIME, MEM_ID, RECOVER_VALUE) VALUES ('ProcUpdateTmpTrans', '20200414', '111051', '', '', '0', '0000', '', '04', '14', 'N', '000', '000000', '', '')
+[main] 20200414 11:10:58 DEBUG TbBatchResultMgr     L:64   - TB_BATCH_RESULT: 1 record inserted
+[main] 20200414 11:10:58 DEBUG TbBatchResultMgr     L:65   - [TbBatchResultInfo  sProgramName:ProcUpdateTmpTrans sStartDate:20200414 sStartTime:111051 sEndDate: sEndTime: sWorkFlag:0 sRcode:0000 sErrorDesc: sParMon:04 sParDay:14 sLinkControl:N sJobId:000 sJobTime:000000 sMemId: sRecoverValue:]
+[main] 20200414 11:10:58 INFO  ProcUpdateTmpTrans   L:142  - batchDate:20170331
+[main] 20200414 11:10:58 INFO  ProcUpdateTmpTrans   L:149  - init() ok.
+
+[main] 20200414 11:10:58 DEBUG DBService            L:1155 - UPDATE TB_TMP_TRANS SET REGEN_STATUS = '2',REGEN_SOURCE_DATE= '20170331',APRV_DATE = '20170331',UPT_SRC = 'B' WHERE RCODE = '1007' AND IMP_DATE = '20170331' AND ACQ_MEM_ID IN (SELECT MEM_ID FROM TB_MEMBER WHERE IGNORE_MAC_INVLIAD ='1' )
+[main] 20200414 11:10:59 WARN  DBService            L:1179 - SQL stmt update time: 1526 ms[UPDATE TB_TMP_TRANS SET REGEN_STATUS = '2',REGEN_SOURCE_DATE= '20170331',APRV_DATE = '20170331',UPT_SRC = 'B' WHERE RCODE = '1007' AND IMP_DATE = '20170331' AND ACQ_MEM_ID IN (SELECT MEM_ID FROM TB_MEMBER WHERE IGNORE_MAC_INVLIAD ='1' )]
+[main] 20200414 11:10:59 DEBUG DBService            L:1183 - update(insert) count:49992
+[main] 20200414 11:10:59 DEBUG TbBatchResultMgr     L:147  - sql: UPDATE TB_BATCH_RESULT SET END_DATE = '20200414', END_TIME = '111059', WORK_FLAG = '1', RCODE = '0000', ERROR_DESC = '', PAR_MON = '04', PAR_DAY = '14', LINK_CONTROL = 'N', MEM_ID = '', RECOVER_VALUE = '' WHERE PROGRAM_NAME = 'ProcUpdateTmpTrans' AND START_DATE = '20200414' AND START_TIME = '111051' AND JOB_ID = '000' AND JOB_TIME = '000000'
+[main] 20200414 11:10:59 DEBUG TbBatchResultMgr     L:151  - TB_BATCH_RESULT: 1 record updated
+[main] 20200414 11:10:59 DEBUG TbBatchResultMgr     L:152  - [TbBatchResultInfo  sProgramName:ProcUpdateTmpTrans sStartDate:20200414 sStartTime:111051 sEndDate:20200414 sEndTime:111059 sWorkFlag:1 sRcode:0000 sErrorDesc: sParMon:04 sParDay:14 sLinkControl:N sJobId:000 sJobTime:000000 sMemId: sRecoverValue:]
+[main] 20200414 11:10:59 INFO  AbstractBatchBasic   L:150  - end running
+
+[main] 20200414 15:47:50 INFO  AbstractBatchBasic   L:109  - begin running
+[main] 20200414 15:47:58 WARN  DBService            L:794  - DBCP borrow connection time: 7002 ms. batch
+[main] 20200414 15:47:58 DEBUG TbBatchResultMgr     L:60   - sql: INSERT INTO TB_BATCH_RESULT(PROGRAM_NAME, START_DATE, START_TIME, END_DATE, END_TIME, WORK_FLAG, RCODE, ERROR_DESC, PAR_MON, PAR_DAY, LINK_CONTROL, JOB_ID, JOB_TIME, MEM_ID, RECOVER_VALUE) VALUES ('ProcUpdateTmpTrans', '20200414', '154750', '', '', '0', '0000', '', '04', '14', 'N', '000', '000000', '', '')
+[main] 20200414 15:47:58 DEBUG TbBatchResultMgr     L:64   - TB_BATCH_RESULT: 1 record inserted
+[main] 20200414 15:47:58 DEBUG TbBatchResultMgr     L:65   - [TbBatchResultInfo  sProgramName:ProcUpdateTmpTrans sStartDate:20200414 sStartTime:154750 sEndDate: sEndTime: sWorkFlag:0 sRcode:0000 sErrorDesc: sParMon:04 sParDay:14 sLinkControl:N sJobId:000 sJobTime:000000 sMemId: sRecoverValue:]
+[main] 20200414 15:47:58 INFO  ProcUpdateTmpTrans   L:142  - batchDate:20150923
+[main] 20200414 15:47:58 INFO  ProcUpdateTmpTrans   L:149  - init() ok.
+
+[main] 20200414 15:47:58 DEBUG DBService            L:1155 - UPDATE TB_TMP_TRANS SET REGEN_STATUS = '2',REGEN_SOURCE_DATE= '20150923',APRV_DATE = '20150923',UPT_SRC = 'B' WHERE RCODE = '1007' AND REGEN_STATUS ='0' AND IMP_DATE = '20150923' AND ACQ_MEM_ID IN (SELECT MEM_ID FROM TB_MEMBER WHERE IGNORE_MAC_INVLIAD ='1' )
+[main] 20200414 15:47:58 WARN  DBService            L:1179 - SQL stmt update time: 53 ms[UPDATE TB_TMP_TRANS SET REGEN_STATUS = '2',REGEN_SOURCE_DATE= '20150923',APRV_DATE = '20150923',UPT_SRC = 'B' WHERE RCODE = '1007' AND REGEN_STATUS ='0' AND IMP_DATE = '20150923' AND ACQ_MEM_ID IN (SELECT MEM_ID FROM TB_MEMBER WHERE IGNORE_MAC_INVLIAD ='1' )]
+[main] 20200414 15:47:58 DEBUG DBService            L:1183 - update(insert) count:0
+[main] 20200414 15:47:58 DEBUG TbBatchResultMgr     L:147  - sql: UPDATE TB_BATCH_RESULT SET END_DATE = '20200414', END_TIME = '154758', WORK_FLAG = '1', RCODE = '0000', ERROR_DESC = '', PAR_MON = '04', PAR_DAY = '14', LINK_CONTROL = 'N', MEM_ID = '', RECOVER_VALUE = '' WHERE PROGRAM_NAME = 'ProcUpdateTmpTrans' AND START_DATE = '20200414' AND START_TIME = '154750' AND JOB_ID = '000' AND JOB_TIME = '000000'
+[main] 20200414 15:47:58 DEBUG TbBatchResultMgr     L:151  - TB_BATCH_RESULT: 1 record updated
+[main] 20200414 15:47:58 DEBUG TbBatchResultMgr     L:152  - [TbBatchResultInfo  sProgramName:ProcUpdateTmpTrans sStartDate:20200414 sStartTime:154750 sEndDate:20200414 sEndTime:154758 sWorkFlag:1 sRcode:0000 sErrorDesc: sParMon:04 sParDay:14 sLinkControl:N sJobId:000 sJobTime:000000 sMemId: sRecoverValue:]
+[main] 20200414 15:47:58 INFO  AbstractBatchBasic   L:150  - end running
+
+[main] 20200414 15:49:38 INFO  AbstractBatchBasic   L:109  - begin running
+[main] 20200414 15:49:44 WARN  DBService            L:794  - DBCP borrow connection time: 6280 ms. batch
+[main] 20200414 15:49:44 DEBUG TbBatchResultMgr     L:60   - sql: INSERT INTO TB_BATCH_RESULT(PROGRAM_NAME, START_DATE, START_TIME, END_DATE, END_TIME, WORK_FLAG, RCODE, ERROR_DESC, PAR_MON, PAR_DAY, LINK_CONTROL, JOB_ID, JOB_TIME, MEM_ID, RECOVER_VALUE) VALUES ('ProcUpdateTmpTrans', '20200414', '154938', '', '', '0', '0000', '', '04', '14', 'N', '000', '000000', '', '')
+[main] 20200414 15:49:44 DEBUG TbBatchResultMgr     L:64   - TB_BATCH_RESULT: 1 record inserted
+[main] 20200414 15:49:44 DEBUG TbBatchResultMgr     L:65   - [TbBatchResultInfo  sProgramName:ProcUpdateTmpTrans sStartDate:20200414 sStartTime:154938 sEndDate: sEndTime: sWorkFlag:0 sRcode:0000 sErrorDesc: sParMon:04 sParDay:14 sLinkControl:N sJobId:000 sJobTime:000000 sMemId: sRecoverValue:]
+[main] 20200414 15:49:44 INFO  ProcUpdateTmpTrans   L:142  - batchDate:20150923
+[main] 20200414 15:49:44 INFO  ProcUpdateTmpTrans   L:149  - init() ok.
+
+[main] 20200414 15:49:44 DEBUG DBService            L:1155 - UPDATE TB_TMP_TRANS SET REGEN_STATUS = '2',REGEN_SOURCE_DATE= '20150923',APRV_DATE = '20150923',UPT_SRC = 'B' WHERE RCODE = '1007' AND  REGEN_STATUS ='0' AND IMP_DATE = '20150923' AND ACQ_MEM_ID IN (SELECT MEM_ID FROM TB_MEMBER WHERE IGNORE_MAC_INVLIAD ='1' )
+[main] 20200414 15:49:44 WARN  DBService            L:1179 - SQL stmt update time: 15 ms[UPDATE TB_TMP_TRANS SET REGEN_STATUS = '2',REGEN_SOURCE_DATE= '20150923',APRV_DATE = '20150923',UPT_SRC = 'B' WHERE RCODE = '1007' AND  REGEN_STATUS ='0' AND IMP_DATE = '20150923' AND ACQ_MEM_ID IN (SELECT MEM_ID FROM TB_MEMBER WHERE IGNORE_MAC_INVLIAD ='1' )]
+[main] 20200414 15:49:44 DEBUG DBService            L:1183 - update(insert) count:4
+[main] 20200414 15:49:44 DEBUG TbBatchResultMgr     L:147  - sql: UPDATE TB_BATCH_RESULT SET END_DATE = '20200414', END_TIME = '154944', WORK_FLAG = '1', RCODE = '0000', ERROR_DESC = '', PAR_MON = '04', PAR_DAY = '14', LINK_CONTROL = 'N', MEM_ID = '', RECOVER_VALUE = '' WHERE PROGRAM_NAME = 'ProcUpdateTmpTrans' AND START_DATE = '20200414' AND START_TIME = '154938' AND JOB_ID = '000' AND JOB_TIME = '000000'
+[main] 20200414 15:49:44 DEBUG TbBatchResultMgr     L:151  - TB_BATCH_RESULT: 1 record updated
+[main] 20200414 15:49:44 DEBUG TbBatchResultMgr     L:152  - [TbBatchResultInfo  sProgramName:ProcUpdateTmpTrans sStartDate:20200414 sStartTime:154938 sEndDate:20200414 sEndTime:154944 sWorkFlag:1 sRcode:0000 sErrorDesc: sParMon:04 sParDay:14 sLinkControl:N sJobId:000 sJobTime:000000 sMemId: sRecoverValue:]
+[main] 20200414 15:49:44 INFO  AbstractBatchBasic   L:150  - end running
+
+[main] 20200414 16:07:43 INFO  AbstractBatchBasic   L:109  - begin running
+[main] 20200414 16:07:49 WARN  DBService            L:794  - DBCP borrow connection time: 6239 ms. batch
+[main] 20200414 16:07:49 DEBUG TbBatchResultMgr     L:60   - sql: INSERT INTO TB_BATCH_RESULT(PROGRAM_NAME, START_DATE, START_TIME, END_DATE, END_TIME, WORK_FLAG, RCODE, ERROR_DESC, PAR_MON, PAR_DAY, LINK_CONTROL, JOB_ID, JOB_TIME, MEM_ID, RECOVER_VALUE) VALUES ('ProcUpdateTmpTrans', '20200414', '160743', '', '', '0', '0000', '', '04', '14', 'N', '000', '000000', '', '')
+[main] 20200414 16:07:49 DEBUG TbBatchResultMgr     L:64   - TB_BATCH_RESULT: 1 record inserted
+[main] 20200414 16:07:49 DEBUG TbBatchResultMgr     L:65   - [TbBatchResultInfo  sProgramName:ProcUpdateTmpTrans sStartDate:20200414 sStartTime:160743 sEndDate: sEndTime: sWorkFlag:0 sRcode:0000 sErrorDesc: sParMon:04 sParDay:14 sLinkControl:N sJobId:000 sJobTime:000000 sMemId: sRecoverValue:]
+[main] 20200414 16:07:49 INFO  ProcUpdateTmpTrans   L:142  - batchDate:20151015
+[main] 20200414 16:07:49 INFO  ProcUpdateTmpTrans   L:149  - init() ok.
+
+[main] 20200414 16:07:49 DEBUG DBService            L:1155 - UPDATE TB_TMP_TRANS SET REGEN_STATUS = '2',REGEN_SOURCE_DATE= '20151015',APRV_DATE = '20151015',UPT_SRC = 'B' WHERE RCODE = '1007' AND  REGEN_STATUS ='0' AND IMP_DATE = '20151015' AND ACQ_MEM_ID IN (SELECT MEM_ID FROM TB_MEMBER WHERE IGNORE_MAC_INVLIAD ='1' )
+[main] 20200414 16:07:49 WARN  DBService            L:1179 - SQL stmt update time: 39 ms[UPDATE TB_TMP_TRANS SET REGEN_STATUS = '2',REGEN_SOURCE_DATE= '20151015',APRV_DATE = '20151015',UPT_SRC = 'B' WHERE RCODE = '1007' AND  REGEN_STATUS ='0' AND IMP_DATE = '20151015' AND ACQ_MEM_ID IN (SELECT MEM_ID FROM TB_MEMBER WHERE IGNORE_MAC_INVLIAD ='1' )]
+[main] 20200414 16:07:49 DEBUG DBService            L:1183 - update(insert) count:3
+[main] 20200414 16:07:49 DEBUG TbBatchResultMgr     L:147  - sql: UPDATE TB_BATCH_RESULT SET END_DATE = '20200414', END_TIME = '160749', WORK_FLAG = '1', RCODE = '0000', ERROR_DESC = '', PAR_MON = '04', PAR_DAY = '14', LINK_CONTROL = 'N', MEM_ID = '', RECOVER_VALUE = '' WHERE PROGRAM_NAME = 'ProcUpdateTmpTrans' AND START_DATE = '20200414' AND START_TIME = '160743' AND JOB_ID = '000' AND JOB_TIME = '000000'
+[main] 20200414 16:07:49 DEBUG TbBatchResultMgr     L:151  - TB_BATCH_RESULT: 1 record updated
+[main] 20200414 16:07:49 DEBUG TbBatchResultMgr     L:152  - [TbBatchResultInfo  sProgramName:ProcUpdateTmpTrans sStartDate:20200414 sStartTime:160743 sEndDate:20200414 sEndTime:160749 sWorkFlag:1 sRcode:0000 sErrorDesc: sParMon:04 sParDay:14 sLinkControl:N sJobId:000 sJobTime:000000 sMemId: sRecoverValue:]
+[main] 20200414 16:07:49 INFO  AbstractBatchBasic   L:150  - end running
+

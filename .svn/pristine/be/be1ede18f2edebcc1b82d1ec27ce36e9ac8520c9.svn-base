@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="termBatchConditionMaker" class="tw.com.hyweb.core.cp.batch.errhandle.TermBatchConditionMakerImpl" />
+	<bean id="onlineUploadTxnPatcherMap" class="org.springframework.beans.factory.config.MapFactoryBean">
+		<property name="sourceMap">
+			<map>
+				<entry key="N">
+					<bean class="tw.com.hyweb.core.cp.batch.errhandle.OnlineUploadTxnPatcher" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>

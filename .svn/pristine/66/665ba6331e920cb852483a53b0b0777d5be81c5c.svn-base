@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+    
+    <!-- Reversal 復卡交易 online -->
+    <bean id="ReActivateCardReversal" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.BatchBaseController">
+        <property name="acceptMti"><value>0400</value></property>
+        <property name="acceptProcCode"><value>888888</value></property>
+        <property name="acceptLmsProcCode"><value>7247</value></property>
+        <property name="txLogger">
+            <ref bean="TxLoggerEmpty" />
+        </property>
+        <property name="validatorList">
+            <list>
+                <ref bean="CardValidator" />     
+                <ref bean="MerchantValidator" />
+                <ref bean="CpcTerminalValidator" />
+                <ref bean="AcquireValidator" />
+                <ref bean="SamDeviceValidator" />
+                <ref bean="MacValidator" />
+            </list>
+        </property>
+        <property name="generalFiller">
+            <list>
+                <ref bean="CardInfoFiller" />
+                <ref bean="BonusBaseFiller" />
+                <ref bean="IssuerFiller" />
+                <ref bean="AcquirerFiller" />
+            </list>
+        </property>
+        <property name="bizAction">
+            <list>
+                <ref bean="OriginalTxnDataFiller"/>
+                <ref bean="InsertTermBatch"/>
+				<ref bean="UpdateTxnSettleDateTime"/>
+                <ref bean="UpdateOnlTxnImpInfo"/> 
+                <ref bean="CheckDueDay"/>
+                <ref bean="ReversalOnlTxn"/>
+                <ref bean="UpdateRefundCardStatus"/>
+                <ref bean="RvInsertSyncHpGoData"/>
+                <ref bean="RvInsertCardUpt"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="RefundCardReversal" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.BatchBaseController">
+        <property name="acceptMti"><value>0400</value></property>
+        <property name="acceptProcCode"><value>888888</value></property>
+        <property name="acceptLmsProcCode"><value>7527</value></property>
+
+        <property name="txLogger">
+            <ref bean="TxLoggerEmpty" />
+        </property>
+	    <property name="validatorList">
+            <list>
+                <ref bean="ReActivateCardValidator" />     
+                <ref bean="MerchantValidator" />
+                <ref bean="CpcTerminalValidator" />
+                <ref bean="AcquireValidator" />
+                <ref bean="SamDeviceValidator" />
+                <ref bean="MacValidator" />
+            </list>
+        </property>
+        <property name="generalFiller">
+            <list>
+                <ref bean="CardInfoFiller" />
+                <ref bean="BonusBaseFiller" />
+                <ref bean="IssuerFiller" />
+                <ref bean="AcquirerFiller" />
+            </list>
+        </property>
+        <property name="bizAction">
+            <list>
+                <ref bean="OriginalTxnDataFiller"/>
+                <ref bean="InsertTermBatch"/>
+				<ref bean="UpdateTxnSettleDateTime"/>
+                <ref bean="UpdateOnlTxnImpInfo"/>
+                <ref bean="CheckDueDay"/>
+                <ref bean="ReversalOnlTxn"/>
+                <ref bean="ReversalChipBalAction"/>
+                <ref bean="UpdateActivationCardStatus"/>
+                <ref bean="RvInsertSyncHpGoData"/>
+                <ref bean="RvInsertCardUpt"/>
+            </list>
+        </property>
+        <property name="respActionList">
+            <list>
+                <ref bean="TagFF2AAction" />
+                <ref bean="TagFF2CAction" />
+            </list>
+        </property>       
+    </bean>
+  
+    <bean id="RefundCardVoidReversal" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.BatchBaseController">
+        <property name="acceptProcCode"><value>888888</value></property>
+        <property name="acceptLmsProcCode"><value>7528</value></property>
+
+        <property name="txLogger">
+            <ref bean="TxLoggerEmpty" />
+        </property>
+	    <property name="validatorList">
+            <list>     
+                <ref bean="CardValidator" />
+                <ref bean="MerchantValidator" />
+                <ref bean="CpcTerminalValidator" />
+                <ref bean="AcquireValidator" />
+                <ref bean="SamDeviceValidator" />
+                <ref bean="MacValidator" />
+            </list>
+        </property>
+        <property name="generalFiller">
+            <list>
+                <ref bean="CardInfoFiller" />
+                <ref bean="BonusBaseFiller" />
+                <ref bean="IssuerFiller" />
+                <ref bean="AcquirerFiller" />
+            </list>
+        </property>
+        <property name="bizAction">
+            <list>
+                <ref bean="ChipBalanceFiller" />
+                <ref bean="ChipCouponBalanceFiller" />
+                <ref bean="OriginalTxnDataFiller"/>
+                <ref bean="InsertTermBatch"/>
+				<ref bean="UpdateTxnSettleDateTime"/>
+                <ref bean="UpdateOnlTxnImpInfo"/>
+                <ref bean="CheckDueDay"/>
+                <ref bean="ReversalVoidOnlTxn"/>   
+                <ref bean="ReversalOnlTxn"/>
+                <ref bean="ReversalChipBalAction"/>
+                <ref bean="UpdateRefundCardStatus"/>
+                <ref bean="RvInsertSyncHpGoData"/>
+                <ref bean="RvInsertCardUpt"/>
+            </list>
+        </property>
+    </bean>
+</beans>

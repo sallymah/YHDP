@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+  <bean id="ImpTerm" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTerm.ImpTerm">
+    <!-- 匯入多少筆 commit 一次, default 1000, impfiles setting -->
+    <property name="recordsPerCommit"><value>1000</value></property>
+    <!-- commit 一次後暫停多少 ms, default 500, impfiles setting -->
+    <property name="sleepPerCommit"><value>500</value></property>
+  </bean>
+</beans>

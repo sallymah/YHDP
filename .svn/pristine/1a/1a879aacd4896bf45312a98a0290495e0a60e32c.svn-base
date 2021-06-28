@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="procOnlTxnErr" class="tw.com.hyweb.core.cp.batch.errhandle.ProcOnlTxnErr">
+		<property name="types">
+			<list>
+				<value>A</value>
+			</list>
+		</property>
+		<property name="maxRecord">
+			<value>500</value>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,11 @@
+<isomsg>
+  <field id="0" value="0200"/>
+  <field id="3" value="888888"/>
+<!--  <field id="4" value="000000209900"/>-->
+<!--  <field id="11" value="777777"/>-->
+  <field id="41" value="81501001"/>
+  <field id="42" value="815009999900001"/>
+  <field id="48" value="FF21027647FF2203000175FF230481000005FF2509168813243000000015FF260499991231FF290720080627164546FF2B050000000600FF2E020901FF2F06062716454622FF31020000FF45014CFF650704E44319C00280" type="binary"/>
+  <field id="61" value="FF3C140000000600000000000000000000000000000000" type="binary"/>
+  <field id="64" value="FADA5DC399401DE6" type="binary"/>
+</isomsg>

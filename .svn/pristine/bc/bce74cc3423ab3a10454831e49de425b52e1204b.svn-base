@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+    <!-- Controller validators -->
+    <bean id="LockCardBlacklistValidator" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.validator.LockCardBlacklistValidator"/>
+    <bean id= "RefundCardValidator" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.controller.base.RefundCardValidator" />
+    <bean id= "CheckIsActivationCardProc" class="tw.com.hyweb.svc.yhdp.online.controller.reload.CheckIsActivationCardProc" />
+    <bean id="InsertOffLineRldAuth" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpCpcTxnDtl.controller.base.InsertOffLineRldAuth" >
+        <property name="uptUserId"><value>BATCH</value></property>
+        <property name="aprUserId"><value>BATCH</value></property>
+    </bean>
+    
+    <bean id="ChipCounterAwardFiller" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.controller.base.ChipCounterAwardFiller"/>
+    <bean id="ChipCounterRedeemFiller" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.controller.base.ChipCounterRedeemFiller"/>
+    
+    <!-- 取tag36點數餘額 -->
+    <bean id="ChipCounterReloadFiller" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.controller.base.ChipCounterReloadFiller"/>
+    
+	<bean id ="UpdateChipBalance" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.controller.redeem.UpdateChipBalance"/>
+    
+    <bean id ="UpdateBlackList" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.controller.base.UpdateBlackList">
+    	<property name="acceptLmsProcCode"><value>7517</value></property>
+    </bean>
+    
+    <bean id="InsertOfflineTxLogger" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.controller.base.InsertOfflineTxLogger"/>
+    
+    <bean id="CheckIsErrData" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.controller.base.CheckIsErrData"/>
+    
+    <bean id="UpdateOnlTxnImpInfo" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.controller.base.UpdateOnlTxnImpInfo">
+		<property name="ignoreLmsProcCode"><value>7367 7377 7587 7597 7337 7327 7357</value></property>
+    </bean>
+    
+    <bean id="InsertCheckTxnTxLogger" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.logger.InsertCheckTxnTxLogger"/>
+    
+	<bean id="TxnDupValidator" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.validator.TxnDupValidator"/>
+	
+    <bean id="RvCardBalLimitValidator" class="tw.com.hyweb.svc.yhdp.online.controller.redeem.RvCardBalLimitValidator" />
+    
+	<bean id="MemGroupReloadLimitValidator" class="tw.com.hyweb.svc.yhdp.online.controller.reload.MemGroupReloadLimitValidator" />
+	
+    <bean id="CheckBalanceEnough" class="tw.com.hyweb.svc.yhdp.online.controller.base.CheckBalanceEnough"/>
+    
+    <bean id="ReloadLockValidator" class="tw.com.hyweb.svc.yhdp.online.controller.reload.ReloadLockValidator"/>
+    
+    <bean id="InsertCardUpt" class="tw.com.hyweb.svc.yhdp.online.controller.base.InsertCardUpt"/>
+    
+    <bean id="HostBalanceFiller" class="tw.com.hyweb.svc.yhdp.online.controller.base.HostBalanceFiller"/>
+
+    <bean id="HostCouponBalanceFiller" class="tw.com.hyweb.svc.yhdp.online.controller.base.HostCouponBalanceFiller"/>
+    
+    <!-- Common Filler -->
+    <bean id="ChipBalanceFiller" class="tw.com.hyweb.svc.yhdp.online.controller.base.ChipBalanceFiller"/>
+    <!-- 取tag38點數餘額 -->
+    
+    <bean id="ChipCouponBalanceFiller" class="tw.com.hyweb.svc.yhdp.online.controller.base.ChipCouponBalanceFiller"/>
+    <!-- 取tag39點數餘額 -->
+    
+    <bean id="ChipCouponRedeemFiller" class="tw.com.hyweb.svc.yhdp.online.controller.base.ChipCouponRedeemFiller"/>
+    <!-- 取tag37點數餘額 -->
+    
+	<bean id="ChipActivationFiller" class="tw.com.hyweb.svc.yhdp.online.controller.activation.ChipActivationFiller"/>
+
+	<bean id="UpdateActivationCardStatus" class="tw.com.hyweb.svc.yhdp.online.controller.activation.UpdateActivationCardStatus"/>
+	
+    <bean id="CalWarrantyPeriod" class="tw.com.hyweb.svc.yhdp.online.controller.base.CalWarrantyPeriod"/>
+    	
+    <bean id="UpdateBalanceActivation" class="tw.com.hyweb.svc.yhdp.online.controller.activation.UpdateBalanceActivation"/>
+    
+    <bean id="CheckAwardLimit" class="tw.com.hyweb.svc.yhdp.online.controller.base.CheckAwardLimit"/>
+    
+    <bean id="ReversalOrigValidator" class="tw.com.hyweb.svc.yhdp.online.controller.base.ReversalOrigValidator" />
+    
+	<!-- Reversal -->
+    <bean id="OriginalTxnDataFiller" class="tw.com.hyweb.svc.yhdp.online.controller.base.OriginalTxnDataFiller"/>
+    
+    <bean id="ProcessReversalNotFound" class="tw.com.hyweb.svc.yhdp.online.controller.base.ProcessReversalNotFound"/>
+    
+    <bean id="ProcessRefundNotFound" class="tw.com.hyweb.svc.yhdp.online.controller.base.ProcessRefundNotFound"/>
+
+     <!-- Commom Reversal -->    
+    <bean id="ReversalInsertRepair" class="tw.com.hyweb.svc.yhdp.online.controller.activation.ReversalInsertRepair"/>
+
+    <bean id="ReversalDownloadRepair" class="tw.com.hyweb.svc.yhdp.online.controller.base.ReversalDownloadRepair"/>
+
+    <bean id="ReversalOnlTxn" class="tw.com.hyweb.svc.yhdp.online.controller.base.ReversalOnlTxn"/>
+    
+    <bean id="ReversalVoidOnlTxn" class="tw.com.hyweb.svc.yhdp.online.controller.base.ReversalVoidOnlTxn"/>
+
+    <bean id="ReversalCampaign" class="tw.com.hyweb.svc.yhdp.online.controller.base.ReversalCampaign">
+	    <constructor-arg index="0" type="boolean"><value>true</value></constructor-arg>
+	    <constructor-arg index="1" type="boolean"><value>false</value></constructor-arg>
+    </bean>
+       
+    <!-- Refund/Void Original Txn Filler -->
+    <bean id="RVOriginalTxnDataFiller" class="tw.com.hyweb.svc.yhdp.online.controller.base.RVOriginalTxnDataFiller"/>
+
+     <!-- Common Update Balance Award,Redeem,Reload -->
+    <bean id="UpdateBalanceChipAward" class="tw.com.hyweb.svc.yhdp.online.controller.base.UpdateBalanceChipAward"/>
+
+	<!-- Common Update Balance Redeem -->
+    <bean id="UpdateBalanceChipRedeem" class="tw.com.hyweb.svc.yhdp.online.controller.base.UpdateBalanceChipRedeem"/>
+
+    <bean id="UpdateBalanceChipRedeemVoid" class="tw.com.hyweb.svc.yhdp.online.controller.base.UpdateBalanceChipRedeemVoid"/>
+    
+    <bean id="ReversalChipBalAction" class="tw.com.hyweb.svc.yhdp.online.controller.base.ReversalChipBalAction">
+		<constructor-arg index="0" type="boolean"><value>false</value></constructor-arg>
+		<constructor-arg index="1" type="java.lang.String"><value>8707 8807 8208 8206 8817 8578 8597</value></constructor-arg>
+		<constructor-arg index="2" type="java.lang.String"><value>8708 8808 8806 8207 8577</value></constructor-arg>
+    </bean>
+
+    <!-- Common Campaign -->
+    <bean id="MatchChipCampaign" class="tw.com.hyweb.svc.yhdp.online.controller.base.MatchChipCampaign"/>
+
+    <bean id="RVCampaign" class="tw.com.hyweb.svc.yhdp.online.controller.base.RVCampaign">
+    	<constructor-arg index="0"><value>true</value></constructor-arg>
+    	<constructor-arg index="1"><value>false</value></constructor-arg>
+        <property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"/>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"/>
+        </property>
+    </bean>
+
+    <!-- Common refund and void -->
+    <bean id="UpdateOrigStatus" class="tw.com.hyweb.svc.yhdp.online.controller.base.UpdateOrigStatus"/>
+
+    <bean id="RVAmtValidator" class="tw.com.hyweb.svc.yhdp.online.controller.base.RVAmtValidator"/>
+
+    <!-- Only For SAM Logon -->
+    <bean id="InsertLogonLog" class="tw.com.hyweb.svc.yhdp.online.controller.samlogon.InsertLogonLog"/>
+    <bean id="InsertLogonLog2" class="tw.com.hyweb.svc.yhdp.online.controller.samlogon.InsertLogonLog2"/>
+    <bean id="UpdateTermInfo" class="tw.com.hyweb.svc.yhdp.online.controller.samlogon.UpdateTermInfo"/>
+    <bean id="UpdateTermLastSamLogon" class="tw.com.hyweb.svc.yhdp.online.controller.samlogon.UpdateTermLastSamLogon"/>
+    
+    <!-- Only For Offline Advice -->
+   
+    <!-- Only For Repair -->
+    <bean id="ProcessRepairReversalFound" class="tw.com.hyweb.svc.yhdp.online.controller.repair.ProcessReversalFound"/>
+    <bean id="InsertRepairTxLogger" class="tw.com.hyweb.svc.yhdp.online.controller.repair.InsertRepairTxLogger"/>
+    <bean id="CheckNegativeRepair" class="tw.com.hyweb.svc.yhdp.online.controller.base.CheckNegativeRepair"/>
+
+    <bean id="InsertTermBatch" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpCpcTxnDtl.controller.base.InsertTermBatch"/>
+    <bean id="UpdateTxnSettleDateTime" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpCpcTxnDtl.controller.base.UpdateTxnSettleDateTime"/>
+    <bean id="SettleBlacklistInfoFiller" class="tw.com.hyweb.svc.yhdp.online.controller.settlement.BlacklistInfoFiller"/>
+    <bean id="SettleParameterInfoFiller" class="tw.com.hyweb.svc.yhdp.online.controller.settlement.ParameterInfoFiller"/>
+    <bean id="UpdateSettlement96Status"  class="tw.com.hyweb.svc.yhdp.online.controller.settlement.UpdateSettlement96Status"/>
+
+    <!-- Only For Redeem -->
+    <bean id="ProcessRedeemReversalFound" class="tw.com.hyweb.svc.yhdp.online.controller.redeem.ProcessRedeemReversalFound"/>
+
+    <!-- Only for ParametersDownload -->
+    <bean id="ParametersInfoFiller" class="tw.com.hyweb.svc.yhdp.online.controller.download.ParametersInfoFiller"/>
+
+    <bean id="ProcessParametersDownload" class="tw.com.hyweb.svc.yhdp.online.controller.download.ProcessParametersDownload"/>
+
+    <bean id="InsertParametersDownload" class="tw.com.hyweb.svc.yhdp.online.controller.download.InsertParametersDownload"/>
+
+    <bean id="UpdateParametersDownload" class="tw.com.hyweb.svc.yhdp.online.controller.download.UpdateParametersDownload"/>
+
+    <bean id="ChipCounterResponseFiller" class="tw.com.hyweb.svc.yhdp.online.controller.base.ChipCounterResponseFiller"/>
+
+    <bean id="ChipCouponResponseFiller" class="tw.com.hyweb.svc.yhdp.online.controller.base.ChipCouponResponseFiller"/>
+
+    <bean id="ChipCampaignAwardFiller" class="tw.com.hyweb.svc.yhdp.online.controller.base.ChipCampaignAwardFiller" />
+
+    <bean id="ChipReloadAwardFiller" class="tw.com.hyweb.svc.yhdp.online.controller.base.ChipReloadAwardFiller" />
+
+	<bean id="RespMacDataFiller" class="tw.com.hyweb.svc.yhdp.online.controller.base.RespMacDataFiller">
+        <property name="macKeyID"><value>SingleTAC</value></property>
+    </bean>
+    
+	<bean id="FillTxLoggerAction" class="tw.com.hyweb.svc.yhdp.online.controller.base.FillTxLoggerAction"/>
+    
+    <bean id="FillOrigTxnDtl2Ctx" class="tw.com.hyweb.svc.yhdp.online.controller.base.FillOrigTxnDtl2Ctx"/>
+    
+    <bean id="UpdateVoidChipBalance" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.controller.base.UpdateVoidChipBalance"/>
+    
+    <bean id="UpdateRefundCardStatus" class="tw.com.hyweb.svc.yhdp.online.controller.refundCard.UpdateCardStatus"/>
+    
+    <bean id ="CardBalLimitValidator" class="tw.com.hyweb.svc.yhdp.online.controller.reload.CardBalLimitValidator" />
+    
+   	<bean id="UpdateCardTxnDate" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.controller.base.UpdateCardTxnDate">
+		<property name="reloadPcodeList"><value>7414 7437</value></property>
+    </bean>
+
+	<!-- reload -->
+    <bean id ="CheckEcashBalIsEnough" class="tw.com.hyweb.svc.yhdp.online.controller.reload.CheckEcashBalIsEnough" />
+    <bean id ="CancelReversalCampaign" class="tw.com.hyweb.svc.yhdp.online.controller.base.CancelReversalCampaign" />
+    
+    <!-- log -->
+    <bean id = "InsertOnlineValidationTxLogger" class="tw.com.hyweb.svc.yhdp.online.controller.onlinevalidation.InsertOnlineValidationTxLogger" />
+    <bean id = "InsertRefundCardTxLogger" class="tw.com.hyweb.svc.yhdp.online.controller.refundCard.InsertRefundCardTxLogger" />
+    <bean id = "InsertRefundCardVoidTxLogger" class="tw.com.hyweb.svc.yhdp.online.controller.refundCard.InsertRefundCardVoidTxLogger" />
+    
+    <!-- BalTransfer -->
+    <bean id ="InsertBalTransferDtl" class="tw.com.hyweb.svc.yhdp.online.controller.baltransfer.InsertBalTransferDtl"/>
+    <bean id ="UpdateBalTransferStatus" class="tw.com.hyweb.svc.yhdp.online.controller.baltransfer.UpdateBalTransferStatus" />
+    <bean id ="InsertBalTransferTxLogger" class="tw.com.hyweb.svc.yhdp.online.controller.baltransfer.InsertTxLogger"/>
+    <bean id ="ReversalNewCardStatus" class="tw.com.hyweb.svc.yhdp.online.controller.baltransfer.ReversalNewCardStatus"/>
+    <bean id ="ReversalOrigCardStatus" class="tw.com.hyweb.svc.yhdp.online.controller.baltransfer.ReversalOrigCardStatus"/>
+    
+    <!-- offline Advice -->
+    <bean id="InsertOfflineAdviceTxLogger" class="tw.com.hyweb.svc.yhdp.online.controller.offlineAdvice.InsertOfflineAdviceTxLogger"/>
+    
+    <bean id="InsertBathUploadTxLogger" class="tw.com.hyweb.svc.yhdp.online.controller.batchupload.InsertBathUploadTxLogger"/>
+    
+    <bean id="CheckDueDay" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.controller.base.CheckDueDay"/>
+    
+</beans>

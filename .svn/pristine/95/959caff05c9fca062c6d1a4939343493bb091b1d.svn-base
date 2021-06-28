@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+<bean id="ErrorOnlTxn2CapTxn" class="tw.com.hyweb.core.cp.batch.preoperation.ErrorOnlTxn2CapTxn">
+    <property name="txnSrc"><value>R</value></property><!--Err Online to Captured -->
+    <property name="sleepTime"><value>500</value></property>
+	<property name="batchNoType"><value>R</value></property>
+	<property name="capStatus"><value>1</value></property>
+</bean>
+</beans>

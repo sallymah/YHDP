@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://appointreload.ws.cp.hyweb.com.tw" xmlns:tns="http://appointreload.ws.cp.hyweb.com.tw" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenc11="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soapenc12="http://www.w3.org/2003/05/soap-encoding" xmlns:soap11="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://appointreload.ws.cp.hyweb.com.tw">
+<xsd:element name="simulateAppointReload1">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="in0" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="in1" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="simulateAppointReload1Response">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" type="xsd:boolean"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="simulateAppointReload">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="in0" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="simulateAppointReloadResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" type="xsd:boolean"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:schema>
+
+  </wsdl:types>
+  <wsdl:message name="simulateAppointReloadRequest">
+    <wsdl:part name="parameters" element="tns:simulateAppointReload">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="simulateAppointReloadResponse">
+    <wsdl:part name="parameters" element="tns:simulateAppointReloadResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="simulateAppointReload1Response">
+    <wsdl:part name="parameters" element="tns:simulateAppointReload1Response">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="simulateAppointReload1Request">
+    <wsdl:part name="parameters" element="tns:simulateAppointReload1">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="AppointReloadServicePortType">
+    <wsdl:operation name="simulateAppointReload1">
+      <wsdl:input name="simulateAppointReload1Request" message="tns:simulateAppointReload1Request">
+    </wsdl:input>
+      <wsdl:output name="simulateAppointReload1Response" message="tns:simulateAppointReload1Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="simulateAppointReload">
+      <wsdl:input name="simulateAppointReloadRequest" message="tns:simulateAppointReloadRequest">
+    </wsdl:input>
+      <wsdl:output name="simulateAppointReloadResponse" message="tns:simulateAppointReloadResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AppointReloadServiceHttpBinding" type="tns:AppointReloadServicePortType">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="simulateAppointReload1">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="simulateAppointReload1Request">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="simulateAppointReload1Response">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="simulateAppointReload">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="simulateAppointReloadRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="simulateAppointReloadResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AppointReloadService">
+    <wsdl:port name="AppointReloadServiceHttpPort" binding="tns:AppointReloadServiceHttpBinding">
+      <wsdlsoap:address location="http://10.10.10.31:8080/hyweb-ws-sit/services/AppointReloadService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

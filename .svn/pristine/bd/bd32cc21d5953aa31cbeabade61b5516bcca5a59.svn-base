@@ -1,0 +1,10 @@
+<isomsg>
+  <field id="0" value="0100"/>
+  <field id="3" value="888888"/>
+<!--  <field id="4" value="000000209900"/>-->
+<!--  <field id="11" value="777777"/>-->
+  <field id="41" value="77777777"/>
+  <field id="42" value="777777777777777"/>
+  <field id="48" value="FF21027347FF2D0400000000" type="binary"/>
+</isomsg>
+

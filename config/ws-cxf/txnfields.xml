@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<bean id="txnFieldsMap" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+			    <entry key="CARD_NO" value="0011"/>
+			    <entry key="EXPIRY_DATE" value="0011"/>
+			    <entry key="LMS_INVOICE_NO" value="0011"/>
+			    <entry key="P_CODE" value="0010"/>
+			    <entry key="MERCH_ID" value="0010"/>
+			    <entry key="TXN_DATE" value="0010"/>
+			    <entry key="TXN_TIME" value="0010"/>
+			    <entry key="TXN_AMT" value="0010"/>
+			    <entry key="TXN_PRICE" value="0010"/>			    
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="txnDtlFieldsMap" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+			    <entry key="CARD_NO" value="0011"/>
+			    <entry key="EXPIRY_DATE" value="0011"/>
+			    <entry key="LMS_INVOICE_NO" value="0011"/>
+			    <entry key="P_CODE" value="0011"/>
+			    <entry key="TXN_CODE" value="0011"/>
+			    <entry key="BONUS_ID" value="0010"/>
+			    <entry key="BONUS_SDATE" value="0010"/>
+			    <entry key="BONUS_EDATE" value="0010"/>
+			    <entry key="BONUS_QTY" value="0010"/>
+			 </map>
+		</constructor-arg>
+	</bean>	
+       
+</beans>

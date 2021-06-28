@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+
+    <bean id="TxLogger" class="tw.com.hyweb.online.TxLogger"/> 
+    <bean id="TxLoggerEmpty" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.logger.TxLoggerEmpty"/>
+    
+    <bean id="BaseTxLogger" class="tw.com.hyweb.svc.yhdp.online.logger.BaseTxLogger"/>
+
+	<bean id="TxLoggerOfflineBase" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.logger.TxLoggerOfflineBase">
+    	<property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean>
+    
+    <bean id="TxLoggerSale" class="tw.com.hyweb.svc.yhdp.online.logger.TxLoggerSale">
+    	<property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean>
+    
+    <bean id="TxLoggerSaleVoid" class="tw.com.hyweb.svc.yhdp.online.logger.TxLoggerSaleVoid">
+    	<property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean>
+    
+    <bean id="TxLoggerSaleRefund" class="tw.com.hyweb.svc.yhdp.online.logger.TxLoggerSaleRefund">
+    	<property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean>      
+
+    <bean id="TxLoggerRepair" class="tw.com.hyweb.svc.yhdp.online.logger.TxLoggerRepair">
+    	<property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean> 
+    
+    <bean id="TxLoggerOfflineAdvice" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.logger.TxLoggerBOfflineAdvice">
+    	<property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean>
+
+    <bean id="TxLoggerComeStoreAward" class="tw.com.hyweb.svc.yhdp.online.logger.TxLoggerComeStoreAward">
+    	<property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean>
+
+    <bean id="TxLoggerAppointReload" class="tw.com.hyweb.svc.yhdp.online.logger.TxLoggerAppointReload">
+    	<property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean>
+
+    <bean id="TxLoggerBalanceTransfer" class="tw.com.hyweb.svc.yhdp.online.logger.TxLoggerBalanceTransfer">
+    	<property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean>
+
+    <bean id="TxLoggerSettle" class="tw.com.hyweb.svc.yhdp.online.logger.TxLoggerSettle"/>
+    
+    <bean id="TxLoggerActivation" class="tw.com.hyweb.svc.yhdp.online.logger.TxLoggerActivation">
+    	<property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean>
+
+	<bean id="TxLoggerCardRefund" class="tw.com.hyweb.svc.yhdp.online.logger.TxLoggerCardRefund">
+    	<property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean>
+	
+	<bean id="TxLoggerConnValidator" class="tw.com.hyweb.svc.yhdp.online.logger.TxLoggerConnValidator">
+    	<property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean>
+
+	<bean id="TxLoggerReloadVoid" class="tw.com.hyweb.svc.yhdp.online.logger.TxLoggerReloadVoid">
+    	<property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean>
+	
+    <bean id="TxLoggerReload" class="tw.com.hyweb.svc.yhdp.online.logger.TxLoggerReload">
+    	<property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean>
+    
+    <bean id="TxLoggerCardRefundVoid" class="tw.com.hyweb.svc.yhdp.online.logger.TxLoggerCardRefundVoid">
+    	<property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean>
+    
+    <bean id="TxLoggerC2CBalanceTracsfer" class="tw.com.hyweb.svc.yhdp.online.logger.TxLoggerC2CBalanceTracsfer">
+    	<property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean>
+</beans>

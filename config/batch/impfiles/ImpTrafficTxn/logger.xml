@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+
+    <bean id="TxLogger" class="tw.com.hyweb.online.TxLogger"/> 
+    <bean id="TxLoggerEmpty" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.logger.TxLoggerEmpty"/> 
+    
+    <bean id="BaseTxLogger" class="tw.com.hyweb.svc.yhdp.online.logger.BaseTxLogger"/>
+
+	<bean id="TxLoggerOfflineBase" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.logger.TxLoggerOfflineBase">
+    	<property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean>
+</beans>

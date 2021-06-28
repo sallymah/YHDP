@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+   xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+   <bean id="processor" class="tw.com.hyweb.core.cp.batch.framework.generic.SimpleBatchProcessor">
+      <constructor-arg>
+         <bean id="handler" class="tw.com.hyweb.core.cp.batch.framework.generic.BatchJobHandler">
+            <constructor-arg>
+               <ref bean="factory" />
+            </constructor-arg>
+         </bean>
+      </constructor-arg>
+      <property name="recoverLevelMap" ref="recoverLevelMap" />
+      <property name="programName" value="SumCardStatus" />
+   </bean>
+
+   <bean id="factory" class="tw.com.hyweb.svc.thig.batch.summary.CardStatusSummaryJobFactory" />
+
+   <util:map id="recoverLevelMap">
+      <entry key="ALL">
+         <bean class="tw.com.hyweb.core.cp.batch.summary.SummaryRecoverHandler">
+            <constructor-arg>
+               <value>TB_CARD_STATUS_SUM</value>
+            </constructor-arg>
+            <constructor-arg>
+               <value>DAY</value>
+            </constructor-arg>
+         </bean>
+      </entry>
+   </util:map>
+
+</beans>

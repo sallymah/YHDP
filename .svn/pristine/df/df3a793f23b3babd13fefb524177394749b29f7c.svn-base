@@ -1,0 +1,72 @@
+package tw.com.hyweb.svc.yhdp.batch.impdata.procPrepaidCharge;
+
+import java.util.List;
+import java.util.Map;
+
+import tw.com.hyweb.core.cp.batch.framework.generic.BatchJob;
+import tw.com.hyweb.core.cp.batch.framework.generic.CursorBatchJobFactory;
+import tw.com.hyweb.service.db.info.TbBatchResultInfo;
+import tw.com.hyweb.util.string.StringUtil;
+
+public class ProcPrepaidChargeJobFactory extends CursorBatchJobFactory
+{
+	private List<String> consPcodes = null;
+    /*
+     * (non-Javadoc)
+     * 
+     * @see tw.com.hyweb.core.cp.batch.framework.generic.CursorBatchJobFactory#getSQL(java.lang.String)
+     */
+    @Override
+    protected String getSQL(String batchDate, TbBatchResultInfo tbBatchResultInfo) throws Exception
+    {
+    	String consPcodeList = "";
+    	for( int i = 0; i< consPcodes.size(); i++){
+    		String pcode = consPcodes.get(i);
+    		consPcodeList = consPcodeList + StringUtil.toSqlValueWithSQuote(pcode);
+    		if ( i < consPcodes.size()-1 ){
+    			consPcodeList = consPcodeList+", ";
+    		}
+    	}
+    	
+    	String sql = 
+    			"SELECT TN.ACQ_MEM_ID, TN.ISS_MEM_ID, TN.P_CODE AS P_CODE, TN.TXN_CODE AS TXN_CODE, CD.CARD_NO AS CARD_NO, "+
+				"CD.EXPIRY_DATE AS EXPIRY_DATE, TN.LMS_INVOICE_NO AS LMS_INVOICE_NO, "+
+				"TN.BONUS_BEFORE_QTY AS BONUS_BEFORE_QTY, TN.BONUS_QTY AS BONUS_QTY, TN.BONUS_AFTER_QTY AS BONUS_AFTER_QTY "+
+				"FROM "+
+				"(SELECT TRANS.ACQ_MEM_ID, TRANS.ISS_MEM_ID, DTL.CARD_NO, DTL.EXPIRY_DATE, DTL.LMS_INVOICE_NO, DTL.P_CODE, DTL.TXN_CODE, DTL.BONUS_ID, DTL.BONUS_BEFORE_QTY, DTL.BONUS_AFTER_QTY, DTL.BONUS_QTY "+
+				"FROM TB_TRANS TRANS,TB_TRANS_DTL DTL "+
+				"WHERE DTL.CUT_DATE = '"+ batchDate +"' "+
+				"AND TRANS.CARD_NO = DTL.CARD_NO "+
+				"AND TRANS.EXPIRY_DATE = DTL.EXPIRY_DATE "+
+				"AND TRANS.LMS_INVOICE_NO = DTL.LMS_INVOICE_NO "+
+				"AND ((DTL.P_CODE IN ("+consPcodeList+") AND DTL.TXN_CODE IN (SELECT TXN_CODE FROM TB_TXN_DEF WHERE SIGN = 'M') AND DTL.BONUS_AFTER_QTY<0) " +
+				"OR (DTL.TXN_CODE IN (SELECT TXN_CODE FROM TB_TXN_DEF WHERE BAL_FLAG = '1' AND SIGN = 'P') AND DTL.BONUS_BEFORE_QTY<0 ))) TN, "+
+				"(SELECT CARD_NO, EXPIRY_DATE, CARD_PRODUCT FROM TB_CARD) CD, "+
+				"(SELECT CARD_PRODUCT, ECASH_BONUS_ID FROM TB_CARD_PRODUCT) CP "+
+				"WHERE TN.CARD_NO = CD.CARD_NO "+
+				"AND TN.EXPIRY_DATE = CD.EXPIRY_DATE "+
+				"AND CD.CARD_PRODUCT = CP.CARD_PRODUCT "+
+				"AND CP.ECASH_BONUS_ID = TN.BONUS_ID "+
+				"ORDER BY TN.CARD_NO, TN.EXPIRY_DATE, TN.LMS_INVOICE_NO";
+    	
+        return sql;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see tw.com.hyweb.core.cp.batch.framework.generic.CursorBatchJobFactory#makeBatchJob(java.util.Map)
+     */
+    @Override
+    protected BatchJob makeBatchJob(Map<String, String> result) throws Exception
+    {
+        return new ProcPrepaidChargeJob(result, consPcodes);
+    }
+
+	public List getConsPcodes() {
+		return consPcodes;
+	}
+	public void setConsPcodes(List consPcodes) {
+		this.consPcodes = consPcodes;
+	}
+}

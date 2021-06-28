@@ -1,0 +1,13 @@
+[main] 20170603 12:01:35 INFO  AbstractBatchBasic   L:109  - begin running
+[main] 20170603 12:01:41 WARN  DBService            L:794  - DBCP borrow connection time: 6032 ms. batch
+[main] 20170603 12:01:41 DEBUG TbBatchResultMgr     L:60   - sql: INSERT INTO TB_BATCH_RESULT(PROGRAM_NAME, START_DATE, START_TIME, END_DATE, END_TIME, WORK_FLAG, RCODE, ERROR_DESC, PAR_MON, PAR_DAY, LINK_CONTROL, JOB_ID, JOB_TIME, MEM_ID, RECOVER_VALUE) VALUES ('SimulateImpTxnData', '20170603', '120135', '', '', '0', '0000', '', '06', '03', 'N', '000', '000000', '00078067', '')
+[main] 20170603 12:01:42 DEBUG TbBatchResultMgr     L:64   - TB_BATCH_RESULT: 1 record inserted
+[main] 20170603 12:01:42 DEBUG TbBatchResultMgr     L:65   - [TbBatchResultInfo  sProgramName:SimulateImpTxnData sStartDate:20170603 sStartTime:120135 sEndDate: sEndTime: sWorkFlag:0 sRcode:0000 sErrorDesc: sParMon:06 sParDay:03 sLinkControl:N sJobId:000 sJobTime:000000 sMemId:00078067 sRecoverValue:]
+[main] 20170603 12:01:43 WARN  SecureDataSource     L:135  - DBCP borrow connection time: 604 ms. YHDP_BATCH
+[main] 20170603 12:01:43 DEBUG CursorBatchJobFactory L:47   - execute sql:SELECT MERCH_ID, TERM_ID, BATCH_NO, TERM_SETTLE_DATE, TERM_SETTLE_TIME  FROM TB_TERM_BATCH WHERE (TERM_SETTLE_DATE<>'00000000' OR TERM_SETTLE_DATE IS NOT NULL) AND (CUT_DATE ='00000000' OR CUT_DATE IS  NULL) AND IMP_FILE_NAME IS NULL  AND EXISTS (SELECT * FROM TB_MERCH WHERE MEM_ID in (SELECT MEM_ID FROM TB_MEMBER WHERE TXN_LOG_FLAG='0' AND MEM_ID='00078067') AND TB_MERCH.MERCH_ID = TB_TERM_BATCH.MERCH_ID)
+[main] 20170603 12:01:43 WARN  PreparedStatementUtils L:348  - sql execution time:103ms for sql:update TB_TERM_BATCH set IMP_FILE_NAME=? where MERCH_ID=? AND TERM_ID=? AND BATCH_NO=? AND TERM_SETTLE_DATE=? AND TERM_SETTLE_TIME=?
+[main] 20170603 12:01:43 DEBUG TbBatchResultMgr     L:147  - sql: UPDATE TB_BATCH_RESULT SET END_DATE = '20170603', END_TIME = '120143', WORK_FLAG = '1', RCODE = '0000', ERROR_DESC = 'success:1, failure:0', PAR_MON = '06', PAR_DAY = '03', LINK_CONTROL = 'N', MEM_ID = '00078067', RECOVER_VALUE = '' WHERE PROGRAM_NAME = 'SimulateImpTxnData' AND START_DATE = '20170603' AND START_TIME = '120135' AND JOB_ID = '000' AND JOB_TIME = '000000'
+[main] 20170603 12:01:43 DEBUG TbBatchResultMgr     L:151  - TB_BATCH_RESULT: 1 record updated
+[main] 20170603 12:01:43 DEBUG TbBatchResultMgr     L:152  - [TbBatchResultInfo  sProgramName:SimulateImpTxnData sStartDate:20170603 sStartTime:120135 sEndDate:20170603 sEndTime:120143 sWorkFlag:1 sRcode:0000 sErrorDesc:success:1, failure:0 sParMon:06 sParDay:03 sLinkControl:N sJobId:000 sJobTime:000000 sMemId:00078067 sRecoverValue:]
+[main] 20170603 12:01:43 INFO  AbstractBatchBasic   L:150  - end running
+

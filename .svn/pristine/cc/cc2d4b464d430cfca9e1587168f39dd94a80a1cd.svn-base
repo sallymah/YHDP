@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+	
+<!--
+ Version: 1.0.0
+ Date: 2007-01-03
+-->
+<beans>
+    <import resource="logger.xml"/>
+    <bean id="MCtrler" class="tw.com.hyweb.online.controller.MgmtController">
+        <property name="txLogger" ref="TxLogger"/>
+    </bean>
+</beans>

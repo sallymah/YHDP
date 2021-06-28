@@ -1,0 +1,77 @@
+package tw.com.hyweb.svc.yhdp.batch.summary.procPrepaidBal;
+
+import java.util.List;
+import java.util.Map;
+
+import tw.com.hyweb.core.cp.batch.framework.generic.BatchJob;
+import tw.com.hyweb.core.cp.batch.framework.generic.CursorBatchJobFactory;
+import tw.com.hyweb.core.cp.common.misc.DateUtil;
+import tw.com.hyweb.service.db.info.TbBatchResultInfo;
+import tw.com.hyweb.util.string.StringUtil;
+
+public class ProcPrepaidBalJobFactory extends CursorBatchJobFactory
+{
+	private List<String> consPcodes = null;
+    /*
+     * (non-Javadoc)
+     * 
+     * @see tw.com.hyweb.core.cp.batch.framework.generic.CursorBatchJobFactory#getSQL(java.lang.String)
+     */
+    @Override
+    protected String getSQL(String batchDate, TbBatchResultInfo tbBatchResultInfo) throws Exception
+    {
+    	String startDate = DateUtil.addMonth(batchDate, -1);
+    	String endDate = DateUtil.addDate(batchDate, -1);
+    	String consPcodeList = "";
+    	for( int i = 0; i< consPcodes.size(); i++){
+    		String pcode = consPcodes.get(i);
+    		consPcodeList = consPcodeList + StringUtil.toSqlValueWithSQuote(pcode);
+    		if ( i < consPcodes.size()-1 ){
+    			consPcodeList = consPcodeList+", ";
+    		}
+    	}
+    	
+    	String sql = 
+    			"SELECT PROC_MON, ACQ_MEM_ID, SUM(REV_QTY) AS REV_PREPAID_QTY ,SUM(INC_QTY) AS INC_PREPAID_QTY FROM ( "+
+	    		"SELECT SUBSTR(PROC_DATE,1,6) AS PROC_MON,ACQ_MEM_ID, "+
+	    		"SUM(PREPAID_CHARGE*(CASE WHEN SIGN='M' THEN -1 ELSE 1 END)) AS REV_QTY, "+ 
+	    		"0 AS INC_QTY "+ 
+	    		"FROM TB_PREPAID_CHARGE TPC, TB_TXN_DEF TTD "+
+	    		"WHERE PROC_DATE >='"+ startDate +"' AND PROC_DATE <= '"+ endDate +"' "+
+	    		//"AND P_CODE IN ('7707','7717','7737') "+
+	    		"AND BAL_FLAG = '1' AND SIGN = 'P' "+ 
+	    		"AND TPC.TXN_CODE=TTD.TXN_CODE " +
+	    		"GROUP BY SUBSTR(PROC_DATE,1,6),ACQ_MEM_ID "+ 
+	    		"UNION ALL "+ 
+	    		"SELECT SUBSTR(PROC_DATE,1,6) AS PROC_MON,ACQ_MEM_ID, "+ 
+	    		"0 AS REV_QTY, "+ 
+	    		"SUM(PREPAID_CHARGE*(CASE WHEN SIGN='M' THEN -1 ELSE 1 END)) AS INC_QTY "+
+	    		"FROM TB_PREPAID_CHARGE TPC, TB_TXN_DEF TTD "+
+	    		"WHERE PROC_DATE >= '"+ startDate +"' AND PROC_DATE <= '"+ endDate +"' "+
+	    		"AND TPC.TXN_CODE=TTD.TXN_CODE AND P_CODE IN ("+consPcodeList+") "+
+	    		"GROUP BY SUBSTR(PROC_DATE,1,6),ACQ_MEM_ID ) "+ 
+	    		"GROUP BY PROC_MON, ACQ_MEM_ID "+ 
+	    		"ORDER BY PROC_MON, ACQ_MEM_ID ";
+    	
+        return sql;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see tw.com.hyweb.core.cp.batch.framework.generic.CursorBatchJobFactory#makeBatchJob(java.util.Map)
+     */
+    @Override
+    protected BatchJob makeBatchJob(Map<String, String> result) throws Exception
+    {
+        return new ProcPrepaidBalJob(result);
+    }
+
+	public List<String> getConsPcodes() {
+		return consPcodes;
+	}
+	public void setConsPcodes(List<String> consPcodes) {
+		this.consPcodes = consPcodes;
+	}
+    
+}

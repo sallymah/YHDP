@@ -1,0 +1,770 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+    <bean id="TransDupValidator" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.validator.TxnDupValidator"/>
+    
+    <bean id="termBatchValidator" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.validator.termBatchValidator"/>
+    
+    <bean id="FieldsFormatValidator" class="tw.com.hyweb.online.validator.FieldsFormatValidator">
+        <property name="fields">
+            <props>
+                <!--
+                first digit is Alpha; second digit is Numeric; third digit is Space.
+                ex. 010: only Numeric allowed; 110: Alpha and Numeric value is allowed;
+                -->
+                <prop key="3" >010</prop>
+                <prop key="11">010</prop>
+                <prop key="39">110</prop>
+                <prop key="41">110</prop>
+                <prop key="42">110</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--Reload Controller validators-->
+        <bean id="MFieldsValidator" class="tw.com.hyweb.online.validator.MFieldsValidator">
+        <property name="fields">
+            <props>
+            	<prop key="0100">3 11 41 42</prop>
+                <prop key="0110">3 11 39 64</prop>
+                <prop key="0200">3 11 41 42 64</prop>
+                <prop key="0210">3 11 39 41 42 64</prop>
+<!--                 <prop key="0220">3 11 41 42 64</prop>
+                <prop key="0230">3 11 39 64</prop> -->
+                <prop key="0300">3 11 41 42 64</prop>
+                <prop key="0310">3 11 39 64</prop>
+                <prop key="0320">3 11 41 42 64</prop>
+                <prop key="0330">3 11 39 64</prop>
+                <prop key="0400">3 11 41 42 64</prop>
+                <prop key="0410">3 11 39 41 42 64</prop>
+                <prop key="0500">3 11 41 42 64</prop>
+                <prop key="0510">3 11 39 41 42 64</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="Field58FormatValidator" class="tw.com.hyweb.svc.yhdp.online.validator.TlvFormatValidator">
+        <property name="tags">
+            <props>
+                <!--
+                first digit is Alpha; second digit is Numeric; third digit is Space.
+                ex. 010: only Numeric allowed; 110: Alpha and Numeric value is allowed;
+                -->
+                <prop key="FF21">010</prop>
+                <prop key="FF22">010</prop>
+                <prop key="FF23">010</prop>
+                <prop key="FF24">111</prop>
+                <prop key="FF25">010</prop>
+                <prop key="FF26">010</prop>
+                <prop key="FF27">010</prop>
+                <prop key="FF29">010</prop>
+                <prop key="FF2A">010</prop>
+                <prop key="FF2C">110</prop>
+                <!--<prop key="FF2D">010</prop>-->
+                <prop key="FF2E">010</prop>
+                <prop key="FF2F">010</prop>
+                <prop key="FF31">010</prop>
+                <prop key="FF32">010</prop>
+                <prop key="FF34">010</prop>
+                <prop key="FF35">110</prop>
+                <prop key="FF36">010</prop>
+                <prop key="FF37">010</prop>
+                <prop key="FF38">010</prop>
+                <prop key="FF39">010</prop>
+                <prop key="FF3A">010</prop>
+                <prop key="FF3B">010</prop>
+                <prop key="FF3D">010</prop>
+                <prop key="FF3E">010</prop>
+                <prop key="FF3F">010</prop>
+                <prop key="FF40">110</prop>
+                <!--<prop key="FF41">010</prop>-->
+                <prop key="FF42">010</prop>
+                <prop key="FF43">010</prop>
+                <prop key="FF44">110</prop>
+                <prop key="FF45">110</prop>
+                <prop key="FF49">010</prop>
+                <prop key="FF4A">010</prop>
+                <prop key="FF4B">010</prop>
+                <prop key="FF4C">110</prop>
+                <prop key="FF4D">010</prop>
+                <prop key="FF4E">110</prop>
+                <prop key="FF4F">010</prop>
+                <prop key="FF53">110</prop>
+                <!--<prop key="FF57">010</prop>-->
+                <!--<prop key="FF58">010</prop>-->
+                <prop key="FF59">010</prop>
+                <prop key="FF5A">010</prop>
+                <prop key="FF62">010</prop>
+                <prop key="FF63">010</prop>
+                <prop key="FF64">010</prop>
+                <prop key="FF6B">010</prop>
+                <prop key="FF6C">010</prop>
+                <prop key="FF6D">010</prop>
+                <prop key="FF6E">010</prop>
+                <prop key="FF6F">010</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--Controller validators-->
+    <bean id="CardValidator" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.validator.CardValidator"/>
+
+    <!--Controller validators-->
+    <bean id="IssuerValidator" class="tw.com.hyweb.svc.yhdp.online.validator.IssuerValidator"/>
+    
+    <!--Controller validators-->
+    <bean id="MerchantValidator" class="tw.com.hyweb.svc.yhdp.online.validator.MerchantValidator"/>
+    
+    <!--Controller validators-->
+    <bean id="TerminalValidator" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.validator.TerminalValidator"/>
+    
+    <!--Controller validators-->
+    <bean id="SamValidator" class="tw.com.hyweb.svc.yhdp.online.validator.SamValidator"/>
+    
+    <!--Controller validators-->
+    <bean id="MacValidator" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.validator.MacValidator">
+        <property name="servletUrl"><value>http://YhdpSS:36888/YHDP_SSServlet/SS</value></property>
+        <property name="slot"><value>2</value></property>
+        <property name="pin"><value>BAA6B7BBAFCECDCCCBF7F7F7F7F7F7F7F7</value></property>
+        <property name="busMacKeyId"><value>tawk11</value></property>
+        <property name="macKeyID"><value>SingleTAC</value></property>
+        <property name="ver5First3"><value>false</value></property>
+    </bean>
+        
+    <!--Controller validators-->
+    <bean id="AcquireValidator" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.validator.AcquireValidator"/>
+    
+    <bean id ="ReloadCardValidator" class="tw.com.hyweb.svc.yhdp.online.controller.reload.CardValidator" />
+    
+    <!--ReActivate Card validators-->
+    <bean id="ReActivateCardValidator" class="tw.com.hyweb.svc.yhdp.online.validator.ReActivateCardValidator"/>        
+    
+    <!-- Activate Card validators-->
+    <bean id="ActivateCardValidator" class="tw.com.hyweb.svc.yhdp.online.validator.ActivateCardValidator"/>        
+    
+    <!-- Reversal Activate Card validators -->
+    <bean id="RvActivateCardValidator" class="tw.com.hyweb.svc.yhdp.online.validator.RvActivateCardValidator"/>
+    
+    <bean id="TransferValidator" class="tw.com.hyweb.svc.yhdp.online.validator.TransferValidator"/>
+    
+    <bean id="LptsamValidator" class="tw.com.hyweb.svc.yhdp.online.validator.LptsamValidator"/>
+    
+    <bean id="trafficTxnFiller" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.controller.base.trafficTxnFiller"/>
+    
+    <bean id="ParserValidator" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.validator.ParserValidator">
+        <property name="transTypePcode">
+           <ref bean="TransTypePcode"/>
+        </property>
+        <property name="specialTransTypePcode">
+           <ref bean="SpecialTransTypePcode"/>
+        </property>
+        <property name="trafficTxn">
+           <ref bean="TfcTxn"/>
+        </property>
+    </bean>
+    
+     <bean id="TfcTxn" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficTxn">
+        <property name="tfcTxnHeader">
+           <ref bean="TrafficTxnHeader"/>
+        </property>
+        <property name="tfcTxnDtl">
+           <ref bean="TrafficTxnDetail"/>
+        </property>
+     </bean>
+     
+     <bean id="TrafficTxnHeader" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficTxnHeader">
+         <property name="dataFormatList">
+	         <list>
+				<bean id = "item" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>item</value></property>
+				    <property name="format"><value>0</value></property> <!-- an or bin -->
+				    <property name="lsb"><value>0</value></property>    <!-- int or data or string -->
+				    <property name="length"><value>2</value></property>
+	        	</bean>
+	        	<bean id = "sourceDate" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+	        	    <property name="fieldName"><value>sourceDate</value></property>
+				    <property name="format"><value>0</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>8</value></property>
+	        	</bean>
+	        	<bean id = "fileSeq" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+	        	    <property name="fieldName"><value>fileSeq</value></property>
+				    <property name="format"><value>0</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>6</value></property>
+	        	</bean>
+	        	<bean id = "record" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+	        	    <property name="fieldName"><value>record</value></property>
+				    <property name="format"><value>0</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>10</value></property>
+	        	</bean>
+	        	<bean id = "totalAmt" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+	        	    <property name="fieldName"><value>totalAmt</value></property>
+				    <property name="format"><value>0</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>12</value></property>
+	        	</bean>
+	        	<bean id = "ticketAmt" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+	        	    <property name="fieldName"><value>ticketAmt</value></property>
+				    <property name="format"><value>0</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>12</value></property>
+	        	</bean>
+	        	<bean id = "deviceId" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+	        	    <property name="fieldName"><value>deviceId</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>4</value></property>
+	        	</bean>
+	        	<bean id = "batchNo" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+	        	    <property name="fieldName"><value>batchNo</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>2</value></property>
+	        	</bean>
+	        	<bean id = "programVer" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+	        	    <property name="fieldName"><value>programVer</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>2</value></property>
+	        	</bean>
+	        	<bean id = "blacklistVer" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+	        	    <property name="fieldName"><value>blacklistVer</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>4</value></property>
+	        	</bean>
+	        	<bean id = "paramVer" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+	        	    <property name="fieldName"><value>paramVer</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>4</value></property>
+	        	</bean>
+	        </list>
+        </property>
+	 </bean>
+	 
+     <bean id="TrafficTxnDetail" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficTxnDetail">
+         <property name="dataFormatList">
+         	<list>
+				<bean id = "itemDtl" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>item</value></property>
+				    <property name="format"><value>0</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>2</value></property>
+	      	    </bean>
+	      	    <bean id = "txnType" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>txnType</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+				    <property name="isNecessary"><value>true</value></property>
+	      	    </bean>
+	      	    <bean id = "mifareId" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>mifareId</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>4</value></property>
+	      	    </bean>
+	      	    <bean id = "pid" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>pid</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>8</value></property>
+				    <property name="isNecessary"><value>true</value></property>
+	      	    </bean>
+	      	    <bean id = "transNo" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>transNo</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>2</value></property>
+				    <!-- <property name="isNecessary"><value>true</value></property> -->
+	      	    </bean>
+	      	    <bean id = "transDate" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>transDate</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>2</value></property>
+				    <property name="length"><value>4</value></property>
+				    <property name="convertFunc"><value>1</value></property>
+				    <!-- <property name="isNecessary"><value>true</value></property> -->
+	      	    </bean>
+	      	    <bean id = "transType" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>transType</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+				    <!-- <property name="isNecessary"><value>true</value></property> -->
+	      	    </bean>
+	      	    <bean id = "baforeBal" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>baforeBal</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>2</value></property>
+				    <!-- <property name="isNecessary"><value>true</value></property> -->
+	      	    </bean>
+	      	    <bean id = "txnAmt" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>txnAmt</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>2</value></property>
+				    <!-- <property name="isNecessary"><value>true</value></property> -->
+	      	    </bean>
+	      	    <bean id = "afterAmt" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>afterAmt</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>2</value></property>
+				    <!-- <property name="isNecessary"><value>true</value></property> -->
+	      	    </bean>
+	      	    <bean id = "transSysNo" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>transSysNo</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+				    <!-- <property name="isNecessary"><value>true</value></property> -->
+	      	    </bean>
+	      	    <bean id = "locId" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>locId</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+				    <!-- <property name="isNecessary"><value>true</value></property> -->
+	      	    </bean>
+	      	    <bean id = "devId" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>devId</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>4</value></property>
+				    <!-- <property name="isNecessary"><value>true</value></property> -->
+	      	    </bean>
+	      	    <bean id = "samOsn" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>samOsn</value></property>
+				    <property name="format"><value>0</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>8</value></property>
+				    <!-- <property name="isNecessary"><value>true</value></property> -->
+	      	    </bean>
+	      	    <bean id = "samTransSeq" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>samTransSeq</value></property>
+				    <property name="format"><value>0</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>6</value></property>
+				    <property name="isNecessary"><value>true</value></property>
+	      	    </bean>
+	      	    <bean id = "samMac" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>samMac</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>8</value></property>
+				    <property name="isNecessary"><value>true</value></property>
+	      	    </bean>
+	      	    <bean id = "termTxnSeq" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>termTxnSeq</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>6</value></property>
+	      	    </bean>
+	      	    <bean id = "termTxnDate" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>termTxnDate</value></property>
+				    <property name="format"><value>0</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>14</value></property>
+	      	    </bean>
+	      	    <bean id = "termId" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>termId</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>4</value></property>
+	      	    </bean>
+	      	    <bean id = "storeId" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>storeId</value></property>
+				    <property name="format"><value>0</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>15</value></property>
+	      	    </bean>
+	      	    <bean id = "transNoCancel" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>transNoCancel</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>2</value></property>
+	      	    </bean>
+	      	    <bean id = "TRANS_DATE_CANCEL" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>TRANS_DATE_CANCEL</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>2</value></property>
+				    <property name="length"><value>4</value></property>
+	      	    </bean>
+	      	    <bean id = "TXPROCESS_DATE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>TXPROCESS_DATE</value></property>
+				    <property name="format"><value>0</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>8</value></property>
+	      	    </bean>
+	      	    <bean id = "SHIFT_NUMBER" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>SHIFT_NUMBER</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+	      	    </bean>
+	      	    <bean id = "FIRST_ENTRY_STATION_INTER_TRANSFER" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>FIRST_ENTRY_STATION_INTER_TRANSFER</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+	      	    </bean>
+	      	    <bean id = "FIRST_DEDUCT_VALUE_INTER_TRANSFER" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>FIRST_DEDUCT_VALUE_INTER_TRANSFER</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+	      	    </bean>
+	      	    <bean id = "IN_OUT_CODE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>IN_OUT_CODE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+	      	    </bean>
+	      	    <bean id = "TRTC_CTSN" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>TRTC_CTSN</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>2</value></property>
+	      	    </bean>
+	      	    <bean id = "REJ_CODE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>REJ_CODE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+	      	    </bean>
+	      	    <bean id = "CONSUM_CAL_POINTS" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>CONSUM_CAL_POINTS</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>2</value></property>
+	      	    </bean>
+	      	    <bean id = "USER_TYPE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>USER_TYPE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+	      	    </bean>
+	      	    <bean id = "TRANS_FAVOR_AMT" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>TRANS_FAVOR_AMT</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>4</value></property>
+	      	    </bean>
+	      	    <bean id = "ORIG_TRANS_FARE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>ORIG_TRANS_FARE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>2</value></property>
+	      	    </bean>
+	      	    <bean id = "OTHER_FAVOR_AMT" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>OTHER_FAVOR_AMT</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>2</value></property>
+	      	    </bean>
+	      	    <bean id = "BV_BATCH_NO" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>BV_BATCH_NO</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>2</value></property>
+	      	    </bean>
+	      	    <bean id = "IN_SHUTTLE_CODE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>IN_SHUTTLE_CODE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+	      	    </bean>
+	      	    <bean id = "IN_STATUS_CODE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>IN_STATUS_CODE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>2</value></property>
+	      	    </bean>
+	      	    <bean id = "BOARDING_STIO_CODE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>BOARDING_STIO_CODE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>2</value></property>
+	      	    </bean>
+	      	    <bean id = "OUT_SHUTTLE_CODE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>OUT_SHUTTLE_CODE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+	      	    </bean>
+	      	    <bean id = "OUT_STATION_CODE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>OUT_STATION_CODE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>2</value></property>
+	      	    </bean>
+	      	    <bean id = "ALIGHTING_STOP_CODE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>ALIGHTING_STOP_CODE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>2</value></property>
+			    </bean>
+			    <bean id = "TRANSFER_FLAG" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>TRANSFER_FLAG</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+			    </bean>
+			    <bean id = "CASH_FOR_INSUFFICIUNT" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>CASH_FOR_INSUFFICIUNT</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>2</value></property>
+			    </bean>
+			    <bean id = "BUS_LINCENSE_ID" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>BUS_LINCENSE_ID</value></property>
+				    <property name="format"><value>0</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>6</value></property>
+			    </bean>
+			    <bean id = "BUS_DRIVER_ID" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>BUS_DRIVER_ID</value></property>
+				    <property name="format"><value>0</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>10</value></property>
+			    </bean>
+			    <bean id = "BUS_ROUTE_DOMAN" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>BUS_ROUTE_DOMAN</value></property>
+				    <property name="format"><value>0</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>6</value></property>
+			    </bean>
+			    <bean id = "CUST_DATE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>CUST_DATE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>2</value></property>
+				    <property name="length"><value>4</value></property>
+			    </bean>
+			    <bean id = "CUST_DATE_CLASS" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>CUST_DATE_CLASS</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+			    </bean>
+			    <bean id = "TOTAL_CASH_TXN_AMT" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>TOTAL_CASH_TXN_AMT</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>2</value></property>
+			    </bean>
+			    <bean id = "FREE_CODE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>FREE_CODE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+			    </bean>
+			    <bean id = "FREE_BUS_REBATE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>FREE_BUS_REBATE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>2</value></property>
+			    </bean>
+			    <bean id = "PRICE_MARGIN" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>PRICE_MARGIN</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>2</value></property>
+			    </bean>
+			    <bean id = "TOTAL_TRANS_RATE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>TOTAL_TRANS_RATE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>2</value></property>
+			    </bean>
+			    <bean id = "CARD_TYPE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>CARD_TYPE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+			    </bean>
+			    <bean id = "PERMINUM_PROVIDER" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>PERMINUM_PROVIDER</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+			    </bean>
+			    <bean id = "USER_TYPE_FAVOR_AMT" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>USER_TYPE_FAVOR_AMT</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>2</value></property>
+			    </bean>
+			    <bean id = "PERK_FAVOR_AMT" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>PERK_FAVOR_AMT</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>2</value></property>
+			    </bean>
+			    <bean id = "BUSINESS_DATE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>BUSINESS_DATE</value></property>
+				    <property name="format"><value>0</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>8</value></property>
+			    </bean>
+			    <bean id = "PENALTY_AMT" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>PENALTY_AMT</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>2</value></property>
+			    </bean>
+			    <bean id = "CARRIGE_TYPE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>CARRIGE_TYPE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+			    </bean>
+			    <bean id = "FAVOR_FLAG" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>FAVOR_FLAG</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+			    </bean>
+			    <bean id = "PRE_CHKIN_FLAG" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>PRE_CHKIN_FLAG</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+			    </bean>
+			    <bean id = "PRE_CHKIN_DEDUCT_FLAG" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>PRE_CHKIN_DEDUCT_FLAG</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+			    </bean>
+			    <bean id = "PRE_CHKIN_COUNT_FLAG" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>PRE_CHKIN_COUNT_FLAG</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+			    </bean>
+			    <bean id = "SPECIAL_IDENTIFY_ORIG_COUNTER" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>SPECIAL_IDENTIFY_ORIG_COUNTER</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>4</value></property>
+			    </bean>
+			    <bean id = "SPECIAL_IDENTIFY_USAGE_COUNTER" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>SPECIAL_IDENTIFY_USAGE_COUNTER</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>4</value></property>
+			    </bean>
+			    <bean id = "SPECIAL_IDENTIFY_RESET_DATE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>SPECIAL_IDENTIFY_RESET_DATE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>2</value></property>
+				    <property name="length"><value>4</value></property>
+			    </bean>
+			    <bean id = "SPECIAL_IDENTIFY_ACTIVE_DATE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>SPECIAL_IDENTIFY_ACTIVE_DATE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>2</value></property>
+				    <property name="length"><value>4</value></property>
+			    </bean>
+			    <bean id = "SPECIAL_IDENTIFY_EXP_DATE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>SPECIAL_IDENTIFY_EXP_DATE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>2</value></property>
+				    <property name="length"><value>4</value></property>
+			    </bean>
+			    <bean id = "SPECIAL_IDENTIFY_DEPARTURE_STATION" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>SPECIAL_IDENTIFY_DEPARTURE_STATION</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>4</value></property>
+			    </bean>
+			    <bean id = "SPECIAL_IDENTIFY_ARRIVAL_STATION" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>SPECIAL_IDENTIFY_ARRIVAL_STATION</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>4</value></property>
+			    </bean>
+			    <bean id = "SPECIAL_IDENTIFY_ROUTE_ID" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>SPECIAL_IDENTIFY_ROUTE_ID</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>4</value></property>
+			    </bean>
+			    <bean id = "ACCUMULATED_BONUS_USAGE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>ACCUMULATED_BONUS_USAGE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>1</value></property>
+			    </bean>
+			    <bean id = "ACCUMULATED_BONUS_VALID_DATE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>ACCUMULATED_BONUS_VALID_DATE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>4</value></property>
+			    </bean>
+			    <bean id = "BONUS_PURSE_SEQ_NO" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>BONUS_PURSE_SEQ_NO</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>2</value></property>
+			    </bean>
+			    <bean id = "BONUS_TXN_AMT" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>BONUS_TXN_AMT</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>2</value></property>
+			    </bean>
+			    <bean id = "BONUS_REMAINS" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>BONUS_REMAINS</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>1</value></property>
+				    <property name="length"><value>2</value></property>
+			    </bean>
+			    <bean id = "SPECIAL_FLAG" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>SPECIAL_FLAG</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+			    </bean>
+			    <bean id = "TRAFFIC_VER" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>TRAFFIC_VER</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+				    <property name="isNecessary"><value>true</value></property>
+			    </bean>
+			    <bean id = "SETTLE_DATE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>SETTLE_DATE</value></property>
+				    <property name="format"><value>0</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>8</value></property>
+			    </bean>
+			     <bean id = "locIdAp" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>locIdAp</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+				    <!-- <property name="isNecessary"><value>true</value></property> -->
+	      	    </bean>
+			    <bean id = "RETENTION" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>RETENTION</value></property>
+				    <property name="format"><value>0</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>40</value></property>
+			    </bean>
+			    <bean id = "RESP_CODE" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.TrafficDataFormat">
+				    <property name="fieldName"><value>RESP_CODE</value></property>
+				    <property name="format"><value>1</value></property>
+				    <property name="lsb"><value>0</value></property>
+				    <property name="length"><value>1</value></property>
+			    </bean>
+	        </list>
+	    </property>
+	 </bean>
+</beans>

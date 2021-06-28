@@ -1,0 +1,12 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+Version: 1.0.0
+Date: 2007-01-08
+-->
+<beans>
+<bean id="ProcNumOfAuth" class="tw.com.hyweb.svc.yhdp.batch.ProcNumOfAuth.ProcNumOfAuth">
+	 <!-- 執行日期 -->
+  	<property name="executeDate"><value>15</value></property>  
+    <property name="sleepTime"><value>500</value></property>
+</bean>
+</beans>

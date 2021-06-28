@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="dbTruncate" class="tw.com.hyweb.core.cp.batch.housekeep.DbTruncate" init-method="">
+    <property name="historyPostfix"><value>_H</value></property>
+    <property name="afterDay"><value>25</value></property>
+    <property name="partColumnMappings">
+      <props>
+        <prop key="START_DATE">$refDate</prop>
+        <prop key="PART_YYYY">$refDate.YYYY</prop>
+        <prop key="PART_YYYYMM">$refDate.YYYYMM</prop>
+        <prop key="PART_MMDD">$refDate.MMDD</prop>
+        <prop key="PAR_MON">$refDate.MM</prop>
+        <prop key="PAR_DAY">$refDate.DD</prop>
+      </props>
+    </property>
+    <property name="addMonthsFieldNames">
+      <list>
+        <value>PAR_MON</value>
+      </list>
+    </property>
+  </bean>
+</beans>

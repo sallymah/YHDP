@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="dbUpdate" class="tw.com.hyweb.core.cp.batch.housekeep.DbUpdate" init-method="">
+    <property name="usingRowid"><value>true</value></property>
+    <property name="recordsPerCommit"><value>1000</value></property>
+    <property name="conditionMappings">
+      <props>
+        <prop key="##REF_DATE##">$refDate</prop>
+        <prop key="##REF_DATE.YYYY##">$refDate.YYYY</prop>
+        <prop key="##REF_DATE.YYYYMM##">$refDate.YYYYMM</prop>
+        <prop key="##REF_DATE.MMDD##">$refDate.MMDD</prop>
+        <prop key="##REF_DATE.MM##">$refDate.MM</prop>
+        <prop key="##REF_DATE.DD##">$refDate.DD</prop>
+      </props>
+    </property>
+    <property name="keyInConditionMappings"><value>##REF_DATE.MM##</value></property>
+    <property name="addMonthsFieldNames">
+      <list>
+        <value>PAR_MON</value>
+      </list>
+    </property>
+	</bean>
+</beans>

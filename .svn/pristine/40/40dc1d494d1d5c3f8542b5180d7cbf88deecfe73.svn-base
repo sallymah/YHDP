@@ -1,0 +1,6 @@
+#DbUtil.commitTime=35
+#track2.protected=true
+db.commitTime.warn=35
+sensitive.data.protected=true
+field.charsetName=BIG5
+dbunit.dbschema=SIT_OWNER

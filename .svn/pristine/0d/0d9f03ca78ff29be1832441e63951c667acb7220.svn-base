@@ -1,0 +1,303 @@
+<?xml version="1.0"?>
+<!-- ===========================================================================
+
+                           *===================*
+                           | How to build      |
+                           *===================*
+
+
+Install the build tools
+=======================
+
+The build system is based on Jakarta Ant, and JUnit if we want to perform
+
+ - JDK >= 1.5.
+ - Set JAVA_HOME environment variable.
+   e.g. set JAVA_HOME=c:/jdk1.5 (Win32)
+        export JAVA_HOME=/usr/local/IBMJava2-13 (Unix)
+
+============================================================================ -->
+
+<project name="hyweb-layer3-SVC" default="usage" basedir=".">
+	<tstamp>
+		<format property="NOW" pattern="yyyyMMdd" locale="tw" />
+		<format property="TODAY" pattern="yyyyMMdd" locale="tw" />
+	</tstamp>
+	<property name="name" value="${ant.project.name}" />
+	<property name="bin.dir" value="bin" />
+	<property name="config.dir" value="config" />
+	<property name="lib.dir" value="lib" />
+	<property name="ap.dir" value="loyalty" />
+	<property name="patch.file" value="patchonline.zip" />
+	<property name="host.dir" value="Host_Online" />
+	<property name="host01.dir" value="Host_Online01" />
+	<property name="host02.dir" value="Host_Online02" />
+	<property name="host03.dir" value="Host_Online03" />
+	<property name="patchbackup.dir" value="patchbatchbackup" />
+    <!--
+    <property name="online.service.name" value="HywebSvcProductOnline" />
+    <property name="online.service.name" value="hywebSvcUatOnline" />
+    -->
+    <property name="online.service.name" value="HywebSvcDev" />
+        
+	<!-- =================================================================== -->
+	<!-- usage                                                               -->
+	<!-- =================================================================== -->
+	<target name="usage">
+		<echo message="${ant.version}" />
+		<echo message="" />
+		<echo message="JCP Build file" />
+		<echo message="------------------------------------------------------" />
+		<echo message="" />
+		<echo message="available targets are:" />
+		<echo message="" />
+		<echo message="patch                  --> install batch" />
+		<echo message="unpatch                --> restore batch" />
+		<echo message="" />
+		<echo message=" See the comments inside the patchbatch.xml for details." />
+		<echo message="------------------------------------------------------" />
+		<echo message="" />
+		<echo message="" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- init Host, Host_01, Host_02, Host_03 directory                      -->
+	<!-- =================================================================== -->
+	<target name="initHost">
+		<mkdir dir="${host.dir}" />
+		<mkdir dir="${host01.dir}" />
+		<mkdir dir="${host02.dir}" />
+		<mkdir dir="${host03.dir}" />
+		<mkdir dir="${patchbackup.dir}" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- chmodHostXX                                                         -->
+	<!-- =================================================================== -->
+	<target name="chmodHostXX">
+		<chmod perm="755" type="file">
+			<fileset dir="${host.dir}">
+				<include name="**/*.sh" />
+			</fileset>
+		</chmod>
+		<chmod perm="755" type="file">
+			<fileset dir="${host01.dir}">
+				<include name="**/*.sh" />
+			</fileset>
+		</chmod>
+		<chmod perm="755" type="file">
+			<fileset dir="${host02.dir}">
+				<include name="**/*.sh" />
+			</fileset>
+		</chmod>
+		<chmod perm="755" type="file">
+			<fileset dir="${host03.dir}">
+				<include name="**/*.sh" />
+			</fileset>
+		</chmod>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- backup bin, conifg, lib files from fromHost to toHost               -->
+	<!-- =================================================================== -->
+	<target name="backupHost">
+		<copy todir="${toHost}" preservelastmodified="true" overwrite="${overwriteFlag}">
+			<fileset dir="${fromHost}">
+				<include name="${bin.dir}/**/*" />
+				<include name="${config.dir}/**/*" />
+				<include name="${lib.dir}/**/*" />
+				<include name="*.xml" />
+				<include name="*.sh" />
+				<include name="*.bat" />
+				<include name="*.dll" />
+				<include name="*.exe" />
+				<exclude name="${config.dir}/**/dbservice.properties" />
+				<exclude name="${config.dir}/**/batch.properties" />
+				<exclude name="${config.dir}/**/ip.properties" />
+				<exclude name="${config.dir}/**/cnc.keystore" />
+			</fileset>
+		</copy>
+	</target>
+    
+    <!-- =================================================================== -->
+    <!-- stop online                                                         -->
+    <!-- =================================================================== -->
+    <target name="stopOnline">
+        <available file="${host.dir}/shutdownOnline.sh" property="is.sh.stopOnline" />
+        <condition property="isUnixOnlineStop" value="true">
+             <and>
+                 <istrue value="${is.sh.stopOnline}"/>
+                 <os family="unix"/>
+             </and>
+        </condition>
+        <condition property="isWinOnlineStop">
+             <and>      
+                 <os family="windows"/>
+             </and>
+        </condition>
+        
+		<antcall target="unixStopOnline"/>
+		<antcall target="winStopOnline"/>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- start online                                                         -->
+    <!-- =================================================================== -->
+    <target name="startOnline">       
+        <available file="${host.dir}/runOnlineNoHup.sh" property="is.sh.startOnline" />
+        <condition property="isUnixOnlineStart" value="true">
+             <and>
+                 <istrue value="${is.sh.startOnline}"/>
+                 <os family="unix"/>
+             </and>
+        </condition>
+        <condition property="isWinOnlineStart">
+             <and>
+                 <os family="windows"/>
+             </and>
+        </condition>
+        
+        <antcall target="unixStartOnline"/>
+		<antcall target="winStartOnline"/>
+    </target>
+    
+    <!-- =================================================================== -->
+    <!-- stop online                                                         -->
+    <!-- =================================================================== -->
+    <target name="unixStopOnline" if="isUnixOnlineStop">
+        <exec dir="${host.dir}" executable="shutdownOnline.sh" />
+        <sleep seconds="2"/>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- start online                                                         -->
+    <!-- =================================================================== -->
+    <target name="unixStartOnline" if="isUnixOnlineStart">
+        <sleep seconds="2"/>
+        <exec dir="${host.dir}" executable="runOnlineNoHup.sh" spawn="true" />
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- stop online                                                         -->
+    <!-- =================================================================== -->
+    <target name="winStopOnline" if="isWinOnlineStop">
+        <echo message="Window Stop Online..."/>
+        <exec dir="${host.dir}" executable="cmd">
+            <arg line="/c net stop ${online.service.name}"/>
+        </exec>
+        <sleep seconds="2"/>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- start online                                                         -->
+    <!-- =================================================================== -->
+    <target name="winStartOnline" if="isWinOnlineStart">
+        <echo message="Window Start Online..."/>
+        <sleep seconds="2"/>
+        <exec dir="${host.dir}" executable="cmd">
+            <arg line="/c net start ${online.service.name}"/>
+        </exec>
+    </target>
+        
+	<!-- =================================================================== -->
+	<!-- patch Batch                                                         -->
+	<!-- =================================================================== -->
+	<target name="patch">
+		<input message="是否要執行過版Online模組?" addproperty="confirm" validargs="y,n" defaultvalue="n" />
+		<fail>
+			<condition>
+				<or>
+					<equals arg1="N" arg2="${confirm}" />
+					<equals arg1="n" arg2="${confirm}" />
+				</or>
+			</condition>
+		</fail>
+		<antcall target="initHost" />
+        <antcall target="stopOnline"/>
+		<antcall target="backupHost">
+			<param name="fromHost" value="${host02.dir}" />
+			<param name="toHost" value="${host03.dir}" />
+			<param name="overwriteFlag" value="false" />
+		</antcall>
+		<antcall target="backupHost">
+			<param name="fromHost" value="${host01.dir}" />
+			<param name="toHost" value="${host02.dir}" />
+			<param name="overwriteFlag" value="false" />
+		</antcall>
+		<antcall target="backupHost">
+			<param name="fromHost" value="${host.dir}" />
+			<param name="toHost" value="${host01.dir}" />
+			<param name="overwriteFlag" value="false" />
+		</antcall>
+		<unzip src="${patch.file}" dest="${host.dir}">
+			<patternset>
+				<exclude name="${config.dir}/**/dbservice.properties" />
+				<exclude name="${config.dir}/**/batch.properties" />
+				<exclude name="${config.dir}/**/ip.properties" />
+				<exclude name="${config.dir}/**/cnc.keystore" />
+			</patternset>
+		</unzip>
+		<antcall target="fixcrlf" />
+		<antcall target="chmodHostXX" />
+		<move file="${patch.file}" tofile="${patchbackup.dir}/${patch.file}.${NOW}" failonerror="false" />
+        <antcall target="startOnline" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- unpatch Batch                                                       -->
+	<!-- =================================================================== -->
+	<target name="unpatch">
+		<input message="是否要執行退版Online模組?" addproperty="confirm" validargs="y,n" defaultvalue="n" />
+		<fail>
+			<condition>
+				<or>
+					<equals arg1="N" arg2="${confirm}" />
+					<equals arg1="n" arg2="${confirm}" />
+				</or>
+			</condition>
+		</fail>
+		<antcall target="initHost" />
+        <antcall target="stopOnline"/>
+		<antcall target="backupHost">
+			<param name="fromHost" value="${host01.dir}" />
+			<param name="toHost" value="${host.dir}" />
+			<param name="overwriteFlag" value="true" />
+		</antcall>
+		<antcall target="backupHost">
+			<param name="fromHost" value="${host02.dir}" />
+			<param name="toHost" value="${host01.dir}" />
+			<param name="overwriteFlag" value="true" />
+		</antcall>
+		<antcall target="backupHost">
+			<param name="fromHost" value="${host03.dir}" />
+			<param name="toHost" value="${host02.dir}" />
+			<param name="overwriteFlag" value="true" />
+		</antcall>
+		<antcall target="chmodHostXX" />
+        <antcall target="startOnline" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- fix file for win and unix                                           -->
+	<!-- =================================================================== -->
+	<target name="fixcrlf" depends="fixwin, fixunix">
+		<fixcrlf srcDir="${host.dir}" includes="**/*.bat" eol="crlf" eof="asis" />
+		<fixcrlf srcDir="${host.dir}" includes="**/*.sh" eol="lf" eof="remove" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- fix file for win                                                    -->
+	<!-- =================================================================== -->
+	<target name="fixwin" if="is.Windows">
+		<fixcrlf srcDir="${host.dir}" includes="**/*.properties" eol="crlf" eof="asis" />
+		<fixcrlf srcDir="${host.dir}" includes="**/*.xml" eol="crlf" eof="asis" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- fix file for unix                                                   -->
+	<!-- =================================================================== -->
+	<target name="fixunix" if="is.Unix">
+		<fixcrlf srcDir="${host.dir}" includes="**/*.properties" eol="lf" eof="remove" />
+		<fixcrlf srcDir="${host.dir}" includes="**/*.xml" eol="lf" eof="remove" />
+	</target>
+</project>

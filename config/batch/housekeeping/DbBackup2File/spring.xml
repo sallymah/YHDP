@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+  <bean id="dbBackup2File" class="tw.com.hyweb.core.cp.batch.housekeep.DbBackup2File">
+    <property name="houseKeepingHome"><value>/path/to/output_dir</value></property>
+    <property name="fieldSep"><value>#|#</value></property>
+    <property name="tablePostfix"><value>_O</value></property>
+    <property name="fileEncoding"><value>UTF-8</value></property>
+    <property name="conditionMappings">
+      <props>
+        <prop key="##REF_DATE##">$refDate</prop>
+        <prop key="##REF_DATE.YYYYMM##">$refDate.YYYYMM</prop>
+        <prop key="##REF_DATE.YYYY##">$refDate.YYYY</prop>
+        <prop key="##REF_DATE.MMDD##">$refDate.MMDD</prop>
+        <prop key="##REF_DATE.MM##">$refDate.MM</prop>
+        <prop key="##REF_DATE.DD##">$refDate.DD</prop>
+      </props>
+    </property>
+  </bean>
+</beans>

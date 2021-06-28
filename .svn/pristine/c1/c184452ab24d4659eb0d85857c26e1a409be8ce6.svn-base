@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+
+<!-- ===========================================================================
+
+                           *===================*
+                           | How to build      |
+                           *===================*
+
+
+Install the build tools
+=======================
+
+The build system is based on Jakarta Ant, and JUnit if we want to perform
+unit testing during build.
+
+ - JDK >= 1.5.
+ - Set JAVA_HOME environment variable.
+   e.g. set JAVA_HOME=c:\jdk1.5 (Win32)
+        export JAVA_HOME=/usr/local/IBMJava2-13 (Unix)
+
+============================================================================ -->
+
+<project name="hyweb-layer2" default="" basedir=".">
+	<property environment="env" />
+
+	<!--
+ <tstamp>
+		<format property="NOW" pattern="yyyyMMddHHmmss" locale="tw" />
+		<format property="TODAY" pattern="yyyyMMdd" locale="tw" />
+	</tstamp>
+ -->
+
+	<property name="name" value="${ant.project.name}" />
+	<property name="version" value="1.0" />
+	<property name="year" value="2006-2010" />
+	<property name="javadoc.packages" value="tw.com.hyweb.*" />
+
+	<property name="log.dir" value="log" />
+	<property name="batch.dir" value="batch_file" />
+	<property name="lib.dir" value="lib" />
+	<property name="bin.dir" value="bin" />
+	<property name="dll.dir" value="dll" />
+	<property name="build.dir" value="build" />
+	<property name="config.dir" value="config" />
+	<property name="class.dir" value="${build.dir}/classes" />
+
+	<property name="system.dir" value="${env.SystemRoot}/System32" />
+	<property name="controllerclass.dir" value="tw.com.hyweb.controller" />
+
+
+	<!-- for batch -->
+	<property name="memId" value="" />
+	<property name="jobId" value="" />
+	<property name="jobTime" value="" />
+	<property name="date" value="" />
+	<property name="nextDay" value="" />
+	<property name="recover" value="" />
+	<property name="fileName" value="" />
+	<property name="notFileName" value="" />
+	<property name="logMode" value="" />
+
+	<!-- build classpath -->
+	<path id="build.classpath">
+		<pathelement location="." />
+		<pathelement location="${bin.dir}" />
+		<pathelement location="${class.dir}" />
+		<pathelement location="${config.dir}" />
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${bin.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<pathelement path="${java.class.path}" />
+	</path>
+
+	<target name="runController">
+		<java classname="${controllerclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/Controller/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx1024m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-DnextDay=${nextDay}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-DfileName=${fileName}" />
+			<jvmarg value="-DnotFileName=${notFileName}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dspring.configuration=Controller" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+</project>

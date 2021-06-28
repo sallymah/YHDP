@@ -1,0 +1,40 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE isopackager SYSTEM "genericpackager.dtd">
+<!--
+ Version: 1.0.0
+ Date: 2007-01-03
+-->
+
+<!-- ISO 8583:1987 (BINARY) field descriptions for GenericPackager -->
+
+<isopackager emitBitmap="false">
+  <isofield
+      id="0"
+      length="16"
+      name="MESSAGE TYPE INDICATOR"
+      pad="true"
+      class="tw.com.hyweb.iso.field.IFE_CHAR"/>
+  <isofield
+      id="1"
+      length="6"
+      name="BIT MAP"
+      class="tw.com.hyweb.iso.field.IFE_CHAR"/>
+  <isofield
+      id="2"
+      length="6"
+      name="PAN - PRIMARY ACCOUNT NUMBER"
+      pad="false"
+      class="tw.com.hyweb.iso.field.IFE_CHAR"/>
+  <isofield
+      id="3"
+      length="6"
+      name="PROCESSING CODE"
+      pad="true"
+      class="tw.com.hyweb.iso.field.IFE_CHAR"/>
+  <isofield
+      id="4"
+      length="6"
+      name="AMOUNT, TRANSACTION"
+      pad="true"
+      class="tw.com.hyweb.iso.field.IFE_CHAR"/>
+</isopackager>

@@ -1,0 +1,29 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+<!--Resource Properties -->
+
+
+<bean id="BatchResultDecorator" class="tw.com.hyweb.core.cp.batch.framework.BatchResultDecorator" init-method="init">
+	<property name="batchMediator"><ref bean="BatchOutctlDecorator" /></property>
+	<property name="programName"><value>ExpTest</value></property>
+</bean>
+
+<bean id="BatchOutctlDecorator" class="tw.com.hyweb.core.cp.batch.framework.BatchOutctlDecorator" init-method="init">
+	<property name="batchMediator"><ref bean="BatchDirector" /></property>
+	<property name="isSeqnoAddup"><value>true</value></property>
+	<property name="memId"><value>00600000</value></property>
+	<property name="fileName"><value>TEST</value></property>
+	<property name="fileAmount"><value>1</value></property>
+</bean>
+
+<bean id="BatchDirector" class="tw.com.hyweb.core.cp.batch.framework.BatchDirector" init-method="init">
+	<property name="incoming"><ref bean="ExpTest" /></property>
+	<property name="outgoing"><ref bean="ExpTest" /></property>
+</bean>
+
+<bean id="ExpTest" class="tw.com.hyweb.core.cp.batch.test.ExpTest" init-method="init">
+        <property name="isCheck"><value>false</value></property>
+</bean>
+
+</beans>

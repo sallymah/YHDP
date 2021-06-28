@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<bean id="ProcFeeConfigModifyLog" class="tw.com.hyweb.svc.yhdp.batch.impdata.ProcFeeConfigModifyLog">
+		<property name="fileNameLists">
+			<util:list>
+				<value>FEE_CONFIG_DESC</value>
+				<value>VALID_EDATE</value>
+				<value>FIXED_FEE</value>
+				<value>ALLOW_DEDUCT</value>
+				<value>CAL_BASE</value>
+				<value>PROC_CYCLE</value>
+				<value>CAL_RULE_ID</value>
+				<value>FUND_TYPE</value>
+			</util:list>
+		</property>
+	</bean>
+</beans>

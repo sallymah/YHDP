@@ -1,0 +1,332 @@
+<?xml version="1.0"?>
+<!-- ===========================================================================
+
+                           *===================*
+                           | How to build      |
+                           *===================*
+
+
+Install the build tools
+=======================
+
+The build system is based on Jakarta Ant, and JUnit if we want to perform
+unit testing during build.
+
+ - JDK >= 1.5.
+ - Set JAVA_HOME environment variable.
+   e.g. set JAVA_HOME=c:/jdk1.5 (Win32)
+        export JAVA_HOME=/usr/local/IBMJava2-13 (Unix)
+
+============================================================================ -->
+
+<project name="hyweb-layer3-SVC" default="usage" basedir=".">
+    <tstamp>
+        <format property="NOW" pattern="yyyyMMdd" locale="tw" />
+        <format property="TODAY" pattern="yyyyMMdd" locale="tw" />
+    </tstamp>
+    <property name="name" value="${ant.project.name}" />
+    <property name="config.dir" value="config" />
+    <property name="ap.dir" value="loyalty" />
+    <property name="batch.dir" value="batch" />
+    <property name="tmp.file" value="tmp.txt" />
+    <property name="patch.file" value="patch.zip" />
+    <property name="online.service.name" value="HywebSvcDev" />
+    
+    <!-- =================================================================== -->
+    <!-- usage                                                               -->
+    <!-- =================================================================== -->
+    <target name="usage">
+        <echo message="${ant.version}" />
+        <echo message="" />
+        <echo message="JCP Build file" />
+        <echo message="------------------------------------------------------" />
+        <echo message="" />
+        <echo message="available targets are:" />
+        <echo message="" />
+        <echo message="patchWinOnline       --> install online on Win" />
+        <echo message="unpatchWinOnline       --> restore online on Win" />    
+        <echo message="patchUnixOnline       --> install online on Unix" />
+        <echo message="unpatchUnixOnline       --> restore online on Unix" />
+        <echo message="" />        
+        <echo message="patch                  --> install batch on Unix" />
+        <echo message="unpatch                --> restore batch on Unix" />
+        <echo message="" />
+        <echo message=" See the comments inside the build.xml for details." />
+        <echo message="------------------------------------------------------" />
+        <echo message="" />
+        <echo message="" />
+    </target>
+    
+    <!-- =================================================================== -->
+    <!-- init env properties                                                 -->
+    <!-- =================================================================== -->	
+    <target name="init">
+        <available file="runOnlineNoHup.sh" property="is.sh.startOnline" />
+        <available file="shutdownOnline.sh" property="is.sh.stopOnline" />
+        <available file="startOnline.bat" property="is.bat.startOnline" />
+        <available file="stopOnline.bat" property="is.bat.stopOnline" />
+        <condition property="isUnixOnlineStart" value="true">
+             <and>
+                 <istrue value="${is.sh.startOnline}"/>
+                 <os family="unix"/>
+             </and>
+        </condition>
+        <condition property="isUnixOnlineStop" value="true">
+             <and>
+                 <istrue value="${is.sh.stopOnline}"/>
+                 <os family="unix"/>
+             </and>
+        </condition>
+        <condition property="isWinOnlineStart">
+             <and>
+                 <istrue value="${is.bat.startOnline}"/>                   
+                 <os family="windows"/>
+             </and>
+        </condition>
+        <condition property="isWinOnlineStop">
+             <and>
+                 <istrue value="${is.bat.stopOnline}"/>                   
+                 <os family="windows"/>
+             </and>
+        </condition>
+        <echo message="isUnixOnlineStart=${isUnixOnlineStart}"/>
+        <echo message="isUnixOnlineStop=${isUnixOnlineStop}"/>
+        <echo message="isWinOnlineStart=${isWinOnlineStart}"/>
+        <echo message="isWinOnlineStop=${isWinOnlineStop}"/>
+	</target>
+    
+    <!-- =================================================================== -->
+    <!-- patch unix                                                          -->
+    <!-- =================================================================== -->
+    <target name="patchUnix">
+        <antcall target="patchUnixOnline" />
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- patch win                                                          -->
+    <!-- =================================================================== -->
+    <target name="patchWin">
+        <antcall target="patchWinOnline" />
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- unpatch Unix                                                        -->
+    <!-- =================================================================== -->
+    <target name="unpatchUnix">
+        <antcall target="unpatchUnixOnline" />
+    </target>
+        
+    <!-- =================================================================== -->
+    <!-- unpatch win                                                          -->
+    <!-- =================================================================== -->
+    <target name="unpatchWin">
+        <antcall target="unpatchWinOnline" />
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- patch unix Online                                                   -->
+    <!-- =================================================================== -->
+    <target name="patchUnixOnline" depends="init">
+        <property name="is.Online" value="true" />
+        <antcall target="patch" />
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- patch win online                                                          -->
+    <!-- =================================================================== -->
+    <target name="patchWinOnline" depends="init">
+        <property name="is.Online" value="true" />
+        <antcall target="patch" />
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- unpatch Unixonline                                                  -->
+    <!-- =================================================================== -->
+    <target name="unpatchUnixOnline" depends="init">
+        <property name="is.Online" value="true" />
+        <antcall target="unpatch" />
+    </target>
+    
+    <!-- =================================================================== -->
+    <!-- unpatch win online                                                  -->
+    <!-- =================================================================== -->
+    <target name="unpatchWinOnline" depends="init">
+        <property name="is.Online" value="true" />
+        <antcall target="unpatch" />
+    </target>
+    
+    <!-- =================================================================== -->
+    <!-- common patch process                                                -->
+    <!-- =================================================================== -->
+    <target name="patch">
+        <antcall target="stopOnline" />
+        <antcall target="backup" />
+        <unzip src="${patch.file}" dest="${basedir}" />
+        <antcall target="fixcrlf" />
+        <chmod perm="755" type="file">
+            <fileset dir="${basedir}">
+                <include name="**/*.sh" />
+            </fileset>
+        </chmod>
+        <move file="${patch.file}" tofile="backup/${patch.file}.${NOW}" failonerror="false" />
+        <antcall target="startOnline" />
+    </target>
+    
+    <!-- =================================================================== -->
+    <!-- common patch process                                                -->
+    <!-- =================================================================== -->
+    <target name="unpatch">
+        <antcall target="stopOnline" />
+        <antcall target="unbackup" />
+        <antcall target="fixcrlf" />
+        <chmod perm="755" type="file">
+            <fileset dir="${basedir}">
+                <include name="**/*.sh" />
+            </fileset>
+        </chmod>
+        <antcall target="startOnline" />
+    </target>    
+    
+    <!-- =================================================================== -->
+    <!-- backup                                                              -->
+    <!-- =================================================================== -->
+    <target name="backup">
+        <move todir="lib" includeemptydirs="false">
+            <fileset dir="lib">
+                <include name="**/hyweb-*.jar"/>
+                <include name="**/L2-*.jar"/>
+            </fileset>
+            <mapper type="glob" from="*.jar" to="*.jar.${NOW}"/>
+        </move>
+        <move todir="bin" includeemptydirs="false">
+            <fileset dir="bin">
+                <include name="**/hyweb-*.jar"/>
+                <include name="**/L3-*.jar"/>
+            </fileset>
+            <mapper type="glob" from="*.jar" to="*.jar.${NOW}"/>
+        </move>
+        <mkdir dir="backup" />
+        <zip zipfile="backup/config.zip.${NOW}" update="true">
+            <fileset dir=".">
+                <include name="${config.dir}/**/*.*" />
+            </fileset>
+        </zip>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- unbackup                                                              -->
+    <!-- =================================================================== -->
+    <target name="unbackup">
+        <property name="restore.dt" value="${TODAY}"/>
+        <!--<input message="Please enter datetime to restore.default is ${TODAY}" addproperty="restore.datetime" />-->
+        <echo message="restore.dt=${restore.dt}"/>
+        <move todir="lib" includeemptydirs="false">
+            <fileset dir="lib">
+                <include name="**/hyweb-*.jar.${restore.dt}"/>
+                <include name="**/L2-*.jar.${restore.dt}"/>
+            </fileset>
+            <mapper type="glob" from="*.jar.${restore.dt}" to="*.jar"/>
+        </move>
+        <move todir="bin" includeemptydirs="false">
+            <fileset dir="bin">
+                <include name="**/hyweb-*.jar.${restore.dt}"/>
+                <include name="**/L3-*.jar.${restore.dt}"/>
+            </fileset>
+            <mapper type="glob" from="*.jar.${restore.dt}" to="*.jar"/>
+        </move>
+        
+        <unzip src="backup/config.zip.${restore.dt}" dest="${basedir}" />
+
+    </target>
+    
+    <!-- =================================================================== -->
+    <!-- stop online                                                         -->
+    <!-- =================================================================== -->
+    <target name="stopOnline">
+		<antcall target="unixStopOnline"/>
+		<antcall target="winStopOnline"/>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- start online                                                         -->
+    <!-- =================================================================== -->
+    <target name="startOnline">
+		<antcall target="unixStartOnline"/>
+		<antcall target="winStartOnline"/>
+    </target>
+    
+    <!-- =================================================================== -->
+    <!-- stop online                                                         -->
+    <!-- =================================================================== -->
+    <target name="unixStopOnline" if="isUnixOnlineStop">
+        <exec dir="${basedir}" executable="shutdownOnline.sh" />
+        <sleep seconds="2"/>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- start online                                                         -->
+    <!-- =================================================================== -->
+    <target name="unixStartOnline" if="isUnixOnlineStart">
+        <sleep seconds="2"/>
+        <exec dir="${basedir}" executable="runOnlineNoHup.sh" spawn="true" />
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- stop online                                                         -->
+    <!-- =================================================================== -->
+    <target name="winStopOnline" if="isWinOnlineStop">
+        <exec dir="${basedir}" executable="cmd">
+            <arg line="/c net stop ${online.service.name}"/>
+        </exec>
+        <sleep seconds="2"/>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- start online                                                         -->
+    <!-- =================================================================== -->
+    <target name="winStartOnline" if="isWinOnlineStart">
+        <sleep seconds="2"/>
+        <exec dir="${basedir}" executable="cmd">
+            <arg line="/c net start ${online.service.name}"/>
+        </exec>
+    </target>
+            
+    <!-- =================================================================== -->
+    <!-- fix file for win and unix                                           -->
+    <!-- =================================================================== -->
+    <target name="fixcrlf" depends="fixwin, fixunix">
+        <fixcrlf srcDir="${basedir}" includes="**/*.bat" eol="crlf" eof="asis" />
+        <fixcrlf srcDir="${basedir}" includes="**/*.sh" eol="lf" eof="remove" />
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- fix file for win                                                    -->
+    <!-- =================================================================== -->
+    <target name="fixwin" if="is.Windows">
+        <fixcrlf srcDir="${basedir}" includes="**/*.properties" eol="crlf" eof="asis" />
+        <fixcrlf srcDir="${basedir}" includes="**/*.xml" eol="crlf" eof="asis" />
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- fix file for unix                                                   -->
+    <!-- =================================================================== -->
+    <target name="fixunix" if="is.Unix">
+        <fixcrlf srcDir="${basedir}" includes="**/*.properties" eol="lf" eof="remove" />
+        <fixcrlf srcDir="${basedir}" includes="**/*.xml" eol="lf" eof="remove" />
+    </target>
+
+    <target name="fixlog4j">
+        <replace dir="${config.dir}/${ap.dir}" token="{HH:mm:ss.SSS}" value="{yyyyMMdd HH:mm:ss.SSS}">
+            <include name="**/log4j.xml" />
+        </replace>
+        <replace dir="${config.dir}/${ap.dir}" token="{HH:mm:ss}" value="{yyyyMMdd HH:mm:ss.SSS}">
+            <include name="**/log4j.xml" />
+        </replace>
+        <replace dir="${config.dir}/${batch.dir}" token="{HH:mm:ss.SSS}" value="{yyyyMMdd HH:mm:ss.SSS}">
+            <include name="**/log4j.xml" />
+        </replace>
+        <replace dir="${config.dir}/${batch.dir}" token="{HH:mm:ss}" value="{yyyyMMdd HH:mm:ss.SSS}">
+            <include name="**/log4j.xml" />
+        </replace>
+    </target>
+</project>

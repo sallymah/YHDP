@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+   xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+   <bean id="processor" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpPersoFeeback.ImpPersoFeeback">
+      <constructor-arg index="0">
+               <bean class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpPersoFeeback.YhdpCardDataGenerator" />
+      </constructor-arg>
+      <constructor-arg index="1">
+               <bean class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpPersoFeeback.YhdpCpDeliveryDataGenerator" />
+      </constructor-arg>
+      <property name="descryptFlag" value="true" />
+      <property name="iv" value="0000000000000000" />
+      <property name="pinKeyId" value="P3EncKey" /> 
+   </bean>
+
+</beans>

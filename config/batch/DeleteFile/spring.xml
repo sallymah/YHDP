@@ -1,0 +1,32 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+
+<bean id="DeleteFile" class="tw.com.hyweb.core.cp.batch.DeleteFile">
+    <property name="storages">
+        <list>
+            <ref bean="DF0001"/>
+            <ref bean="DF0002"/>
+        </list>
+    </property>
+</bean>
+
+
+<bean id="DF0001" class="tw.com.hyweb.core.cp.batch.DeleteFileProcessor">
+    <property name="deleteDir"><value>batch_file/temp_file</value></property>
+    <property name="deleteFile"><value>0905</value></property>
+    <property name="keepDay"><value>0</value></property>
+    
+</bean>
+
+
+<bean id="DF0002" class="tw.com.hyweb.core.cp.batch.DeleteFileProcessor">
+    <property name="deleteDir"><value>batch_file/work_file</value></property>
+    <property name="deleteFile"><value>0906</value></property>
+    <property name="keepDay"><value>1</value></property>
+</bean>
+
+
+
+
+</beans>

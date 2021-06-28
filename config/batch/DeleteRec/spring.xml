@@ -1,0 +1,42 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+
+
+
+
+<bean id="DeleteRec" class="tw.com.hyweb.core.cp.batch.DeleteRec">
+    <property name="storages">
+        <list>
+            <ref bean="DR0001"/>
+            <ref bean="DR0002"/>
+        </list>
+    </property>
+</bean>
+
+
+<bean id="DR0001" class="tw.com.hyweb.core.cp.batch.DeleteRecProcessor">
+    <property name="tableName"><value>TB_BANK_BIN</value></property>
+    <property name="dayName"><value>input_day</value></property>
+    <property name="keepDay"><value>0</value></property>
+    <!--
+    <property name="sleepTime"><value>1000</value></property>
+    <property name="deleteRecCountPerCommit"><value>3</value></property>
+    -->
+</bean>
+
+
+<bean id="DR0002" class="tw.com.hyweb.core.cp.batch.DeleteRecProcessor">
+    <property name="tableName"><value>TB_BANKS</value></property>
+    <property name="dayName"><value>input_day</value></property>
+    <property name="keepDay"><value>1</value></property>
+    <!--
+    <property name="sleepTime"><value>1000</value></property>
+    <property name="deleteRecCountPerCommit"><value>3</value></property>
+    -->
+</bean>
+
+
+
+
+</beans>

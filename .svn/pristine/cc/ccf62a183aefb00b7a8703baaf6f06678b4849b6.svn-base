@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+<bean id="CheckLateUploadTxn" class="tw.com.hyweb.core.cp.batch.daycut.CheckLateUploadTxn">
+    <property name="sleepTime"><value>500</value></property>
+</bean>
+</beans>

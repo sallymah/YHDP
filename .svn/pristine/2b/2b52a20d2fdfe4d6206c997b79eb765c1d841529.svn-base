@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>  
+    
+    <bean id="BrthDay2" class="tw.com.hyweb.svc.thig.batch.award.BatchBaseController">
+        <property name="acceptProcCode"><value>BrthDay2</value></property>
+    	<property name="txLogger">
+    	    <ref bean="AwardTxLogger"/>
+    	</property>
+    	<property name="validatorList">
+      		<list>
+      		</list>
+    	</property>
+    	<property name="generalFiller">
+      		<list>
+      		    <ref bean="RegularDtlFiller" />
+      		</list>
+    	</property>
+    	<property name="bizAction">
+      		<list>
+      		    <ref bean="BirthdayFiller" />
+      		    <ref bean="RegularAwardProc" />
+      		</list>
+    	</property>
+  	</bean>
+  	
+     <bean id="BrthDay3" class="tw.com.hyweb.svc.thig.batch.award.BatchBaseController">
+        <property name="acceptProcCode"><value>BrthDay3</value></property>
+    	<property name="txLogger">
+    	    <ref bean="AwardTxLogger"/>
+    	</property>
+    	<property name="validatorList">
+      		<list>
+      		</list>
+    	</property>
+    	<property name="generalFiller">
+      		<list>
+      		    <ref bean="RegularDtlFiller" />
+      		</list>
+    	</property>
+    	<property name="bizAction">
+      		<list>
+      		    <ref bean="BirthdayFiller" />
+      		    <ref bean="RegularAwardProc" />
+      		</list>
+    	</property>
+  	</bean>
+  	
+      <bean id="BrthDay4" class="tw.com.hyweb.svc.thig.batch.award.BatchBaseController">
+        <property name="acceptProcCode"><value>BrthDay4</value></property>
+    	<property name="txLogger">
+    	    <ref bean="AwardTxLogger"/>
+    	</property>
+    	<property name="validatorList">
+      		<list>
+      		</list>
+    	</property>
+    	<property name="generalFiller">
+      		<list>
+      		    <ref bean="RegularDtlFiller" />
+      		</list>
+    	</property>
+    	<property name="bizAction">
+      		<list>
+      		    <ref bean="BirthdayFiller" />
+      		    <ref bean="RegularAwardProc" />
+      		</list>
+    	</property>
+  	</bean>
+  	
+    <bean id="BrthDay" class="tw.com.hyweb.svc.thig.batch.award.BatchBaseController">
+        <property name="acceptProcCode"><value>BrthDay1</value></property>
+    	<property name="txLogger">
+    	    <ref bean="AwardTxLogger"/>
+    	</property>
+    	<property name="validatorList">
+      		<list>
+      		</list>
+    	</property>
+    	<property name="generalFiller">
+      		<list>
+      		    <ref bean="RegularDtlFiller" />
+      		</list>
+    	</property>
+    	<property name="bizAction">
+      		<list>
+      		    <ref bean="BirthdayFiller" />
+      		    <ref bean="RegularAwardProc" />
+      		</list>
+    	</property>
+  	</bean>
+  	
+    <bean id="RegDate" class="tw.com.hyweb.svc.thig.batch.award.BatchBaseController">
+        <property name="acceptProcCode"><value>RegDate1</value></property>
+    	<property name="txLogger">
+    	    <ref bean="AwardTxLogger"/>
+    	</property>
+    	<property name="validatorList">
+      		<list>
+      		</list>
+    	</property>
+    	<property name="generalFiller">
+      		<list>
+      		    <ref bean="RegularDtlFiller" />
+      		</list>
+    	</property>
+    	<property name="bizAction">
+      		<list>
+      		    <ref bean="RegDateFiller" />
+      		    <ref bean="RegularAwardProc" />
+      		</list>
+    	</property>
+  	</bean>
+  	
+    <bean id="SaleCard" class="tw.com.hyweb.svc.thig.batch.award.BatchBaseController">
+        <property name="acceptProcCode"><value>SalCard1</value></property>
+    	<property name="txLogger">
+    	    <ref bean="AwardTxLogger"/>
+    	</property>
+    	<property name="validatorList">
+      		<list>
+      		</list>
+    	</property>
+    	<property name="generalFiller">
+      		<list>
+      		    <ref bean="RegularDtlFiller" />
+      		</list>
+    	</property>
+    	<property name="bizAction">
+      		<list>
+      		    <ref bean="SaleCardFiller" />
+      		    <ref bean="RegularAwardProc" />
+      		</list>
+    	</property>
+  	</bean>
+  	
+    <bean id="FixDate" class="tw.com.hyweb.svc.thig.batch.award.BatchBaseController">
+        <property name="acceptProcCode"><value>MmDd1</value></property>
+    	<property name="txLogger">
+    	    <ref bean="AwardTxLogger"/>
+    	</property>
+    	<property name="validatorList">
+      		<list>
+      		</list>
+    	</property>
+    	<property name="generalFiller">
+      		<list>
+      		    <ref bean="RegularDtlFiller" />
+      		</list>
+    	</property>
+    	<property name="bizAction">
+      		<list>
+      		    <ref bean="FixDateCheck" />
+      		    <ref bean="FixDateFiller" />
+      		    <ref bean="RegularAwardProc" />
+      		</list>
+    	</property>
+  	</bean>
+  	
+    <bean id="FixMonth" class="tw.com.hyweb.svc.thig.batch.award.BatchBaseController">
+        <property name="acceptProcCode"><value>Month1</value></property>
+    	<property name="txLogger">
+    	    <ref bean="AwardTxLogger"/>
+    	</property>
+    	<property name="validatorList">
+      		<list>
+      		</list>
+    	</property>
+    	<property name="generalFiller">
+      		<list>
+      		    <ref bean="RegularDtlFiller" />
+      		</list>
+    	</property>
+    	<property name="bizAction">
+      		<list>
+      		    <ref bean="FixMonthCheck" />
+      		    <ref bean="FixDateFiller" />
+      		    <ref bean="RegularAwardProc" />
+      		</list>
+    	</property>
+  	</bean>
+  	
+    <bean id="FixWeek" class="tw.com.hyweb.svc.thig.batch.award.BatchBaseController">
+        <property name="acceptProcCode"><value>Week1</value></property>
+    	<property name="txLogger">
+    	    <ref bean="AwardTxLogger"/>
+    	</property>
+    	<property name="validatorList">
+      		<list>
+      		</list>
+    	</property>
+    	<property name="generalFiller">
+      		<list>
+      		    <ref bean="RegularDtlFiller" />
+      		</list>
+    	</property>
+    	<property name="bizAction">
+      		<list>
+      		    <ref bean="FixWeekCheck" />
+      		    <ref bean="FixDateFiller" />
+      		    <ref bean="RegularAwardProc" />
+      		</list>
+    	</property>
+  	</bean>
+</beans>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>  
+	<!-- 一代卡 -->
+	<bean id ="IFF" class="tw.com.hyweb.svc.yhdp.batch.framework.perso.PersoFileData">
+		<property name="fileName"><value>IFF</value></property>
+		<property name="persoFactoryStart"><value>3</value></property>
+		<property name="persoFactoryEnd"><value>5</value></property>
+	</bean>
+	
+	<!-- 二代卡 -->
+	<bean id ="IFF2" class="tw.com.hyweb.svc.yhdp.batch.framework.perso.PersoFileData">
+		<property name="fileName"><value>IFF2</value></property>
+		<property name="persoFactoryStart"><value>3</value></property>
+		<property name="persoFactoryEnd"><value>5</value></property>
+	</bean>
+	
+	<!-- 二代卡 -->
+	<bean id ="IFF_BANK" class="tw.com.hyweb.svc.yhdp.batch.framework.perso.PersoFileData">
+		<property name="fileName"><value>IFF_BANK</value></property>
+		<property name="memIdStart"><value>3</value></property>
+		<property name="memIdEnd"><value>11</value></property>
+	</bean>
+	
+</beans>

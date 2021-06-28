@@ -1,0 +1,28 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+Version: 1.0.0
+Date: 2007-03-28
+-->
+<beans>
+	<bean id="ProcUpdateTmpTrans" class="tw.com.hyweb.svc.yhdp.batch.ProcUpdateTmpTrans.ProcUpdateTmpTrans" init-method="">
+	    <property name="sleepTime"><value>500</value></property>
+	    <property name="filenameBeans">
+           <list>
+               <value>TXN</value>
+               <value>TXNS_TRTC</value>                
+               <value>TXNS_TYRTC</value>
+               <value>TXNS_KRTC</value>
+               <value>TXNS_TRA</value>
+               <value>TXNS_CARPARK</value>
+               <value>TXNS_DHLRT</value>
+               <value>TXNS_CBike</value>
+               <value>TXNS_KLRT</value>
+               <value>TXNS_NMNS</value>
+               <value>TXNS_TMRT</value>
+               <value>TXNS_TPZOO</value>
+               <value>TXNS_HCZOO</value>
+               <value>TXNS_SYMRT</value>
+           </list>
+    </property>
+	</bean>
+</beans>

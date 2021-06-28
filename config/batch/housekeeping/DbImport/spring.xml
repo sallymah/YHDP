@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+  <bean id="dbImport" class="tw.com.hyweb.core.cp.batch.housekeep.DbImport">
+    <property name="houseKeepingHome"><value>/path/to/output_dir</value></property>
+    <property name="fieldSep"><value>#|#</value></property>
+    <property name="tablePostfix"><value>_O</value></property>
+    <property name="fileEncoding"><value>UTF-8</value></property>
+    <property name="recordsPerCommit"><value>1000</value></property>
+  </bean>
+</beans>

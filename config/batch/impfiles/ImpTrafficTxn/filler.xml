@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+    
+    <bean id="BonusBaseFiller" class="tw.com.hyweb.svc.yhdp.online.controller.base.BonusBaseFiller"/>
+        
+    <bean id="CardInfoFiller" class="tw.com.hyweb.svc.yhdp.online.controller.base.CardInfoFiller"/>
+    
+    <bean id="IssuerFiller" class="tw.com.hyweb.svc.yhdp.online.controller.base.IssuerFiller"/>
+    
+    <bean id="AcquirerFiller" class="tw.com.hyweb.svc.yhdp.online.controller.base.AcquirerFiller"/>
+
+</beans>

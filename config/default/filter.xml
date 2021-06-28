@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!--
+ Version: 1.0.0
+ Date: 2007-01-03
+-->
+<beans>
+    <bean id="NFieldsFilter" class="tw.com.hyweb.online.filter.NFieldsFilter">
+        <property name="fields">
+            <props>
+                <prop key="0100">5 8 9 16 17 27 28</prop>
+                <prop key="0110">5 8 9 16 17 27 28</prop>
+                <prop key="0120">5 8 9 16 17 27 28</prop>
+                <prop key="0130">5 8 9 16 17 27 28</prop>
+                <prop key="0420">5 8 9 16 17 27 28</prop>
+                <prop key="0430">5 8 9 16 17 27 28</prop>
+                <prop key="0800">5 8 9 16 17 27 28</prop>
+                <prop key="0810">5 8 9 16 17 27 28</prop>
+            </props>
+        </property>
+    </bean>
+</beans>

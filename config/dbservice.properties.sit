@@ -1,0 +1,54 @@
+# Version: 1.0.0
+# Date: 2007-01-03
+#Mon Apr 25 11:42:13 CST 2005
+dbservice.connection.driverClass=oracle.jdbc.driver.OracleDriver
+dbservice.connection.url=jdbc:oracle:thin:@ 10.10.10.35:1521:SVC
+dbservice.tableSwitchTime=2400
+dbservice.sqlExecuteTimeMs=1000
+dbservice.sql.execute.update.time=20
+dbservice.connection.usernames=owner,batch,common
+dbservice.connection.showConnectionCount=false
+dbservice.dbcp.isRollback=false
+
+#OWNER
+dbservice.connection.username.owner=YHDP_OWNER
+dbservice.connection.password.owner=2FC04CFCD9510CC8415DF948ABEF70EC
+dbservice.dbcp.ps.maxActive.owner=0
+dbservice.dbcp.initialSize.owner=0
+dbservice.dbcp.maxIdle.owner=3
+dbservice.dbcp.minIdle.owner=0
+dbservice.dbcp.maxActive.owner=20
+dbservice.dbcp.testWhileIdle.owner=true
+dbservice.dbcp.testOnBorrow.owner=true
+dbservice.dbcp.testOnReturn.owner=true
+dbservice.dbcp.maxWait.batch=-1
+
+#BATCH
+dbservice.connection.username.batch=YHDP_BATCH
+dbservice.connection.password.batch=376328485223330EA8D42CD017ED98F9
+dbservice.dbcp.ps.maxActive.batch=20
+dbservice.dbcp.initialSize.batch=20
+dbservice.dbcp.maxIdle.batch=20
+dbservice.dbcp.minIdle.batch=20
+dbservice.dbcp.maxActive.batch=20
+dbservice.dbcp.testWhileIdle.batch=true
+dbservice.dbcp.testOnBorrow.batch=true
+dbservice.dbcp.testOnReturn.batch=true
+dbservice.dbcp.maxWait.batch=-1
+
+#COMMON
+dbservice.connection.username.common=YHDP_BATCH
+dbservice.connection.password.common=376328485223330EA8D42CD017ED98F9
+dbservice.dbcp.ps.maxActive.common=20
+dbservice.dbcp.initialSize.common=20
+dbservice.dbcp.maxIdle.common=20
+dbservice.dbcp.minIdle.common=20
+dbservice.dbcp.maxActive.common=20
+dbservice.dbcp.testWhileIdle.common=true
+dbservice.dbcp.testOnBorrow.common=true
+dbservice.dbcp.testOnReturn.common=true
+dbservice.dbcp.maxWait.common=-1
+
+#db service retry period and count about one hour.
+dbservice.connection.retryCount=4
+dbservice.connection.retryPeriod=900

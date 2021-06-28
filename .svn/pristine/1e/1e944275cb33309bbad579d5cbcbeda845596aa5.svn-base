@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+
+    <bean id="Header" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.BatchBaseController">
+        <property name="acceptMti"><value>0200</value></property>
+        <property name="acceptProcCode"><value>888888</value></property>
+        <property name="txLogger">
+            <ref bean="TxLoggerEmpty"/>
+        </property>
+        <property name="validatorList">
+        	<list>     
+        	    <ref bean="ParserValidator" />
+            </list>
+        </property>
+        <property name="generalFiller">
+            <list>
+            </list>
+        </property>
+         <property name="bizAction">
+            <list>
+            </list>
+        </property>  
+    </bean>
+    
+    <bean id="Redeem" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.BatchBaseController">
+        <property name="acceptMti"><value>0320</value></property>
+        <property name="acceptProcCode"><value>900000</value></property>
+        <property name="acceptLmsProcCode"><value>7617 7627 7401 7402 7403 7404 7405 7407 7409 7410 7411 7412 7413 7415 7417 7419 7420 7421 7422 7424 7430 7458 7431 7432 7433 7434 7435 7447</value></property>
+        <property name="txLogger">
+            <ref bean="TxLoggerOfflineBase"/>
+        </property>
+         <property name="bizAction">
+            <list>
+                <ref bean="CheckDueDay" />
+                <ref bean="ChipBalanceFiller"/>
+                <ref bean="ChipCounterRedeemFiller"/>
+                <ref bean="UpdateChipBalance"/>
+                <ref bean="UpdateCardTxnDate"/>
+                <ref bean="InsertOfflineTxLogger"/>
+			</list>
+        </property>
+    </bean>
+    
+    <bean id="RefundCard" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.BatchBaseController">
+        <property name="acceptMti"><value>0320</value></property>
+        <property name="acceptProcCode"><value>900000</value></property>
+        <property name="acceptLmsProcCode"><value>7637</value></property>
+        <property name="txLogger">
+            <ref bean="TxLoggerOfflineBase" />
+        </property>
+        <property name="bizAction">
+            <list>
+                <ref bean="CheckDueDay" />
+                <ref bean="RefundCardValidator" />
+                <ref bean="ChipBalanceFiller" />
+                <ref bean="ChipCounterRedeemFiller"/>
+                <ref bean="UpdateChipBalance" />
+                <ref bean="UpdateRefundCardStatus" />
+                <ref bean="InsertCardUpt"/>
+                <ref bean="InsertOfflineTxLogger" />
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="LockCard" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.BatchBaseController">
+        <property name="acceptMti"><value>0320</value></property>
+        <property name="acceptProcCode"><value>900000</value></property>
+        <property name="acceptLmsProcCode"><value>7517</value></property>
+        <property name="txLogger">
+            <ref bean="TxLoggerOfflineBase"/>
+        </property>
+         <property name="bizAction">
+            <list>
+                <ref bean="CheckDueDay" />
+                <ref bean="LockCardBlacklistValidator" />
+                <ref bean="UpdateBlackList"/>
+                <ref bean="UpdateCardTxnDate"/>
+                <ref bean="InsertOfflineTxLogger"/>
+            </list>
+        </property> 
+    </bean>
+    
+    <bean id="RedeemVoidRefund" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.BatchBaseController">
+        <property name="acceptMti"><value>0320</value></property>
+        <property name="acceptProcCode"><value>900000</value></property>
+        <property name="acceptLmsProcCode"><value>7414 7406 7408 7488 7808 7806</value></property>
+        <property name="txLogger">
+            <ref bean="TxLoggerOfflineBase"/>
+        </property>
+        <property name="validatorList">
+        	<list>
+            </list>
+        </property>
+         <property name="bizAction">
+            <list>
+                <ref bean="CheckDueDay" />
+                <ref bean="ChipBalanceFiller"/>
+                <ref bean="ChipCounterRedeemFiller"/>
+                <ref bean="UpdateVoidChipBalance"/>
+                <ref bean="UpdateCardTxnDate"/>
+                <ref bean="InsertOfflineTxLogger"/>
+			</list>
+        </property>
+    </bean>
+    
+    <bean id="Reload" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.BatchBaseController">
+        <property name="acceptMti"><value>0320</value></property>
+        <property name="acceptProcCode"><value>900000</value></property>
+        <property name="acceptLmsProcCode"><value>7423 7425 7429 7437</value></property>
+        <property name="txLogger">
+            <ref bean="TxLoggerOfflineBase"/>
+        </property>
+        <property name="validatorList">
+        	<list>
+            </list>
+        </property>
+         <property name="bizAction">
+            <list>
+                <ref bean="CheckDueDay" />
+                <ref bean="ChipBalanceFiller"/>
+                <ref bean="ChipCounterReloadFiller"/>
+                <ref bean="UpdateChipBalance"/>
+                <ref bean="CalWarrantyPeriod" />  <!-- 計算保固期 -->
+                <ref bean="CheckIsActivationCardProc"/>
+                <ref bean="UpdateCardTxnDate"/>
+                <ref bean="InsertOfflineTxLogger"/>
+			</list>
+        </property>
+    </bean>
+    
+    <bean id="ReloadVoid" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.BatchBaseController">
+        <property name="acceptMti"><value>0320</value></property>
+        <property name="acceptProcCode"><value>900000</value></property>
+        <property name="acceptLmsProcCode"><value>7418 7428 7438 7448 7468 7828</value></property>
+        <property name="txLogger">
+            <ref bean="TxLoggerOfflineBase"/>
+        </property>
+        <property name="validatorList">
+        	<list>
+            </list>
+        </property>
+         <property name="bizAction">
+            <list>
+                <ref bean="CheckDueDay" />
+                <ref bean="ChipBalanceFiller"/>
+                <ref bean="ChipCounterReloadFiller"/>
+                <ref bean="UpdateVoidChipBalance"/>
+                <ref bean="UpdateCardTxnDate"/>
+                <ref bean="InsertOfflineTxLogger"/>
+			</list>
+        </property>
+    </bean>
+    
+    <bean id="AuthReload" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.BatchBaseController">
+        <property name="acceptMti"><value>0320</value></property>
+        <property name="acceptProcCode"><value>900000</value></property>
+        <property name="acceptLmsProcCode"><value>7737 7427</value></property>
+        <property name="txLogger">
+            <ref bean="TxLoggerOfflineBase"/>
+        </property>
+        <property name="validatorList">
+        	<list>
+            </list>
+        </property>
+         <property name="bizAction">
+            <list>
+                <ref bean="CheckDueDay" />
+                <ref bean="ChipBalanceFiller"/>
+                <ref bean="ChipCounterReloadFiller"/>
+                <ref bean="UpdateChipBalance"/>
+                <ref bean="CalWarrantyPeriod" />  <!-- 計算保固期 -->
+                <ref bean="CheckIsActivationCardProc"/>
+                <ref bean="UpdateCardTxnDate"/>
+                <ref bean="InsertOfflineTxLogger"/>
+			</list>
+        </property>
+    </bean>
+    
+    <bean id="AuthReloadVoid" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.BatchBaseController">
+        <property name="acceptMti"><value>0320</value></property>
+        <property name="acceptProcCode"><value>900000</value></property>
+        <property name="acceptLmsProcCode"><value>7438 7478</value></property>
+        <property name="txLogger">
+            <ref bean="TxLoggerOfflineBase"/>
+        </property>
+        <property name="validatorList">
+        	<list>
+            </list>
+        </property>
+         <property name="bizAction">
+            <list>
+                <ref bean="CheckDueDay" />
+                <ref bean="ChipBalanceFiller"/>
+                <ref bean="ChipCounterReloadFiller"/>
+                <ref bean="UpdateVoidChipBalance"/>
+                <ref bean="UpdateCardTxnDate"/>
+                <ref bean="InsertOfflineTxLogger"/>
+			</list>
+        </property>
+    </bean>
+
+    <bean id="TrafficDispatcher" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.controller.base.BatchDispatcher">
+        <property name="acceptMti"><value>0320</value></property>
+        <property name="acceptProcCode"><value>900001</value></property>
+        <property name="txLogger">
+            <ref bean="TxLoggerOfflineBase"/>
+        </property>
+        <property name="ctrlerList">
+            <list>
+                <ref bean="Redeem"/>
+                <ref bean="AuthReload"/>
+                <ref bean="Reload"/>
+                <ref bean="AuthReloadVoid"/>
+                <ref bean="RedeemVoidRefund"/>
+                <ref bean="ReloadVoid"/>
+                <ref bean="LockCard"/>
+                <ref bean="RefundCard"/>
+            </list>
+        </property>
+        <property name="validatorList">
+            <list>
+        	    <ref bean="ParserValidator" />
+        	    <ref bean="trafficTxnFiller" />
+        	    <ref bean="MerchantValidator" />
+                <ref bean="TerminalValidator" />
+                <ref bean="termBatchValidator" />
+                <ref bean="AcquireValidator" />
+                <ref bean="CardValidator" />
+                <ref bean="TransDupValidator" />
+                <ref bean="MacValidator" />
+            </list>
+        </property>
+         <property name="generalFiller">
+            <list>
+				<ref bean="CardInfoFiller" />
+                <ref bean="BonusBaseFiller" />
+                <ref bean="IssuerFiller" />
+                <ref bean="AcquirerFiller" />
+            </list>
+        </property>
+    </bean>	  
+</beans>

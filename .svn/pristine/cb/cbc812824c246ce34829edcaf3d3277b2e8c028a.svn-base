@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+  <bean id="processor" class="tw.com.hyweb.svc.yhdp.batch.mail.NotifyMail">
+    <property name="context" ref="Context"/>
+    <property name="bizAction">
+		<list>
+		    <ref bean="BatchResultFiller"/> <!-- dataFlow 0 -->
+			<ref bean="ReversalInfoFiller"/> <!-- dataFlow 1 -->
+			<ref bean="WsLogFiller"/> <!-- dataFlow 2 -->
+			<ref bean="MonitorBatch"/> <!-- dataFlow 3 -->
+		    <ref bean="SendMail"/>
+		    <ref bean="MonitorSendSMS"/>
+		</list>
+	</property>
+	<property name="sysName"><value>遠鑫</value></property>
+  </bean>
+  
+  <bean id="Context" class="tw.com.hyweb.svc.yhdp.batch.mail.MailContext"/>
+  <bean id="BatchResultFiller" class="tw.com.hyweb.svc.yhdp.batch.mail.BatchResultFiller">
+      <property name="indexFlow"><value>0</value></property>
+  </bean>
+  
+  <bean id="ReversalInfoFiller" class="tw.com.hyweb.svc.yhdp.batch.mail.ReversalInfoFiller">
+      <property name="indexFlow"><value>1</value></property>
+  </bean>
+  
+  <!-- TableSpaceFiller 需要owner -->
+  <bean id="TableSpaceFiller" class="tw.com.hyweb.svc.yhdp.batch.mail.TableSpaceFiller"/>
+  <bean id="MailSettingFiller" class="tw.com.hyweb.svc.yhdp.batch.mail.MailSettingFiller"/>
+  <bean id="WsLogFiller" class="tw.com.hyweb.svc.yhdp.batch.mail.WsLogFiller">
+    <property name="indexFlow"><value>2</value></property>
+  	<property name="condiction"><value>AND RESEND_COUNT = 3 AND SYNC_RCODE != '0000'</value></property>
+  </bean>
+  
+  <bean id="SendMail" class="tw.com.hyweb.svc.yhdp.batch.mail.SendMail"/>
+  
+  <bean id="MonitorBatch" class="tw.com.hyweb.svc.yhdp.batch.mail.MonitorBatch" >
+      <property name="indexFlow"><value>3</value></property>
+      <property name="smsHeader"><value>==BATH Monitor Notify==</value></property>
+  </bean>
+  
+  <bean id="MonitorSendSMS" class="tw.com.hyweb.svc.yhdp.batch.mail.SendSMS">
+<!--       <property name="smsUrl"><value>http://10.88.40.219:6600/mpushapi/smssubmit</value></property>
+      <property name="sysId"><value>YUHSDPA2</value></property>
+      <property name="srcAddress"><value>01916800060000800223</value></property>
+      <property name="destAddress">
+          <list>
+              <value>0910919601</value>
+          </list>
+      </property> -->
+  </bean>
+</beans>

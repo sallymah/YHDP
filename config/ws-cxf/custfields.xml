@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<bean id="custFieldsMap" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+			    <entry key="CUST_ID" value="1001"/>
+			    <entry key="REGION_ID" value="1001"/>
+			    <entry key="PERSON_ID" value="1110"/>
+			    <entry key="BIRTHDAY" value="1110"/>
+			    <entry key="GENDER" value="1110"/>
+			    <entry key="MARRIAGE" value="1110"/>
+			    <entry key="LOC_NAME" value="1110"/> 
+			    <entry key="TEL_HOME" value="1110"/> 
+			    <entry key="TEL_OFFICE" value="1110"/> 
+			    <entry key="MOBILE" value="1110"/> 
+			    <entry key="EMAIL" value="1110"/> 
+			    <entry key="ZIP_CODE" value="1110"/> 
+			    <entry key="ADDRESS" value="1110"/> 
+			</map>
+		</constructor-arg>
+	</bean>
+	
+
+	<bean id="assFieldsMap" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+				<entry key="MEM_ID" value="1011"/>
+				<entry key="ASSOCIATOR_ID" value="1011"/>
+				<entry key="ASSOCIATOR_LEVEL" value="1000"/>
+			    <entry key="CUST_ID" value="1000"/>
+			    <entry key="PERSON_ID" value="1110"/>
+			    <entry key="BIRTHDAY" value="1110"/>
+			    <entry key="GENDER" value="1110"/>
+			    <entry key="MARRIAGE" value="1110"/>
+			    <entry key="TEL_HOME" value="1110"/> 
+			    <entry key="TEL_OFFICE" value="1110"/> 
+			    <entry key="MOBILE" value="1110"/> 
+			    <entry key="EMAIL" value="1110"/> 
+			    <entry key="ZIP_CODE" value="1110"/> 
+			    <entry key="ADDRESS" value="1110"/> 
+			</map>
+		</constructor-arg>
+	</bean>
+	       
+</beans>

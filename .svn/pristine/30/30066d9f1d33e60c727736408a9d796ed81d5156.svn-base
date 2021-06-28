@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<bean id="cardBalanceFieldsMap" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+			    <entry key="CARD_NO" value="0011"/>
+			    <entry key="EXPIRY_DATE" value="0011"/>
+			    <entry key="BONUS_ID" value="0011"/>
+			    <entry key="BONUS_SDATE" value="0011"/>
+			    <entry key="BONUS_EDATE" value="0011"/>
+			    <entry key="CR_BONUS_QTY" value="0010"/>
+			    <entry key="DB_BONUS_QTY" value="0010"/>
+			    <entry key="BAL_BONUS_QTY" value="0010"/>			    
+			</map>
+		</constructor-arg>
+	</bean>
+       
+</beans>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util" xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+   <import resource="validator.xml"/>
+   <import resource="logger.xml"/>
+   <import resource="controller.xml"/>
+   <import resource="bizAction.xml"/>
+   <import resource="../../datasource.xml"/>
+    
+   <bean id="processor" class="tw.com.hyweb.core.cp.batch.framework.generic.SimpleBatchProcessor">
+      <constructor-arg>
+         <ref bean="handler" />
+      </constructor-arg>
+      <property name="programName" value="RegularAward" />
+   </bean>
+
+   <bean id="handler" class="tw.com.hyweb.svc.thig.batch.award.RegularBatchJobHandler">
+      <constructor-arg>
+         <ref bean="factory" />
+      </constructor-arg>
+   </bean>
+
+   <bean id="factory" class="tw.com.hyweb.svc.thig.batch.award.RegularAwardBatchJobFactory">
+      <property name="programName" value="RegularAward" />
+      <constructor-arg>
+         <ref bean="filter" />
+      </constructor-arg>
+      <constructor-arg>
+         <bean class="tw.com.hyweb.svc.thig.batch.award.BatchSingleAwardAction">
+            <property name="ctrlerList">
+                <list>
+	                <ref bean="BrthDay"/>
+	                <ref bean="BrthDay2"/>
+	                <ref bean="BrthDay3"/>
+	                <ref bean="BrthDay4"/>
+	                <ref bean="RegDate"/>
+	                <ref bean="SaleCard"/>
+	                <ref bean="FixDate"/>
+	                <ref bean="FixMonth"/>
+	                <ref bean="FixWeek"/>
+	            </list>
+
+        	</property>
+        	<property name="processCode" value="7867"/>
+        	<property name="txnCode" value="8807"/>
+        	<property name="selectTxnSize" value="3000"/>
+        	<property name="commitCount" value="3000"/>
+        	<property name="batchDataSource" ref="dataSource" />
+        	<property name="notAllowCnt" value="0" /> <!-- 每次處理一個活動的最大筆數,0表示不限制 -->
+         </bean>
+      </constructor-arg>
+      <property name="cacheTbList">
+	      <list>
+	          <ref bean="CacheTbRcode"/>
+	          <ref bean="CacheTbSysConfig"/>
+	      </list>
+      </property>
+   </bean>
+   
+   <bean id="CacheTbRcode" class="tw.com.hyweb.core.cp.online.loyalty.CacheTbRcode" factory-method="getInstance"/>
+   <bean id="CacheTbSysConfig" class="tw.com.hyweb.core.cp.online.loyalty.CacheTbSysConfig" factory-method="getInstance"/>
+
+   <bean id="filter" class="tw.com.hyweb.svc.thig.batch.award.RegularAwardFilter">
+      <constructor-arg>
+         <value> AND ENABLE = '1' AND STATUS = '0' order by regular_id</value>
+      </constructor-arg>
+   </bean>
+
+</beans>

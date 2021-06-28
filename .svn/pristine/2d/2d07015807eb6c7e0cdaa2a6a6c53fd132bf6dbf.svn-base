@@ -1,0 +1,87 @@
+package tw.com.hyweb.svc.yhdp.batch.impfiles.ChangeLocalPath;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Vector;
+
+import tw.com.hyweb.core.ftp.batch.util.BatchUtil;
+import tw.com.hyweb.util.DbUtil;
+
+public class FilenameBean {
+	
+	private static final String SELECT_SQL = "SELECT FILE_NAME_PATTERN, LOCAL_PATH FROM TB_FILE_INFO WHERE FILE_NAME = ? AND IN_OUT = ?";
+	
+	private String tempDir = "";
+
+	private String fileName = "";
+	private String fileNamePattern = "";
+	private String localPath = "";
+	
+	private String changeFileName = "";
+	private String changeLocalPath = "";
+	
+	private String InOut = "I";
+	
+	
+	public void toInit(Connection connection) throws Exception {
+		// TODO Auto-generated method stub
+		
+		tempDir = BatchUtil.getTempDirectory();
+		
+		Vector params = new Vector<>();
+		Vector fileInfo = new Vector<>();
+		
+		
+		params.add(fileName);
+		params.add(InOut);
+		fileInfo = DbUtil.getInfoListHashMap(SELECT_SQL, params, connection);
+		fileNamePattern = (String) ((HashMap) fileInfo.get(0)).get("FILE_NAME_PATTERN");
+		localPath = (String) ((HashMap) fileInfo.get(0)).get("LOCAL_PATH");
+		
+		params.clear();
+		fileInfo.clear();
+		
+		params.add(changeFileName);
+		params.add(InOut);
+		fileInfo = DbUtil.getInfoListHashMap(SELECT_SQL, params, connection);
+		changeLocalPath = (String) ((HashMap) fileInfo.get(0)).get("LOCAL_PATH");
+	}
+	
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public String getChangeFileName() {
+		return changeFileName;
+	}
+	public void setChangeFileName(String changeFileName) {
+		this.changeFileName = changeFileName;
+	}
+	public String getFileNamePattern() {
+		return fileNamePattern;
+	}
+	public void setFileNamePattern(String fileNamePattern) {
+		this.fileNamePattern = fileNamePattern;
+	}
+	public String getLocalPath() {
+		return localPath;
+	}
+	public void setLocalPath(String localPath) {
+		this.localPath = localPath;
+	}
+	public String getChangeLocalPath() {
+		return changeLocalPath;
+	}
+	public void setChangeLocalPath(String changeLocalPath) {
+		this.changeLocalPath = changeLocalPath;
+	}
+	public String getTempDir() {
+		return tempDir;
+	}
+	public void setTempDir(String tempDir) {
+		this.tempDir = tempDir;
+	}
+}

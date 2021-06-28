@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+   xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+   <util:map id="functionMap">
+      <entry key="BatchNumber">
+         <util:constant static-field="tw.com.hyweb.core.cp.batch.parmdown.ParameterFunction.NULL" />
+      </entry>
+      
+      <entry key="HostTime">
+         <util:constant static-field="tw.com.hyweb.core.cp.batch.parmdown.ParameterFunction.NULL" />
+      </entry>
+      
+      <entry key="TerminalFunction">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.TerminalFunction" />
+      </entry>
+      
+      <!-- <entry key="ECRID">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.ECRID" />
+      </entry>
+      <entry key="StoreCounter">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.StoreCounter" />
+      </entry>
+      <entry key="CashCoupon">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.CashCoupon" />
+      </entry> -->
+      <entry key="PointRedeemStep">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.PointRedeemStep" />
+      </entry>
+      <!-- <entry key="SaleRedeemUpperLimit">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.SaleRedeemUpperLimit" />
+      </entry>
+      <entry key="SaleRedeemUpperPercentage">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.SaleRedeemUpperPercentage" />
+      </entry>
+      <entry key="MaxOfflineRedeem">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.MaxOfflineRedeem" />
+      </entry> -->
+      <entry key="PointRedeemUpperLimit">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.PointRedeemUpperLimit" />
+      </entry>
+      <!-- <entry key="GiftRedeemUpperLimit">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.GiftRedeemUpperLimit" />
+      </entry>
+      <entry key="ForceOnlineDay">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.ForceOnlineDay" />
+      </entry> -->
+      <entry key="CampaignName">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.MaxLengthTrimmer">
+            <constructor-arg>
+               <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.CampaignName" />
+            </constructor-arg>
+            <constructor-arg>
+               <value>UTF-8</value>
+            </constructor-arg>
+            <constructor-arg>
+               <value>0x3C</value>
+            </constructor-arg>
+         </bean>
+      </entry>
+      <!-- <entry key="HostPointRedeemFunction">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.HostPointRedeemFunction" />
+      </entry>
+      <entry key="HostPointRedeemFunctionExt">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.MaxLengthTrimmer">
+            <constructor-arg>
+               <bean class="tw.com.hyweb.svc.cp.batch.parmdown.function.HostPointRedeemFunction" />
+            </constructor-arg>
+            <constructor-arg>
+               <value>UTF-8</value>
+            </constructor-arg>
+            <constructor-arg>
+               <value>0x20</value>
+            </constructor-arg>
+         </bean>
+      </entry> -->
+      <entry key="ChipPointRedeemFunction">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.ChipPointRedeemFunction" />
+      </entry>
+      <!-- <entry key="HostGiftRedeemFunction">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.HostGiftRedeemFunction">
+            <property name="functionType" value="H" />
+            <property name="transactionType" value="3" />
+         </bean>
+      </entry>
+      <entry key="ChipGiftRedeemFunction">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.ChipGiftRedeemFunction">
+            <property name="functionType" value="C" />
+            <property name="transactionType" value="3" />
+         </bean>
+      </entry> 
+      <entry key="HostNormalCouponFunction">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.MaxLengthTrimmer">
+            <constructor-arg>
+               <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.HostNormalCouponFunction">
+                  <property name="functionType" value="H" />
+                  <property name="transactionType" value="4" />
+               </bean>
+            </constructor-arg>
+            <constructor-arg>
+               <value>UTF-8</value>
+            </constructor-arg>
+            <constructor-arg>
+               <value>0x26</value>
+            </constructor-arg>
+         </bean>
+      </entry> -->
+      <entry key="ChipNormalCouponFunction">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.MaxLengthTrimmer">
+            <constructor-arg>
+               <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.ChipNormalCouponFunction">
+                  <property name="functionType" value="C" />
+                  <property name="transactionType" value="4" />
+               </bean>
+            </constructor-arg>
+            <constructor-arg>
+               <value>UTF-8</value>
+            </constructor-arg>
+            <constructor-arg>
+               <value>0x2E</value>
+            </constructor-arg>
+         </bean>
+      </entry>
+      <!-- <entry key="BIN">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.BIN" />
+      </entry>
+      <entry key="OffusMessage">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.MaxLengthTrimmer">
+            <constructor-arg>
+               <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.OffusMessage" />
+            </constructor-arg>
+            <constructor-arg>
+               <value>UTF-8</value>
+            </constructor-arg>
+            <constructor-arg>
+               <value>0x96</value>
+            </constructor-arg>
+         </bean>
+      </entry> -->
+      <entry key="BonusName">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.MaxLengthTrimmer">
+            <constructor-arg>
+               <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.BonusName">
+                  <constructor-arg>
+                     <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.CompositeBonusSource">
+                        <constructor-arg>
+                           <util:list>
+                              <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.IssuerPointBonusSource" />
+                              <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.BonusAcqBonusSource" />
+                              <!-- <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.AwardCampaignBonusSource" />
+                              <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.RedeemCampaignBonusSource" />
+                              <bean class="tw.com.hyweb.core.cp.batch.parmdown.function.RedeemFunctionBonusSource" />
+                              <bean class="tw.com.hyweb.svc.cp.batch.parmdown.function.ReloadFunctionBonusSource" /> -->
+                           </util:list>
+                        </constructor-arg>
+                     </bean>
+                  </constructor-arg>
+               </bean>
+            </constructor-arg>
+            <constructor-arg>
+               <value>UTF-8</value>
+            </constructor-arg>
+            <constructor-arg>
+               <value>0x50</value>
+            </constructor-arg>
+         </bean>
+      </entry>
+
+      <!--SVC-->
+      <!-- <entry key="HostPointReloadFunction">
+         <bean class="tw.com.hyweb.svc.cp.batch.parmdown.function.HostPointReloadFunction">
+            <constructor-arg value="H" />
+            <constructor-arg value="7" />
+         </bean>
+      </entry>
+      <entry key="ChipPointReloadFunction">
+         <bean class="tw.com.hyweb.svc.cp.batch.parmdown.function.ChipPointReloadFunction">
+            <constructor-arg value="C" />
+            <constructor-arg value="7" />
+         </bean>
+      </entry> -->
+      <entry key="ECashPointAddressMapping">
+         <bean class="tw.com.hyweb.svc.yhdp.batch.parmdown.function.ECashPointAddressMapping" />
+      </entry>
+      <entry key="OfflineAmtParameter">
+         <bean class="tw.com.hyweb.svc.yhdp.batch.parmdown.function.OfflineAmtParameter" />
+      </entry>
+      <entry key="OfflineAutoLoadParameter">
+         <bean class="tw.com.hyweb.svc.yhdp.batch.parmdown.function.OfflineAutoLoadParameter" />
+      </entry>
+      <!-- <entry key="AutoLoadParameter">
+         <bean class="tw.com.hyweb.svc.cp.batch.parmdown.function.AutoLoadParameter" />
+      </entry>
+      <entry key="OfflineAmtParameter">
+         <bean class="tw.com.hyweb.svc.cp.batch.parmdown.function.OfflineAmtParameter" />
+      </entry>
+      <entry key="HostCouponReloadFunction">
+         <bean class="tw.com.hyweb.svc.cp.batch.parmdown.function.HostCouponReloadFunction">
+            <constructor-arg value="H" />
+            <constructor-arg value="A" />
+         </bean>
+      </entry>
+      <entry key="ChipCouponReloadFunction">
+         <bean class="tw.com.hyweb.svc.cp.batch.parmdown.function.ChipCouponReloadFunction">
+            <constructor-arg value="C" />
+            <constructor-arg value="A" />
+         </bean>
+      </entry>
+      <entry key="Mask">
+         <bean class="tw.com.hyweb.svc.cp.batch.parmdown.function.Mask" />
+      </entry>
+      <entry key="HostCreditCardPointReloadFunction">
+         <bean class="tw.com.hyweb.svc.cp.batch.parmdown.function.HostCreditCardPointReloadFunction">
+            <constructor-arg value="H" />
+            <constructor-arg value="8" />
+         </bean>
+      </entry>
+      <entry key="ChipCreditCardPointReloadFunction">
+         <bean class="tw.com.hyweb.svc.cp.batch.parmdown.function.ChipCreditCardPointReloadFunction">
+            <constructor-arg value="C" />
+            <constructor-arg value="8" />
+         </bean>
+      </entry>
+      <entry key="HostCreditCardCouponReloadFunction">
+         <bean class="tw.com.hyweb.svc.cp.batch.parmdown.function.HostCreditCardCouponReloadFunction">
+            <constructor-arg value="H" />
+            <constructor-arg value="B" />
+         </bean>
+      </entry>
+      <entry key="ChipCreditCardCouponReloadFunction">
+         <bean class="tw.com.hyweb.svc.cp.batch.parmdown.function.ChipCreditCardCouponReloadFunction">
+            <constructor-arg value="C" />
+            <constructor-arg value="B" />
+         </bean>
+      </entry> -->
+   </util:map>
+</beans>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>  
+	<bean id ="BirthdayFiller" class="tw.com.hyweb.svc.thig.batch.award.BirthdayFiller"/>
+	<bean id ="RegularDtlFiller" class="tw.com.hyweb.svc.thig.batch.award.RegularDtlFiller"/>
+	<bean id ="FixDateCheck" class="tw.com.hyweb.svc.thig.batch.award.FixDateCheck" />
+	<bean id ="FixMonthCheck" class="tw.com.hyweb.svc.thig.batch.award.FixMonthCheck" />
+	<bean id ="FixWeekCheck" class="tw.com.hyweb.svc.thig.batch.award.FixWeekCheck" />
+	<bean id ="RegDateFiller" class="tw.com.hyweb.svc.thig.batch.award.RegDateFiller" />
+	<bean id ="FixDateFiller" class="tw.com.hyweb.svc.thig.batch.award.FixDateFiller" />
+	<bean id ="SaleCardFiller" class="tw.com.hyweb.svc.thig.batch.award.SaleCardFiller" />
+	<bean id ="RegularAwardProc" class="tw.com.hyweb.svc.thig.batch.award.RegularAwardProc" />
+	<bean id="checkBirthdayMonth" class="tw.com.hyweb.svc.thig.batch.award.checkBirthdayMonth" />
+</beans>

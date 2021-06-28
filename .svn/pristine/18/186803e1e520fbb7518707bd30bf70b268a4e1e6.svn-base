@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+   xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+   <bean id="processor" class="tw.com.hyweb.core.cp.batch.framework.generic.SimpleBatchProcessor">
+      <constructor-arg>
+         <bean id="handler" class="tw.com.hyweb.svc.yhdp.batch.summary.procPrepaidBal.BatchJobHandler">
+            <constructor-arg>
+               <ref bean="factory" />
+            </constructor-arg>
+         </bean>
+      </constructor-arg>
+      <property name="recoverLevelMap" ref="recoverLevelMap" />
+      <property name="programName" value="ProcPrepaidBal" />
+   </bean>
+
+   <bean id="factory" class="tw.com.hyweb.svc.yhdp.batch.summary.procPrepaidBal.ProcPrepaidBalJobFactory"> 
+   		<!-- 消費類 -->
+		<property name="consPcodes">
+			<util:list>
+				<value>7402</value>	<!-- 電子票值扣款進站/ 進場 -->
+				<value>7403</value>	<!-- 電子票卡扣點進站/ 進場 -->
+				<value>7405</value>	<!-- 罰款 -->
+				<value>7410</value>	<!-- 電子票值扣款出站/ 出場 -->
+				<value>7412</value>	<!-- 電子票值扣款出站/ 出場 補登 -->
+				<value>7418</value>	<!-- 離線現金加值取消 -->
+				<value>7438</value>	<!-- 信用卡離線自動加值取消 -->
+				<value>7428</value>	<!-- 友善模式加值(送錢)取消 -->                  
+				<value>7448</value>	<!-- 友善模式加值(送錢)取消補登 -->
+				<value>7458</value>	<!-- 同站加值補回取消(同站進出補回取消 -->
+				<value>7415</value>	<!-- 電子票值扣款進站/ 進場(優惠) -->
+				<value>7417</value>	<!-- 電子票卡扣點進站/ 進場(優惠) -->
+				<value>7419</value>	<!-- 罰款(優惠) -->
+				<value>7420</value>	<!-- 電子票值扣款出站/ 出場(優惠) -->
+				<value>7421</value>	<!-- 電子票值扣款出站/ 出場 補登(優惠) -->
+				<value>7617</value>	<!-- 交通一般扣款 -->
+				<value>7627</value>	<!-- 交通優惠扣款 -->
+				<value>7422</value>	<!-- 一般商店消費 -->
+				<value>7424</value>	<!-- 電子票值扣款進站/ 進場 補登 -->
+				<value>7468</value>	<!-- 現金加值取消補登 -->
+				<value>7478</value>	<!-- 信用卡自動加值取消補登 -->
+				<value>7430</value>	<!-- 異常交易處理- 電子票值減少 -->
+			</util:list>
+		</property>
+   </bean>
+
+   <util:map id="recoverLevelMap">
+      <entry key="ALL">
+         <bean class="tw.com.hyweb.core.cp.batch.summary.SummaryRecoverHandler">
+            <constructor-arg>
+               <value>TB_PREPAID_BAL</value>
+            </constructor-arg>
+            <constructor-arg>
+               <value>DAY</value>
+            </constructor-arg>
+         </bean>
+      </entry>
+   </util:map>
+
+</beans>

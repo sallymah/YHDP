@@ -1,0 +1,114 @@
+[main] 20170523 18:28:34 ERROR DBService            L:807  - Get connection error:6912 ms.batch
+org.apache.commons.dbcp.SQLNestedException: Error preloading the connection pool
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:868)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpARSB.beforeHandling(ExpARSB.java:133)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpARSB.main(ExpARSB.java:556)
+Caused by: java.sql.SQLException: Listener refused the connection with the following error:
+ORA-12516, TNS:listener could not find available handler with matching protocol stack
+ 
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:489)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.pool.impl.GenericObjectPool.addObject(GenericObjectPool.java:1614)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:865)
+	... 5 more
+Caused by: oracle.net.ns.NetException: Listener refused the connection with the following error:
+ORA-12516, TNS:listener could not find available handler with matching protocol stack
+ 
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:399)
+	at oracle.jdbc.driver.T4CConnection.connect(T4CConnection.java:1140)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:340)
+	... 13 more
+[main] 20170523 18:28:34 INFO  ExpARSB              L:166  - memId2MemGroupId: {}
+[main] 20170523 18:28:34 WARN  ExpARSB              L:560  - ExpMerchData run fail:Error preloading the connection pool
+org.apache.commons.dbcp.SQLNestedException: Error preloading the connection pool
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:868)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpARSB.beforeHandling(ExpARSB.java:133)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpARSB.main(ExpARSB.java:556)
+Caused by: java.sql.SQLException: Listener refused the connection with the following error:
+ORA-12516, TNS:listener could not find available handler with matching protocol stack
+ 
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:489)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.pool.impl.GenericObjectPool.addObject(GenericObjectPool.java:1614)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:865)
+	... 5 more
+Caused by: oracle.net.ns.NetException: Listener refused the connection with the following error:
+ORA-12516, TNS:listener could not find available handler with matching protocol stack
+ 
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:399)
+	at oracle.jdbc.driver.T4CConnection.connect(T4CConnection.java:1140)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:340)
+	... 13 more
+[main] 20170523 18:32:20 ERROR DBService            L:807  - Get connection error:6479 ms.batch
+org.apache.commons.dbcp.SQLNestedException: Error preloading the connection pool
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:868)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpARSB.beforeHandling(ExpARSB.java:133)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpARSB.main(ExpARSB.java:556)
+Caused by: java.sql.SQLException: Listener refused the connection with the following error:
+ORA-12516, TNS:listener could not find available handler with matching protocol stack
+ 
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:489)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.pool.impl.GenericObjectPool.addObject(GenericObjectPool.java:1614)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:865)
+	... 5 more
+Caused by: oracle.net.ns.NetException: Listener refused the connection with the following error:
+ORA-12516, TNS:listener could not find available handler with matching protocol stack
+ 
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:399)
+	at oracle.jdbc.driver.T4CConnection.connect(T4CConnection.java:1140)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:340)
+	... 13 more
+[main] 20170523 18:32:20 INFO  ExpARSB              L:166  - memId2MemGroupId: {}
+[main] 20170523 18:32:20 WARN  ExpARSB              L:560  - ExpARSB run fail:Error preloading the connection pool
+org.apache.commons.dbcp.SQLNestedException: Error preloading the connection pool
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:868)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpARSB.beforeHandling(ExpARSB.java:133)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpARSB.main(ExpARSB.java:556)
+Caused by: java.sql.SQLException: Listener refused the connection with the following error:
+ORA-12516, TNS:listener could not find available handler with matching protocol stack
+ 
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:489)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.pool.impl.GenericObjectPool.addObject(GenericObjectPool.java:1614)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:865)
+	... 5 more
+Caused by: oracle.net.ns.NetException: Listener refused the connection with the following error:
+ORA-12516, TNS:listener could not find available handler with matching protocol stack
+ 
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:399)
+	at oracle.jdbc.driver.T4CConnection.connect(T4CConnection.java:1140)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:340)
+	... 13 more

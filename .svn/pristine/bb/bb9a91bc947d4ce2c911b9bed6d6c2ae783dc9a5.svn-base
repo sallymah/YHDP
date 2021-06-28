@@ -1,0 +1,19 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jaxws="http://cxf.apache.org/jaxws"
+    xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://cxf.apache.org/jaxws http://cxf.apache.org/schema/jaxws.xsd">
+
+    <bean id="client" class="tw.com.hyweb.starbucks.wstest.querycard.gen.QueryCardService" factory-bean="clientFactory" factory-method="create"/>
+
+    <bean id="clientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+      	<property name="serviceClass" value="tw.com.hyweb.starbucks.wstest.querycard.gen.QueryCardService"/>
+      	<property name="address" value="http://127.0.0.1:8080/hyweb-ws-starbucks-cxf/QueryCardService"/>
+    </bean>
+
+    <bean id="clientPolicy" class="org.apache.cxf.transports.http.configuration.HTTPClientPolicy">
+        <property name="connectionTimeout" value="40000" />
+        <property name="receiveTimeout" value="150000" />
+    </bean>
+</beans>

@@ -1,0 +1,10 @@
+<isomsg>
+  <field id="0" value="0200"/>
+  <field id="3" value="888888"/>
+<!--  <field id="4" value="000000209900"/>-->
+<!--  <field id="11" value="777777"/>-->
+  <field id="41" value="77777777"/>
+  <field id="42" value="777777777777777"/>
+  <field id="48" value="FF21027207FF2203777777FF2412313233343531323334353631323334353620FF2506105433810004FF260421080101FF290720061115045400FF31020000FF450130" type="binary"/>
+  <field id="61" value="FF3C140000000111000000022200000003330000000444" type="binary"/><!--Host Points Transaction Area-->
+</isomsg>

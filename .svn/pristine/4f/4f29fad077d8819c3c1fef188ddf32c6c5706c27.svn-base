@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+  <bean id="ProcFee" class="tw.com.hyweb.svc.yhdp.batch.fee.ProcFee" init-method="">
+	<!--手續費計算前, 須判斷清算狀態, 有二種設定方式, 依專案需求選用-->
+	<!--已清算處理, 才可算手續費-->
+	<property name="settleCond"><value> and settle_rcode='0000'</value></property>
+    <!--已清算成功, 才可算手續費-->
+	<!--property name="settleCond"><value> and settle_rcode='0000'</value></property-->
+	
+    <property name="commitCount"><value>1000</value></property>
+    <property name="sleepTime"><value>500</value></property>
+    <property name="scale"><value>5</value></property>
+    
+    <property name="notInCreditIds">
+      <util:list>
+      	<value>GRANTS</value>
+        <value>CREDIT</value>
+      </util:list>
+    </property>
+</bean>
+</beans>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+  <bean id="splitImpTxnDtl" class="tw.com.hyweb.svc.yhdp.batch.splitfile.impTrans.SplitImpTrans">
+    <!-- okFilePending: 決定 OK file 檔名要如何 pending
+    <property name="okFilePending"><value>.OK</value></property> -->
+    <!-- 目前未使用 renameAfterCopy: 檔案從 temp 目錄 copy 到 work 目錄成功後, temp 目錄中的檔案是否要做 rename 的動作 -->
+    <!-- ex: NEWCARD.2007030601 -> NEWCARD.2007030601.MOVED -->
+    <property name="renameAfterCopy"><value>false</value></property>
+    <property name="renamePending"><value>.MOVED</value></property>
+    <!-- 目前未使用 deleteAfterCopy: 檔案從 temp 目錄 copy 到 work 目錄成功後, temp 目錄中的檔案是否要做刪除的動作 -->
+    <!-- 二選一, (renameAfterCopy, deleteAfterCopy) = (true, true) -> (false, true) -->
+    <!-- 二選一, (renameAfterCopy, deleteAfterCopy) = (false, false), 程式針對 temp 目錄的檔案不額外處理, 但會檢查 TB_INCTL 是否已存在 -->
+    <property name="deleteAfterCopy"><value>true</value></property>
+    <property name="fileName"><value>SPLIT_IMPCPCTXNDTL</value></property>
+    <property name="deletefileName"><value>IMPCPCTXNDTL</value></property>
+    <property name="maxFileRecCount"><value>5000</value></property>    <!-- 每檔切多少筆,不含header -->
+    <property name="deleteSpiltFile"><value>false</value></property>   <!-- 是否刪原切檔檔案        -->
+    <property name="spiltFile"><value>true</value></property>          <!-- 是否作切檔程序          -->
+
+    <!-- 設定如何解析檔案的部份 -->
+    <property name="filenameBeans">
+      <list>
+        <ref bean="IMPCPCTXNDTL"/>
+      </list>
+    </property>
+  </bean>
+  <!--NEWCARD.YYYYMMDDNN-->
+  <bean id="IMPCPCTXNDTL" class="tw.com.hyweb.core.cp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>SPLIT_IMPCPCTXNDTL</value></property>
+    <property name="memIdStart"><value>5</value></property>
+  	<property name="memIdEnd"><value>13</value></property>
+    <property name="fileDateStart"><value>14</value></property>
+    <property name="fileDateEnd"><value>22</value></property>
+    <property name="seqnoStart"><value>22</value></property>
+    <property name="seqnoEnd"><value>25</value></property>
+  </bean> 
+</beans>

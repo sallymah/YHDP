@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+   xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+   <bean id="processor" class="tw.com.hyweb.core.cp.batch.framework.generic.SimpleBatchProcessor">
+      <constructor-arg>
+         <bean id="handler" class="tw.com.hyweb.core.cp.batch.framework.generic.BatchJobHandler">
+            <constructor-arg>
+               <ref bean="factory" />
+            </constructor-arg>
+         </bean>
+      </constructor-arg>
+      <property name="programName" value="ProcPersoV2" />
+   </bean>
+
+   <bean id="factory" class="tw.com.hyweb.svc.yhdp.batch.persoV2.YhdpPersoCardJobFactory">
+      <constructor-arg>
+         <bean class="tw.com.hyweb.svc.yhdp.batch.persoV2.ProcessPersoJobFactory">
+            <constructor-arg index="0">
+               <bean class="tw.com.hyweb.svc.yhdp.batch.persoV2.YhdpCardNumberGenerator" />
+            </constructor-arg>
+            <constructor-arg index="1">
+               <bean class="tw.com.hyweb.svc.yhdp.batch.persoV2.YhdpCardDataGenerator" />
+            </constructor-arg>
+            <constructor-arg index="2">
+               <bean class="tw.com.hyweb.svc.yhdp.batch.persoV2.YhdpPersoCardFile">
+               		<constructor-arg>
+               			<bean class="tw.com.hyweb.svc.yhdp.batch.framework.perso.HsmAdapterECB">
+							<property name="iv" value="0000000000000000" />
+							<property name="pinKeyId" value="P3EncKey" /> 
+               			</bean>
+               		</constructor-arg>
+               		<constructor-arg>
+               			<bean class="tw.com.hyweb.svc.yhdp.batch.framework.perso.CgYhdpSsf">
+							<property name="servletUrl"><value>http://YhdpSS:36888/YHDP_SSServlet/SS</value></property>
+					        <property name="slot"><value>0</value></property>
+					        <property name="pin"><value>BAA6B7BBAFCECDCCCBF7F7F7F7F7F7F7F7</value></property>
+               			</bean>
+               		</constructor-arg>
+               </bean>
+            </constructor-arg>
+             <constructor-arg index="3">
+               <bean class="tw.com.hyweb.svc.yhdp.batch.persoV2.YhdpCpDeliveryDataGenerator" />
+            </constructor-arg>
+         </bean>
+      </constructor-arg>
+   </bean>
+
+</beans>

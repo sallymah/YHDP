@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:util="http://www.springframework.org/schema/util"
+   xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+   <import resource="../datasource.xml" />
+
+	<bean id="ftpRefilesDelete" class="tw.com.hyweb.svc.yhdp.batch.framework.ftp.RefileDeleteProcessor">
+		<constructor-arg>
+			<ref bean="preValidator" />
+		</constructor-arg>
+		<property name="dataSource" ref="dataSource" />
+		<property name="fileNames">	<!-- 須檢查刪除的TB_FILE_INFO.FILE_NAME -->
+			<util:list>
+				<value>IMPTXNDTL</value>	<!-- 交易檔 -->
+			</util:list>
+		</property>
+	</bean>
+
+   <bean id="preValidator" class="tw.com.hyweb.core.ftp.batch.framework.ftp.validation.LocalPathValidator">
+      <constructor-arg>
+        <ref bean="preProcessor" />
+      </constructor-arg>
+   </bean>
+
+   <bean id="preProcessor" class="tw.com.hyweb.core.ftp.batch.framework.ftp.strategy.TransferFileFilter">
+      <constructor-arg>
+         <bean class="tw.com.hyweb.svc.yhdp.batch.framework.ftp.strategy.ReOKFileDelete">
+         	<constructor-arg>
+         		<bean class="tw.com.hyweb.core.ftp.batch.framework.ftp.strategy.DownloadStrategy" >
+					<property name="downloadDirection"><value>I</value></property>
+					<property name="downloadPathMatcheList">
+			   			<list>
+			       			<bean class="tw.com.hyweb.svc.yhdp.batch.framework.pathMatche.PersoFactoryDownPath" />
+			   			</list>
+					</property>
+				</bean>
+         	</constructor-arg>
+         </bean>
+      </constructor-arg>
+   </bean>
+</beans>

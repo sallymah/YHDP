@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<bean id="Redeem" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.BatchBaseController">
+        <property name="acceptMti"><value>0320</value></property>
+        <property name="acceptProcCode"><value>900000</value></property>
+        <property name="acceptLmsProcCode"><value>7647 7557 7547 7207 7657 7217 7397</value></property>
+        <property name="txLogger">
+            <ref bean="TxLoggerOfflineBase"/>
+        </property>
+        <property name="validatorList">
+        	<list>     
+                <ref bean="MerchantValidator" />
+                <ref bean="TerminalValidator" />
+                <ref bean="AcquireValidator" />
+                <ref bean="TransDupValidator" />
+                <ref bean="MacValidator" />
+            </list>
+        </property>
+        <property name="generalFiller">
+            <list>
+				<ref bean="CardInfoFiller" />
+                <ref bean="BonusBaseFiller" />
+                <ref bean="IssuerFiller" />
+                <ref bean="AcquirerFiller" />
+            </list>
+        </property>
+        <property name="bizAction">
+            <list>
+                <bean id = "PurchaseDisp" class = "tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.controller.base.TxnDispAction">       		
+        			<property name="notFoundAction">
+      					<list>
+      						  <ref bean="CheckIsErrData"/>
+      						  <ref bean="CheckDueDay"/>
+      						  <ref bean="UpdateOnlTxnImpInfo"/>
+        				</list>
+        			</property>
+        			<property name="foundAction">
+        			    <list>
+        			        <ref bean="CheckIsErrData"/>
+        			        <ref bean="CheckDueDay"/>
+      						<ref bean="ChipBalanceFiller"/>
+			                <ref bean="ChipCouponBalanceFiller"/>
+			                <ref bean="ChipCounterRedeemFiller"/>
+			                <ref bean="ChipCouponRedeemFiller"/>
+			                <ref bean="UpdateChipBalance"/>
+			                <ref bean="InsertOfflineTxLogger"/>
+        				</list>
+					</property>
+				</bean>
+            </list>
+        </property> 
+    </bean>
+    
+	<bean id="LockCard" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.BatchBaseController">
+        <property name="acceptMti"><value>0320</value></property>
+        <property name="acceptProcCode"><value>900000</value></property>
+        <property name="acceptLmsProcCode"><value>7517</value></property>
+        <property name="txLogger">
+            <ref bean="TxLoggerOfflineBase"/>
+        </property>
+        <property name="validatorList">
+        	<list>     
+                <ref bean="MerchantValidator" />
+                <ref bean="TerminalValidator" />
+                <ref bean="AcquireValidator" />
+                <ref bean="LockCardBlacklistValidator" />
+                <ref bean="TransDupValidator" />
+                <ref bean="MacValidator" />
+            </list>
+        </property>
+        <property name="generalFiller">
+            <list>
+				<ref bean="CardInfoFiller" />
+                <ref bean="BonusBaseFiller" />
+                <ref bean="IssuerFiller" />
+                <ref bean="AcquirerFiller" />
+            </list>
+        </property>
+         <property name="bizAction">
+            <list>
+                <ref bean="CheckIsErrData"/>
+                <ref bean="CheckDueDay"/>
+                <ref bean="UpdateBlackList"/>
+                <ref bean="InsertOfflineTxLogger"/>
+            </list>
+        </property> 
+    </bean>
+    
+	<bean id="PassTxn" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.BatchBaseController">
+        <property name="acceptMti"><value>0200</value></property>
+        <property name="acceptProcCode"><value>888888</value></property>
+        <property name="acceptLmsProcCode"><value>7587 7367 7377 7337 7357 7327 7257 7727 7387</value></property>
+        <property name="txLogger">
+            <ref bean="TxLoggerEmpty"/>
+        </property>
+        <property name="validatorList">
+        	<list>     
+            </list>
+        </property>
+        <property name="generalFiller">
+            <list>
+            </list>
+        </property>
+         <property name="bizAction">
+            <list>
+                <ref bean="CheckIsErrData"/>
+            </list>
+        </property>  
+    </bean>
+    
+    <bean id="CheckTxn" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.BatchBaseController">
+        <property name="acceptMti"><value>0200</value></property>
+        <property name="acceptProcCode"><value>888888</value></property>
+        <property name="txLogger">
+            <ref bean="TxLoggerEmpty"/>
+        </property>
+        <property name="validatorList">
+        	<list>     
+            </list>
+        </property>
+        <property name="generalFiller">
+            <list>
+            </list>
+        </property>
+         <property name="bizAction">
+            <list>
+                <ref bean="CheckIsErrData"/>
+                <ref bean="CheckDueDay"/>
+                <ref bean="UpdateOnlTxnImpInfo"/>
+            </list>
+        </property>  
+    </bean>
+</beans>

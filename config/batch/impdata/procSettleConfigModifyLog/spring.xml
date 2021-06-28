@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<bean id="ProcSettleConfigModifyLog" class="tw.com.hyweb.svc.yhdp.batch.impdata.ProcSettleConfigModifyLog">
+		<property name="fileNameLists">
+			<util:list>
+				<value>BONUS_ID</value>
+				<value>VALID_EDATE</value>
+				<value>SETTLE_RATE</value>
+				<value>SETTLE_FROM</value>
+				<value>CARRY_DIGIT</value>
+				<value>CARRY_TYPE</value>
+				<value>FUND_TYPE</value>
+			</util:list>
+		</property>
+	</bean>
+</beans>

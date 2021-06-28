@@ -1,0 +1,11 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="ProcExpiredCard" class="tw.com.hyweb.svc.yhdp.batch.ProcExpiredCard.ProcExpiredCard" init-method="">
+	    <property name="sleepTime"><value>500</value></property>
+	    <!-- 執行日期 -->
+	    <property name="executeDate"><value>1</value></property>
+	    <!-- 黑名單原因代碼 -->
+	    <property name="blackListCode"><value>06</value></property>
+	</bean>
+</beans>

@@ -1,0 +1,2940 @@
+<?xml version="1.0"?>
+
+<!-- ===========================================================================
+
+                           *===================*
+                           | How to build      |
+                           *===================*
+
+
+Install the build tools
+=======================
+
+The build system is based on Jakarta Ant, and JUnit if we want to perform
+unit testing during build.
+
+ - JDK >= 1.5.
+ - Set JAVA_HOME environment variable.
+   e.g. set JAVA_HOME=c:\jdk1.5 (Win32)
+        export JAVA_HOME=/usr/local/IBMJava2-13 (Unix)
+
+============================================================================ -->
+
+<project name="hyweb-layer3-YHDP" default="" basedir=".">
+	<property environment="env" />
+
+	<!--
+ <tstamp>
+		<format property="NOW" pattern="yyyyMMddHHmmss" locale="tw" />
+		<format property="TODAY" pattern="yyyyMMdd" locale="tw" />
+	</tstamp>
+ -->
+
+	<property name="name" value="${ant.project.name}" />
+	<property name="version" value="1.0" />
+	<property name="year" value="2006-2010" />
+	<property name="javadoc.packages" value="tw.com.hyweb.*" />
+
+	<property name="log.dir" value="log" />
+	<property name="batch.dir" value="batch_file" />
+	<property name="lib.dir" value="lib" />
+	<property name="bin.dir" value="bin" />
+	<property name="dll.dir" value="dll" />
+	<property name="build.dir" value="build" />
+	<property name="config.dir" value="config" />
+	<property name="class.dir" value="${build.dir}/classes" />
+
+	<property name="system.dir" value="${env.SystemRoot}/System32" />
+	<property name="opmemuclass.dir" value="tw.com.hyweb.core.cp.opmenu" />
+	<property name="batchclass.dir" value="tw.com.hyweb.core.cp.batch" />
+	<property name="batchclasssvc.dir" value="tw.com.hyweb.svc.cp.batch" />
+	<property name="batchclassyhdp.dir" value="tw.com.hyweb.svc.yhdp.batch" />
+	<property name="batchclassftp.dir" value="tw.com.hyweb.core.ftp.batch" />
+
+
+	<!-- for batch -->
+	<property name="memId" value="" />
+	<property name="jobId" value="" />
+	<property name="jobTime" value="" />
+	<property name="date" value="" />
+	<property name="nextDay" value="" />
+	<property name="recover" value="" />
+	<property name="fileName" value="" />
+	<property name="notFileName" value="" />
+	<property name="logMode" value="" />
+	
+	
+	<!-- build classpath -->
+	<path id="build.classpath">
+		<pathelement location="." />
+		<pathelement location="${bin.dir}" />
+		<pathelement location="${class.dir}" />
+		<pathelement location="${config.dir}" />
+			
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${bin.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<pathelement path="${java.class.path}" />
+	</path>
+	
+	<target name="runFtpOut">
+		<java classname="${batchclassftp.dir}.framework.ftp.FtpOut" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/FtpOut" />
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/FtpOut/beans-config.xml" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-DfileName=${fileName}" />
+			<jvmarg value="-DnotFileName=${notFileName}" />
+			<jvmarg value="-Dspring.configuration=FtpOut" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runFtpIn">
+		<java classname="${batchclassftp.dir}.framework.ftp.FtpIn" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/FtpIn" />
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/FtpIn/beans-config.xml" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-DfileName=${fileName}" />
+			<jvmarg value="-DnotFileName=${notFileName}" />
+			<jvmarg value="-Dspring.configuration=FtpIn" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runFtpInWs">
+		<java classname="${batchclassftp.dir}.framework.ftp.FtpIn" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/FtpInWs" />
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/FtpInWs/beans-config.xml" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-DfileName=${fileName}" />
+			<jvmarg value="-DnotFileName=${notFileName}" />
+			<jvmarg value="-Dspring.configuration=FtpInWs" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runFilesIn">
+		<java classname="${batchclassftp.dir}.framework.filesin.FilesIn" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/FilesIn" />
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/FilesIn/spring.xml" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-DfileName=${fileName}" />
+			<jvmarg value="-DnotFileName=${notFileName}" />
+			<jvmarg value="-Dspring.configuration=FilesIn" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runFilesInWs">
+		<java classname="${batchclassftp.dir}.framework.filesin.FilesIn" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/FilesInWs" />
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/FilesInWs/spring.xml" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-DfileName=${fileName}" />
+			<jvmarg value="-DnotFileName=${notFileName}" />
+			<jvmarg value="-Dspring.configuration=FilesInWs" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runFilesOut">
+		<java classname="${batchclassftp.dir}.framework.filesout.FilesOut" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/FilesOut" />
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/FilesOut/spring.xml" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-DfileName=${fileName}" />
+			<jvmarg value="-DnotFileName=${notFileName}" />
+			<jvmarg value="-Dspring.configuration=FilesOut" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runSimulateAppointReloadDownload">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/preoperation/SimulateAppointReload/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=SimulateAppointReload" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runSimulateBalTransferDownload">
+		<java classname="${batchclass.dir}.preoperation.SimulateBalTransferDownload" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/preoperation/SimulateBalTransferDownload" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=SimulateBalTransferDownload" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runSimulateCardReturn">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/preoperation/SimulateCardReturn/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=SimulateCardReturn" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runGenerateKEKKeyVersion">
+		<java classname="${batchclasssvc.dir}.preoperation.GenerateKEKKeyVersion" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/preoperation/GenerateKEKKeyVersion" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=GenerateKEKKeyVersion" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runCleanCardBalance">
+		<java classname="${batchclasssvc.dir}.preoperation.CleanCardBalance" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/preoperation/CleanCardBalance" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=CleanCardBalance" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runBalUpdateBadBonus">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/preoperation/BalUpdateBadBonus" />
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/preoperation/BalUpdateBadBonus/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=BalUpdateBadBonus" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runCutOnlTxn">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/daycut/CutOnlTxn" />
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/daycut/CutOnlTxn/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=CutOnlTxn" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runCutCapturedTxn">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/daycut/CutCapturedTxn" />
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/daycut/CutCapturedTxn/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=CutCapturedTxn" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runCutAdjustTxn">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/daycut/CutAdjustTxn" />
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/daycut/CutAdjustTxn/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=CutAdjustTxn" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runCheckOfflineTxn">
+		<java classname="${batchclass.dir}.daycut.CheckOfflineTxn" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/CheckOfflineTxn" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=CheckOfflineTxn" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runProcBalance">
+		<java classname="${batchclassyhdp.dir}.balance.ProcBalance" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/balance/ProcBalance" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcBalance" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runProcSettle">
+		<java classname="${batchclassyhdp.dir}.settle.ProcSettle" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/settle/ProcSettle" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcSettle" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runProcFee">
+		<java classname="${batchclassyhdp.dir}.fee.ProcFee" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/fee/ProcFee" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcFee" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runProcBlacklist">
+		<java classname="${batchclassyhdp.dir}.ProcBlacklist.ProcBlacklist" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/ProcBlacklist" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=ProcBlacklist" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpHappyGo">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpHappyGo.ImpHappyGo" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/impfiles/ImpHappyGo" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=ImpHappyGo" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpLptsam">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpLptsam.ImpLptsam" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/impfiles/ImpLptsam" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=ImpLptsam" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runImpMerch">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpMerch.ImpMerch" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/impfiles/ImpMerch" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=ImpMerch" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runImpTerm">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpTerm.ImpTerm" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/impfiles/ImpTerm" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=ImpTerm" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runImpCard">
+		<java classname="${batchclass.dir}.impfiles.ImpCard" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/impfiles/ImpCard" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=ImpCard" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpPersoFeeback">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpPersoFeeback.ImpPersoFeeback" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/impfiles/ImpPersoFeeback" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-DfileName=${fileName}" />
+			<jvmarg value="-Dspring.configuration=ImpPersoFeeback" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runProcAppointList">
+		<java classname="${batchclass.dir}.impfiles.ProcAppointList" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/ProcAppointList" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=ProcAppointList" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runProcOnlTxnErr">
+		<java classname="${batchclass.dir}.errhandle.ProcOnlTxnErr" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/errhandle" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Dspring.configuration=ProcOnlTxnErr" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runProcUnbalTermBatch">
+		<java classname="${batchclassyhdp.dir}.errhandle.ProcUnbalTermBatch" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/errhandle" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcUnbalTermBatch" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runPatchUnbalTermBatch">
+		<java classname="${batchclass.dir}.errhandle.PatchUnbalTermBatch" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/errhandle" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=PatchUnbalTermBatch" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runCutOnlTxnStandard">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/daycut/CutOnlTxnStandard" />
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/daycut/CutOnlTxnStandard/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx1024m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=CutOnlTxnStandard" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runCutCheckTxn">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/daycut/CutCheckTxn" />
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/daycut/CutCheckTxn/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=CutCheckTxn" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runProcPerso">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/ProcPerso" />
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/perso/ProcPerso/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcPerso" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runProcPersoV2">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/ProcPersoV2" />
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/perso/ProcPersoV2/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcPersoV2" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runSumIssPb">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/summary/SumIssPb/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=SumIssPb" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runSumCardStatus">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/summary/SumCardStatus/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=SumCardStatus" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runSumMerch">
+		<java classname="${batchclassyhdp.dir}.summary.SumMerch" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=SumMerch" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runSumCardProduct">
+		<java classname="${batchclass.dir}.summary.SumCardProduct" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=SumCardProduct" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runSumBonus">
+		<java classname="${batchclass.dir}.summary.SumBonus" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=SumBonus" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runSumPbnld">
+		<java classname="${batchclass.dir}.summary.SumPbnld" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=SumPbnld" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runSumTxnCnt">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/summary/SumTxnCnt/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=SumTxnCnt" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runSumProduct">
+		<java classname="${batchclasssvc.dir}.summary.SumProduct" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=SumProduct" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runSumUnReload">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/summary/SumUnReload/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=SumUnReload" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runSumStock">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/summary/SumStock/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=SumStock" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>	
+	
+	<target name="runCrmMakeGroup">
+		<java classname="tw.com.hyweb.crm.batch.makeGroup" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpTxnDtl">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpTxnDtl.ImpTxnDtl" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/impfiles/ImpTxnDtl" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=ImpTxnDtl" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j_batchTxn.xml" />
+		</java>
+	</target>
+
+	<target name="runAutoSettleAccount">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/AutoSettleAccount/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=AutoSettleAccount" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runExpMerchData">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpMerchData" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpMerchData" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpMemberData">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpMemberData" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpMemberData" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runImpCanceled">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpCanceled.ImpCanceled" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpCanceled" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpRevBound">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpRevBound.ImpRevBound" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=runImpRevBound" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runImpReturnBound">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpReturnBound.ImpReturnBound" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpReturnBound" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runImpInBound">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpInBound.ImpInBound" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpInBound" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runImpOutBound">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpOutBound.ImpOutBound" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpOutBound" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runImpBlackList">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpBlackList.ImpBlackList" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpBlackList" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runImpCust">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpCust.ImpCust" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms512m" />
+			<jvmarg value="-Xmx1024m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpCust" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpMemGP">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpMemGP.ImpMemGP" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpMemGP" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runImpMember">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpMember.ImpMember" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpMember" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpAppload">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpAppload.ImpAppload" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpAppload" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runProcParm">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/ParmDown" />
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/ParmDown/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms128m" />
+			<jvmarg value="-Xmx512m" />
+			<jvmarg value="-Dspring.configuration=ProcParm" />
+			<jvmarg value="-Dstart=0" />
+			<jvmarg value="-Dend=99999" />
+			<jvmarg value="-Dflag=true" />
+			<jvmarg value="-DtargetName=runProcParm" />			
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpSettleOut">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpSettleOut.ExpSettleOut" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-DallDate=${allDate}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpSettleOut" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpTerm">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpTerm" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpTerm" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpCardType">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpCardType" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpCardType" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpCardVR">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpCardVR.ExpCardVR" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpCardVR" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpProduct">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpProduct" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpProduct" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpCardProduct">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpCardProduct" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpCardProduct" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpBlackCard">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpBlackCard" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpBlackCard" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runExpRmCard">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpRmCard.ExpRmCard" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpRmCard" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpBlacklist">
+   		<java classname="${batchclassyhdp.dir}.expfiles.ExpBlacklist" fork="true">
+	    	<classpath>
+	     		<path refid="build.classpath" />
+	    	</classpath>
+	    	<jvmarg value="-Xms64m" />
+	    	<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+	    	<jvmarg value="-Ddate=${date}" />
+	    	<jvmarg value="-Drecover=${recover}" />
+	    	<jvmarg value="-Dspring.configuration=ExpBlacklist" />
+   			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+	    	<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+   		</java>
+ 	</target>
+
+	<target name="runConnectTest">
+		<java classname="${batchclassyhdp.dir}.ConnectTest.ConnectTest" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ConnectTest" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runCheckUnusualTXN">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/summary/checkUnusualTXN/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=CheckUnusualTXN" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runNotifyMail">
+		<java classname="${batchclassyhdp.dir}.mail.NotifyMail" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=NotifyMail" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	 </target>
+	 
+	 <target name="runSumLifeCycle">
+		<java classname="${batchclassyhdp.dir}.summary.SumLifeCycle" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=SumLifeCycle" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpAppointReloadResult">
+   		<java classname="${batchclassyhdp.dir}.expfiles.ExpAppointReloadResult" fork="true">
+	    	<classpath>
+	     		<path refid="build.classpath" />
+	    	</classpath>
+	    	<jvmarg value="-Xms64m" />
+	    	<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+	    	<jvmarg value="-Ddate=${date}" />
+	    	<jvmarg value="-Drecover=${recover}" />
+	    	<jvmarg value="-Dspring.configuration=ExpAppointReloadResult" />
+   			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+	    	<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+   		</java>
+ 	</target>
+	
+	<target name="runExpCardReg">
+   		<java classname="${batchclassyhdp.dir}.expfiles.ExpCardReg.ExpCardReg" fork="true">
+	    	<classpath>
+	     		<path refid="build.classpath" />
+	    	</classpath>
+	    	<jvmarg value="-Xms64m" />
+	    	<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+	    	<jvmarg value="-Ddate=${date}" />
+	    	<jvmarg value="-Drecover=${recover}" />
+	    	<jvmarg value="-Dspring.configuration=ExpCardReg" />
+   			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+	    	<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+   		</java>
+ 	</target>
+	
+	<target name="runSumAppointReload">
+		<java classname="${batchclassyhdp.dir}.summary.SumAppointReload" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=SumAppointReload" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runFtpRefilesDelete">
+		<java classname="${batchclassyhdp.dir}.framework.ftp.FtpRefilesDelete" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/FtpRefilesDelete" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-DfileName=${fileName}" />
+			<jvmarg value="-DnotFileName=${notFileName}" />
+			<jvmarg value="-Dspring.configuration=FtpRefilesDelete" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runSumPaymentRequest">
+		<java classname="${batchclassyhdp.dir}.summary.SumPaymentRequest" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=SumPaymentRequest" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runProcRecyclingCards">
+		<java classname="${batchclassyhdp.dir}.ProcRecyclingCards.ProcRecyclingCards" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcRecyclingCards" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpMerc">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpMerc.ImpMerc" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpMerc" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runCheckIFF">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/preoperation/CheckPersoFeeback/spring.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=runCheckIFF" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpCpcTxnDtl">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpCpcTxnDtl.ImpCpcTxnDtl" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/impfiles/ImpCpcTxnDtl" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx512m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=ImpCpcTxnDtl" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j_batchTxn.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpMPMerch">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpMPMerch.ImpMPMerch" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpMPMerch" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpImportReturn">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpImpReturn.ExpImportReturn" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpImportReturn" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpFund">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpFund" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpFund" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpTefr">
+   		<java classname="${batchclassyhdp.dir}.expfiles.ExpTefr" fork="true">
+	    	<classpath>
+	     		<path refid="build.classpath" />
+	    	</classpath>
+	    	<jvmarg value="-Xms64m" />
+	    	<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+	    	<jvmarg value="-Ddate=${date}" />
+	    	<jvmarg value="-Drecover=${recover}" />
+	    	<jvmarg value="-Dspring.configuration=ExpTefr" />
+   			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+	    	<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+   		</java>
+ 	</target>
+		
+	<target name="runSplitImpCpcTxnDtl">
+		<java classname="${batchclassyhdp.dir}.splitfile.impTrans.SplitImpTrans" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/SplitFile/SplitImpTxnDtl" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx512m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=splitImpTxnDtl" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	<target name="runProcCustModifyLog">
+		<java classname="${batchclassyhdp.dir}.impdata.ProcCustModifyLog" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcCustModifyLog" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpSetl">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpSetl" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpSetl" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpHGCardMap">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpHGCardMap" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpHGCardMap" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpBKCD">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpBKCD.ImpBKCD" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpBKCD" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runImpCDRQ">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpCDRQ.ImpCDRQ" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpCDRQ" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpCDRP">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpCDRP.ExpCDRP" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpCDRP" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runImpBMEM">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpBMEM.ImpBMEM" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpBMEM" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpBTP3">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpBTP3" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpBTP3" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpARSB">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpARSB" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpARSB" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runExpCHHC">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpCHHC" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpCHHC" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpFTCB">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpFTCB" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpFTCB" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpPTXN">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpPTXN" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpPTXN" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpSTAN">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpSTAN" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpSTAN" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpBARL">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpBARL.ImpBARL" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpBARL" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpBTCB">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpBTCB.ImpBTCB" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpBTCB" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpDTXN">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpDTXN.ImpDTXN" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpDTXN" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpWithdrawCard">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpWithdrawCard" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpWithdrawCard" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpLockCard">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpLockCard" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpLockCard" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runExpMEMB">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpMEMB" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpMEMB" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpTrafficTxn">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpTrafficTxn.ImpTrafficTxn" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/impfiles/ImpTrafficTxn" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx512m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=ImpTrafficTxn" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j_batchTxn.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpRDCL">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpRDCL" fork="true">
+			<classpath>
+			<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpRDCL" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpLKCD">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpLKCD" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpLKCD" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpTrn">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpTrn.ExpTrn" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpTrn" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runTrnUnZip">
+		<java classname="${batchclassyhdp.dir}.trnUnZip.TrnUnZip" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/TrnUnZip" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-DfileName=${fileName}" />
+			<jvmarg value="-Dspring.configuration=TrnUnZip" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runTrnZip">
+		<java classname="${batchclassyhdp.dir}.trnZip.TrnZip" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/TrnZip" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-DfileName=${fileName}" />
+			<jvmarg value="-Dspring.configuration=TrnZip" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+
+	<target name="runImpCardLifeCycle">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpCardLifeCycle.ImpCardLifeCycle" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpCardLifeCycle" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpTrnBlklist">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpTrnBlklist.ExpTrnBlklist" fork="true">
+	    	<classpath>
+	     		<path refid="build.classpath" />
+	    	</classpath>
+	    	<jvmarg value="-Xms64m" />
+	    	<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+	    	<jvmarg value="-Ddate=${date}" />
+	    	<jvmarg value="-Drecover=${recover}" />
+	    	<jvmarg value="-Dspring.configuration=ExpTrnBlklist" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+	    	<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpTrnTefr">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpTrnTefr.ExpTrnTefr" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpTrnTefr" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runDbConnTest">
+		<java classname="${opmemuclass.dir}.DbConnTest" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-Dspring.configuration=DbConnTest" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runSimulateImpTxn">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/impdata/SimulateImpTxnData" />
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/impdata/SimulateImpTxnData/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=SimulateImpTxn" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runProcGrantsFee">
+		<java classname="${batchclassyhdp.dir}.fee.grantsFee.ProcGrantsFee" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/ProcGrantsFee" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcGrantsFee" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runProcPrepaidBal">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/summary/ProcPrepaidBal/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcPrepaidBal" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runProcPrepaidCharge">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/impdata/ProcPrepaidCharge/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcPrepaidCharge" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runProcSettleDefModifyLog">
+		<java classname="${batchclassyhdp.dir}.impdata.ProcSettleDefModifyLog" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcSettleDefModifyLog" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runProcSettleConfigModifyLog">
+		<java classname="${batchclassyhdp.dir}.impdata.ProcSettleConfigModifyLog" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcSettleConfigModifyLog" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runProcFeeCalModifyLog">
+		<java classname="${batchclassyhdp.dir}.impdata.ProcFeeCalModifyLog" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcFeeCalModifyLog" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runProcFeeDefModifyLog">
+		<java classname="${batchclassyhdp.dir}.impdata.ProcFeeDefModifyLog" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcFeeDefModifyLog" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runProcFeeConfigModifyLog">
+		<java classname="${batchclassyhdp.dir}.impdata.ProcFeeConfigModifyLog" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcFeeConfigModifyLog" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpTeff">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpTeff.ExpTeff" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpTeff" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpFMTefr">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpFMTefr" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpFMTefr" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runProcCreditFee">
+		<java classname="${batchclassyhdp.dir}.fee.creditFee.ProcCreditFee" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/ProcCreditFee" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcCreditFee" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runEncrypt">
+		<java classname="${batchclassyhdp.dir}.cipher.Encrypt" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=Encrypt" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runDecrypt">
+		<java classname="${batchclassyhdp.dir}.cipher.Decrypt" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=Decrypt" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpFmTxnDtl">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpFmTxnDtl.ImpFmTxnDtl" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/impfiles/ImpFmTxnDtl" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx512m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Dspring.configuration=ImpFmTxnDtl" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j_batchTxn.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpErpt">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpErpt.ImpErpt" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpErpt" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runProcExpiredCard">
+		<java classname="${batchclassyhdp.dir}.ProcExpiredCard.ProcExpiredCard" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/ProcExpiredCard" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcExpiredCard" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runProcLockedCard">
+		<java classname="${batchclassyhdp.dir}.ProcLockedCard.ProcLockedCard" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcLockedCard" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runProcNumOfAuth">
+		<java classname="${batchclassyhdp.dir}.ProcNumOfAuth.ProcNumOfAuth" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcNumOfAuth" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runAutoSettlement">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="config/batch/AutoSettlement/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=AutoSettlement" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpAffComBlock">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpAffComBlock.ExpAffComBlock" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpAffComBlock" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpPersoFeedback"> 
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpPersoFeedback.ImpPersoFeedback" fork="true"> 
+			<classpath> 
+				<pathelement location="${config.dir}/batch/impfiles/ImpPersoFeedback" /> 
+			<path refid="build.classpath" /> 
+			</classpath> 
+			<arg value="config/batch/impfiles/ImpPersoFeedback/beans-config.xml" /> 
+			<arg value="processor" /> 
+			<jvmarg value="-Xms64m" /> 
+			<jvmarg value="-Xmx384m" /> 
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" /> 
+			<jvmarg value="-DfileName=${fileName}" /> 
+			<jvmarg value="-Dspring.configuration=ImpPersoFeedback" /> 
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" /> 
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" /> 
+		</java> 
+	</target>
+	
+	<target name="runProcCardIssueFee">
+		<java classname="${batchclassyhdp.dir}.fee.cardIssueFee.ProcCardIssueFee" fork="true">
+			<classpath>
+				<pathelement location="${config.dir}/batch/ProcCardIssueFee" />
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcCardIssueFee" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runProcCardIssSum">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="${config.dir}/batch/summary/ProcCardIssSum/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ProcCardIssSum" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpCAPCF">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpCAPCF" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpCAPCF" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpCARDAMT">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpCARDAMT" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpCARDAMT" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpCARTXN">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpCARTXN" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpCARTXN" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpTrafficFlagTxn">
+		 <java classname="${batchclassyhdp.dir}.expfiles.ExpTrafficFlagTxn" fork="true">
+			<classpath>
+			   <path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpTrafficFlagTxn" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		 </java>
+	</target>
+	
+	<target name="runExpEPAGP">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpEPAGP" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpEPAGP" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runReCalculateBonus">
+		<java classname="${batchclass.dir}.framework.generic.BatchExecutor" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<arg value="${config.dir}/batch/ReCalculateBonus/beans-config.xml" />
+			<arg value="processor" />
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ReCalculateBonus" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runImpRBMEM">
+		<java classname="${batchclassyhdp.dir}.impfiles.ImpRBMEM.ImpBMEM" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ImpRBMEM" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpRegenTrnTxn">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpRegenTrnTxn" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpRegenTrnTxn" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+	
+	<target name="runExpRegenTrnTxnR">
+		<java classname="${batchclassyhdp.dir}.expfiles.ExpRegenTrnTxnR.ExpRegenTrnTxnR" fork="true">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx384m" />
+			<jvmarg value="-DmemId=${memId}" />
+			<jvmarg value="-DjobId=${jobId}" />
+			<jvmarg value="-DjobTime=${jobTime}" />
+			<jvmarg value="-DlogMode=${logMode}" />
+			<jvmarg value="-Ddate=${date}" />
+			<jvmarg value="-Drecover=${recover}" />
+			<jvmarg value="-Dspring.configuration=ExpRegenTrnTxnR" />
+			<jvmarg value="-Djava.security.egd=file:///dev/urandom" />
+			<jvmarg value="-Dlog4j.configuration=${config.dir}/batch/log4j.xml" />
+		</java>
+	</target>
+</project>

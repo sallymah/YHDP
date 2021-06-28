@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<import resource="../../traffics.xml" />
+
+  <bean id="expTrn" class="tw.com.hyweb.svc.yhdp.batch.expfiles.ExpTrn.ExpTrn">
+    <property name="encoding"><value>UTF-8</value></property>
+    <property name="expTxnDtlFlag"><value>false</value></property>
+    
+    <property name="filenameBeans">
+      <list>
+        <ref bean="TXN_BUS"/>
+        <ref bean="TXNS_TRA"/>
+        <ref bean="TXNS_TRTC"/>
+        <ref bean="TXNS_TYRTC"/>
+        <ref bean="TXNS_KRTC"/>
+        <ref bean="TXNS_CARPARK"/>
+        <ref bean="TXNS_DHLRT"/>
+        <ref bean="TXNS_CBike"/>
+        <ref bean="TXNS_KLRT"/>
+        <ref bean="TXNS_NMNS"/>
+		<ref bean="TXNS_TMRT"/>
+		<ref bean="TXNS_TPZOO"/>
+		<ref bean="TXNS_HCZOO"/>
+		<ref bean="TXNS_SYMRT"/>
+      </list>
+    </property>
+    
+	<constructor-arg>
+		<ref bean="trnRcodes" />
+	</constructor-arg>
+	<constructor-arg>
+		<ref bean="members" />
+	</constructor-arg>
+  </bean>
+  
+  <bean id="trnRcodes" class="tw.com.hyweb.svc.yhdp.batch.framework.traffics.TrnRcodes"/>
+  <bean id="members" class="tw.com.hyweb.svc.yhdp.batch.framework.traffics.Members"/>
+  
+</beans>

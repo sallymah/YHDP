@@ -1,0 +1,41 @@
+# Version: 1.0.0
+# Date: 2007-01-03
+#Mon Apr 25 11:42:13 CST 2005
+dbservice.connection.driverClass=oracle.jdbc.driver.OracleDriver
+dbservice.connection.url=jdbc:oracle:thin:@(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = svc-scan.happycashcard.com.tw)(PORT = 2112))(CONNECT_DATA = (SERVICE_NAME = SVC)))
+dbservice.tableSwitchTime=2400
+dbservice.sqlExecuteTimeMs=1000
+dbservice.sql.execute.update.time=20
+dbservice.connection.usernames=batch,common
+dbservice.connection.showConnectionCount=false
+dbservice.dbcp.isRollback=false
+
+#BATCH
+dbservice.connection.username.batch=YHDP_BATCH
+dbservice.connection.password.batch=04AFB8E8A9371305367222BC0D1E3C45
+dbservice.dbcp.ps.maxActive.batch=30
+dbservice.dbcp.initialSize.batch=30
+dbservice.dbcp.maxIdle.batch=30
+dbservice.dbcp.minIdle.batch=30
+dbservice.dbcp.maxActive.batch=30
+dbservice.dbcp.testWhileIdle.batch=true
+dbservice.dbcp.testOnBorrow.batch=true
+dbservice.dbcp.testOnReturn.batch=true
+dbservice.dbcp.maxWait.batch=-1
+
+#COMMON
+dbservice.connection.username.common=YHDP_BATCH
+dbservice.connection.password.common=04AFB8E8A9371305367222BC0D1E3C45
+dbservice.dbcp.ps.maxActive.common=30
+dbservice.dbcp.initialSize.common=30
+dbservice.dbcp.maxIdle.common=30
+dbservice.dbcp.minIdle.common=30
+dbservice.dbcp.maxActive.common=30
+dbservice.dbcp.testWhileIdle.common=true
+dbservice.dbcp.testOnBorrow.common=true
+dbservice.dbcp.testOnReturn.common=true
+dbservice.dbcp.maxWait.common=-1
+
+#db service retry period and count about one hour.
+dbservice.connection.retryCount=4
+dbservice.connection.retryPeriod=900

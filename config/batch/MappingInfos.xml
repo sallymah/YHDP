@@ -1,0 +1,1345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MappingInfos>
+
+<EncodingInfo>
+    <FieldInfo name="B" encoding="Big5_HKSCS"/>
+    <FieldInfo name="U" encoding="UTF-8"/>
+</EncodingInfo>
+
+
+<!--
+說明:
+MappingInfo
+  name:String:attr
+    can set to TB_FILE_INFO.FILE_NAME
+  encoding:String:attr
+    if FieldInfo.encoding no set, default is this encoding
+  dataLength:int:attr
+    sum of length in fieldInfos must match TB_FILE_INFO.DATA_LEN or this recordLength
+    dataLength will re-compute using sum of length in fieldInfos plus lineLength
+  lineStyle:String:attr
+    {dos|unix|mac}, 決定換行與換行長度
+    dos:代表\r\n
+    unix:代表\n
+    mac:代表\r
+  ignoreChar:String:attr
+    (default ' ') setting, 可設定全部都是 ignoreChar 時, 將 ignore, 即轉成空字串
+  lineLength:int:attr
+  lineSep:String:attr
+  header:HeaderInfo
+  fields:List, each element is FieldInfo object
+  trailor:TrailorInfo
+
+HeaderInfo
+  hasHeader:boolean:attr
+    false, no check header, true check by hasCustHeader
+  hasCustHeader:boolean:attr
+    false, check header by filespec, true check by numLines and lines (has the same lines)
+  numLines:int:attr
+  lines:List, each element is String:element
+
+FieldInfo
+  name:String:attr
+  start:int:attr
+  length:int:attr
+  encoding:String:attr
+    if no set, default to MappingInfo.encoding
+  type:String:attr
+    {string|numer}
+  trim:boolean:attr
+    true is trim, false is not trim, for type = string
+  numFraction:int:attr
+    number of decimal fraction, for type = number
+    ex: 2, after read data, will convert to double and divide 100.0 to get real value
+  defaultValue:String:attr
+    當取得的值是空的或 null, 將以此 defaultValue 值代替
+  checkEmpty:boolean:attr
+  checkDate:boolean:attr
+  validValues:String:attr
+    AbstractImpFile.checkDataLine(DataLineInfo lineInfo) has default rule depends on these setting
+    checkEmpty=[true | false], default is false
+    when checkEmpty=true, check this field value is empty
+    checkDate=[true | false], default is false
+    when checkDate=true, check this field value is valid date when the field value is not empty
+    validValues=[value1,value2,...,valueN], default is empty, separator can be ',', ' '
+    when validValues is not empty, check this field value by these separated values when the field value is not empty
+
+TrailorInfo
+  hasTrailor:boolean:attr
+    false, no check trailor, true check by hasCustTrailor
+  hasCustTrailor:boolean:attr
+    false, no check, true check by numLines and lines (has the same lines)
+  numLines:int:attr
+  lines:List, each element is String:element
+
+template:
+  <MappingInfo name="" encoding="" dataLength="" lineStyle="" ignoreChar="">
+    <HeaderInfo hasHeader="" hasCustHeader="" numLines="">
+      <lines>line1</lines>
+      <lines>line2</lines>
+    </HeaderInfo>
+    <FieldInfo name="" start="" length="" encoding="" type="" trim="" numFraction="" checkEmpty="" checkDate="" validValues=""/>
+    <FieldInfo name="" start="" length="" encoding="" type="" trim="" numFraction="" checkEmpty="" checkDate="" validValues=""/>
+    <FieldInfo name="" start="" length="" encoding="" type="" trim="" numFraction="" checkEmpty="" checkDate="" validValues=""/>
+    <FieldInfo name="" start="" length="" encoding="" type="" trim="" numFraction="" checkEmpty="" checkDate="" validValues=""/>
+    <FieldInfo name="" start="" length="" encoding="" type="" trim="" numFraction="" checkEmpty="" checkDate="" validValues=""/>
+    <FieldInfo name="" start="" length="" encoding="" type="" trim="" numFraction="" checkEmpty="" checkDate="" validValues=""/>
+    <TrailorInfo hasTrailor="" hasCustTrailor="" numLines="">
+      <lines>line1</lines>
+      <lines>line2</lines>
+    </TrailorInfo>
+  </MappingInfo>
+-->
+
+<!--
+MERCH
+dataLength:725 + lineLength
+33 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field26]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="MERCH" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar="," separatorString=",">
+    <HeaderInfo hasHeader="true" hasCustHeader="false" numLines="1"/>
+    <FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true"  encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="收單單位代號" name="field02" start="3" length="8" type="string" trim="true"  encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="營利事業統一編號" name="field03" start="12" length="40" type="string" trim="true"  encoding="UTF-8"/>
+    <FieldInfo desc="特店當地名稱(中文/泰文..等)" name="field04" start="53" length="60" type="string" trim="true"  encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="特店英文名稱" name="field05" start="114" length="60" type="string" trim="true"  encoding="UTF-8"/>
+    <FieldInfo desc="特店簡稱" name="field06" start="175" length="20" type="string" trim="true"  encoding="UTF-8"/>
+    <FieldInfo desc="聯絡人" name="field07" start="196" length="20" type="string" trim="true"  encoding="UTF-8"/>
+    <FieldInfo desc="電話" name="field08" start="217" length="20" type="string" trim="true"  encoding="UTF-8"/>
+    <FieldInfo desc="傳真" name="field09" start="238" length="20" type="string" trim="true"  encoding="UTF-8"/>
+    <FieldInfo desc="縣市別" name="field10" start="259" length="20" type="string" trim="true"  encoding="UTF-8"/>
+    <FieldInfo desc="郵遞區號" name="field11" start="280" length="20" type="string" trim="true"  encoding="UTF-8"/>
+    <FieldInfo desc="地址" name="field12" start="301" length="300" type="string" trim="true"  encoding="UTF-8"/>
+    <FieldInfo desc="電子郵件" name="field13" start="602" length="30" type="string" trim="true"  encoding="UTF-8"/>
+    <FieldInfo desc="啟用日期" name="field14" start="633" length="8" type="string" trim="true"  encoding="UTF-8"/>
+    <FieldInfo desc="SAM強迫重新logon時間(小時)" name="field15" start="642" length="4" type="string"  encoding="UTF-8"/>
+    <FieldInfo desc="離線交易累計次數上限" name="field16" start="647" length="3" type="string" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="離線交易累計金額上限" name="field17" start="651" length="12" type="string" encoding="UTF-8" checkEmpty="true"/>
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+
+<!--
+TERM
+dataLength:161 + lineLength
+19 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field16]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="TERM" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar="," separatorString = ",">
+    <HeaderInfo hasHeader="true" hasCustHeader="false" numLines="1"/>
+    <FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="收單單位代號" name="field02" start="3" length="8" type="string" trim="true"  encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="特店當地名稱(中文/泰文..等)" name="field03" start="12" length="40" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="預設專櫃代號" name="field04" start="53" length="5" type="string" trim="true" encoding="UTF-8"/>
+    <FieldInfo desc="預設POS機號" name="field05" start="59" length="8" type="string" trim="true" encoding="UTF-8"/>
+    <FieldInfo desc="狀態" name="field06" start="68" length="1" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="啟用日期" name="field07" start="70" length="8" type="string" trim="true" encoding="UTF-8"/>
+    <FieldInfo desc="停用日期" name="field08" start="79" length="8" type="string" trim="true" encoding="UTF-8"/>
+    <FieldInfo desc="Vendor" name="field09" start="88" length="20" type="string" trim="true" encoding="UTF-8"/>
+    <FieldInfo desc="型號" name="field10" start="109" length="20" type="string" trim="true" encoding="UTF-8"/>
+    <FieldInfo desc="EDC允許的功能註記" name="field11" start="130" length="40" type="string" encoding="UTF-8" checkEmpty="true"/>
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+
+<!--
+BATCH
+dataLength:251 + lineLength
+19 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field20]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="BATCH" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar=" ">
+    <HeaderInfo hasHeader="true" hasCustHeader="false" numLines="1"/>
+    <FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+    <FieldInfo desc="SVC/LMS卡號" name="field02" start="2" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+    <FieldInfo desc="SVC/LMS有效期" name="field03" start="22" length="8" type="string" trim="true" numFraction="2" encoding="UTF-8" checkDate="true"/>
+    <FieldInfo desc="信用卡卡號" name="field04" start="30" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+    <FieldInfo desc="信用卡有效期" name="field05" start="50" length="8" type="string" trim="true" numFraction="2" encoding="UTF-8" checkDate="true"/>
+    <FieldInfo desc="特店代號" name="field06" start="58" length="15" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="端末機代號" name="field07" start="73" length="8" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="信用卡交易代碼" name="field08" start="81" length="4" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="MCC CODE" name="field09" start="85" length="4" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="交易來源" name="field10" start="89" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true" validValues="N,F"/>
+    <FieldInfo desc="收單國別" name="field11" start="90" length="3" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+    <FieldInfo desc="交易日期" name="field12" start="93" length="8" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true" checkDate="true"/>
+    <FieldInfo desc="交易時間" name="field13" start="101" length="6" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="交易授權碼" name="field14" start="107" length="6" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="交易幣別" name="field15" start="113" length="3" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+    <FieldInfo desc="交易金額" name="field16" start="116" length="16" type="number" trim="true" numFraction="2" encoding="UTF-8"/>
+    <FieldInfo desc="請款幣別" name="field17" start="132" length="3" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="請款金額" name="field18" start="135" length="16" type="number" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="說明" name="field19" start="151" length="100" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+
+<!--
+SVC
+IMPTRAFFICTXN
+不固定長度
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field03]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="IMPTRAFFICTXN" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar=" ">
+    <HeaderInfo hasHeader="false" hasCustHeader="false" numLines="1"/>
+    <FieldInfo desc="RESERVED" name="field01" start="0" length="1" type="string" trim="true" numFraction="0" encoding="UTF-8" checkEmpty="false"/>
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="1"/>
+  </MappingInfo>
+  
+  <!--
+SVC
+IMPCPCTXNDTL
+不固定長度
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field03]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="IMPCPCTXNDTL" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar=" ">
+    <HeaderInfo hasHeader="true" hasCustHeader="true" numLines="1"/>
+    <FieldInfo desc="RESERVED" name="field01" start="0" length="1" type="string" trim="true" numFraction="0" encoding="UTF-8" checkEmpty="false"/>
+    <TrailorInfo hasTrailor="true" hasCustTrailor="true" numLines="1"/>
+  </MappingInfo>
+
+  <!--
+SVC
+IMPFMTXNDTL
+不固定長度
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field03]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="IMPFMTXNDTL" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar=" ">
+    <HeaderInfo hasHeader="false" hasCustHeader="false" numLines="1"/>
+    <FieldInfo desc="RESERVED" name="field01" start="0" length="1" type="string" trim="true" numFraction="0" encoding="UTF-8" checkEmpty="false"/>
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="1"/>
+  </MappingInfo>
+  
+  <!--
+SVC
+IMPTXNDTL
+不固定長度
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field03]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+--> 
+  <MappingInfo name="IMPTXNDTL" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar=" ">
+	<HeaderInfo hasHeader="false" hasCustHeader="false" numLines="0"/>
+    <FieldInfo desc="RESERVED" name="field01" start="0" length="1" type="string" trim="true" numFraction="0" encoding="UTF-8" checkEmpty="false"/>
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+    
+<!--
+CARD
+dataLength:53 + lineLength
+2 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field02]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="CARD" hasCustEncoding = "false" encoding="UTF-8" lineStyle="unix" ignoreChar="," separatorString = ",">
+    <HeaderInfo hasHeader="true" hasCustHeader="false" numLines="1"/>
+	<FieldInfo desc="條碼一" name="field01" start="0" length="16" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="條碼二" name="field02" start="17" length="37" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+    
+<!--
+STOCKIN
+dataLength:22 + lineLength
+2 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field02]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="STOCKIN" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar=" ">
+    <HeaderInfo hasHeader="true" hasCustHeader="true" numLines="1"/>
+	<FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="卡號" name="field02" start="2" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<!--<FieldInfo desc="銷售客戶" name="field03" start="22" length="15" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="銷售方式" name="field04" start="37" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true" validValues="0,1,2"/>-->
+	<TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  
+<!--
+RESTOCKIN
+dataLength:22 + lineLength
+2 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field02]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="RESTOCKIN" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar=" ">
+    <HeaderInfo hasHeader="true" hasCustHeader="true" numLines="1"/>
+	<FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="卡號" name="field02" start="2" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  
+<!--
+REFUNDIN
+dataLength:22 + lineLength
+2 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field02]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="REFUNDIN" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar=" ">
+    <HeaderInfo hasHeader="true" hasCustHeader="true" numLines="1"/>
+	<FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="卡號" name="field02" start="2" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="銷售客戶" name="field03" start="22" length="15" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="銷售方式" name="field04" start="37" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true" validValues="0,1,2"/>
+	<TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  
+<!--
+STOCKOUT
+dataLength:22 + lineLength
+2 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field02]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="STOCKOUT" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar=" ">
+    <HeaderInfo hasHeader="true" hasCustHeader="true" numLines="1"/>
+	<FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="卡號" name="field02" start="2" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="銷售客戶" name="field03" start="22" length="15" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="銷售方式" name="field04" start="37" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true" validValues="0,1,2"/>
+	<TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  <!--
+DESTROY
+dataLength:22 + lineLength
+2 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field02]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="DESTROY" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar=" ">
+    <HeaderInfo hasHeader="true" hasCustHeader="true" numLines="1"/>
+	<FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="卡號" name="field02" start="2" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  
+<!--
+BLACKLIST
+dataLength:22 + lineLength
+2 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field02]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="BLACKLIST" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar=" ">
+    <HeaderInfo hasHeader="true" hasCustHeader="true" numLines="1"/>
+	<FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="卡號" name="field02" start="2" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  
+<!--	
+CUST
+dataLength:662 + lineLength
+21 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field21]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="CUST" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar=" ">
+    <HeaderInfo hasHeader="true" hasCustHeader="true" numLines="1"/>
+	<FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="卡號" name="field02" start="2" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="持卡人姓名" name="field03" start="22" length="60" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="身份證字號" name="field04" start="82" length="30" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="性別" name="field05" start="112" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" validValues="F,M"/>
+	<FieldInfo desc="出生日期" name="field06" start="113" length="8" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="縣市別" name="field07" start="121" length="10" type="string" trim="true" numFraction="2" encoding="UTF-8" />
+	<FieldInfo desc="郵遞區號" name="field08" start="131" length="5" type="string" trim="true" numFraction="2" encoding="UTF-8" />
+	<FieldInfo desc="地址" name="field09" start="136" length="300" type="string" trim="true" numFraction="2" encoding="UTF-8" />
+	<FieldInfo desc="市內電話" name="field10" start="436" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8" />
+	<FieldInfo desc="行動電話" name="field11" start="456" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8" />
+	<FieldInfo desc="電子信箱" name="field12" start="476" length="30" type="string" trim="true" numFraction="2" encoding="UTF-8" />
+	<FieldInfo desc="行銷使用註記" name="field13" start="506" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="法定代理人姓名" name="field14" start="507" length="60" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="法定代理人身份證號" name="field15" start="567" length="30" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="法定代理人行動電話" name="field16" start="597" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="法定代理人電話" name="field17" start="617" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="VIP 註記" name="field18" start="637" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="記名日期" name="field19" start="657" length="8" type="string" trim="true" numFraction="2" encoding="UTF-8" checkDate="true"/>
+	<FieldInfo desc="特店代號" name="field20" start="665" length="15" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="婚姻狀態" name="field21" start="680" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8"  validValues="0,1"/>
+	<FieldInfo desc="SA編號" name="field22" start="681" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="HG授權" name="field23" start="701" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="國別碼" name="field24" start="702" length="3" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  
+<!--	
+LPTSAM
+dataLength:29 + lineLength
+5 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field05]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="LPTSAM" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar=" ">
+    <HeaderInfo hasHeader="true" hasCustHeader="true" numLines="1"/>
+	<FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="異動狀態" name="field02" start="2" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true" validValues="I,D"/>
+	<FieldInfo desc="總公司代號" name="field03" start="3" length="5" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="SAM卡號" name="field04" start="8" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="狀態" name="field05" start="28" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true" validValues="1,9"/>
+	<FieldInfo desc="SAM卡號類別" name="field06" start="29" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true" validValues="L,R,B"/>
+	<TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  
+<!--	
+YMEMGR
+dataLength:623 + lineLength
+31 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field05]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="YMEMGR" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar=" ">
+    <HeaderInfo hasHeader="true" hasCustHeader="true" numLines="1"/>
+	<FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="0x2C" name="field02" start="2" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="總公司名稱" name="field03" start="3" length="60" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="0x2C" name="field04" start="63" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="營利事業統一編號" name="field05" start="64" length="40" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="0x2C" name="field06" start="104" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="聯絡人" name="field07" start="105" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="0x2C" name="field08" start="125" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="電話" name="field09" start="126" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="0x2C" name="field10" start="146" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="傳真" name="field11" start="147" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="0x2C" name="field12" start="167" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="電子郵件" name="field13" start="168" length="60" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="0x2C" name="field14" start="228" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="縣市別" name="field15" start="229" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="0x2C" name="field16" start="249" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="郵遞區號" name="field17" start="250" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="0x2C" name="field18" start="270" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="關企代碼" name="field19" start="271" length="6" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="0x2C" name="field20" start="277" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="產業別" name="field21" start="278" length="2" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="0x2C" name="field22" start="280" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="地址" name="field23" start="281" length="300" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="0x2C" name="field24" start="581" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="簽約日期" name="field25" start="582" length="8" type="string" trim="true" numFraction="2" encoding="UTF-8" checkDate="true" checkEmpty="true"/>
+	<FieldInfo desc="0x2C" name="field26" start="590" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="解約日期" name="field27" start="591" length="8" type="string" trim="true" numFraction="2" encoding="UTF-8" checkDate="true" checkEmpty="true"/>
+	<FieldInfo desc="0x2C" name="field28" start="599" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="啟用日期" name="field29" start="600" length="8" type="string" trim="true" numFraction="2" encoding="UTF-8" checkDate="true" checkEmpty="true"/>
+	<FieldInfo desc="0x2C" name="field30" start="608" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="單日現金加值金額上限" name="field31" start="609" length="14" type="number" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  
+<!--	
+YMEMBER
+dataLength:711 + lineLength
+39 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field39]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="YMEMBER" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar=" ">
+    <HeaderInfo hasHeader="true" hasCustHeader="true" numLines="1"/>
+	<FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="0x2C" name="field02" start="2" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="總公司名稱" name="field03" start="3" length="60" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="0x2C" name="field04" start="63" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="收單單位名稱" name="field05" start="64" length="90" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="0x2C" name="field06" start="154" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="參加單位型態" name="field07" start="155" length="8" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="0x2C" name="field08" start="163" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="單位機構屬性" name="field09" start="164" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="0x2C" name="field10" start="165" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="營利事業統一編號" name="field11" start="166" length="40" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="0x2C" name="field12" start="206" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="聯絡人" name="field13" start="207" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="0x2C" name="field14" start="227" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="電話" name="field15" start="228" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="0x2C" name="field16" start="248" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="傳真" name="field17" start="249" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="0x2C" name="field18" start="269" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="電子郵件" name="field19" start="270" length="60" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="0x2C" name="field20" start="330" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="縣市別" name="field21" start="331" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="0x2C" name="field22" start="351" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="郵遞區號" name="field23" start="352" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="0x2C" name="field24" start="372" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="關企代碼" name="field25" start="373" length="6" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="0x2C" name="field26" start="379" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="產業別" name="field27" start="380" length="2" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="0x2C" name="field28" start="382" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="地址" name="field29" start="383" length="300" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="0x2C" name="field30" start="683" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="啟用日期" name="field31" start="684" length="8" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="0x2C" name="field32" start="692" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="狀態" name="field33" start="693" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="0x2C" name="field34" start="694" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="SAM強迫重新logon時間(小時)" name="field35" start="695" length="4" type="number" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="0x2C" name="field36" start="699" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="每筆註冊記名手續費" name="field37" start="700" length="6" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<FieldInfo desc="0x2C" name="field38" start="706" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="手續費匯款日期範圍1 ~ 31" name="field39" start="707" length="2" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  
+  <!--
+APPLOAD
+dataLength:331 + lineLength
+7 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field16]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="HGTOYHDP_HG" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" separatorString = "|">
+    <HeaderInfo hasHeader="false" hasCustHeader="false" numLines="0"/>
+    <FieldInfo desc="兌點日期" name="field01" start="0" length="8" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="聯名卡卡號13號" name="field02" start="8" length="13" type="string" trim="true"  encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="商品代號" name="field03" start="21" length="10" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="訂單編號" name="field04" start="31" length="25" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="兌換券序號" name="field05" start="56" length="255" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="商品點數" name="field06" start="311" length="10" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="兌換金額" name="field07" start="321" length="10" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  
+<!--
+MERC
+dataLength:308 + lineLength
+13 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field16]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="MERC" hasCustEncoding = "true" encoding="UTF-8" lineStyle="dos" separatorString = "">
+    <HeaderInfo hasHeader="true" hasCustHeader="true" numLines="1"/>
+    <FieldInfo desc="檔頭標籤" name="field01" start="0" length="1" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="資料屬性" name="field02" start="1" length="2" type="string" trim="true"  encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="特店代號" name="field03" start="3" length="10" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="特店名簡稱(中文)" name="field04" start="13" length="60" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="連絡電話" name="field05" start="73" length="20" type="string" trim="true" encoding="UTF-8" checkEmpty="false"/>
+    <FieldInfo desc="手機號碼" name="field06" start="93" length="20" type="string" trim="true" encoding="UTF-8" checkEmpty="false"/>
+    <FieldInfo desc="傳真號碼" name="field07" start="113" length="20" type="string" trim="true" encoding="UTF-8" checkEmpty="false"/>
+    <FieldInfo desc="營業住址" name="field08" start="133" length="80" type="string" trim="true" encoding="UTF-8" checkEmpty="false"/>
+    <FieldInfo desc="營業住址區碼" name="field09" start="213" length="5" type="string" trim="true" encoding="UTF-8" checkEmpty="false"/>
+    <FieldInfo desc="特店啟用狀態" name="field10" start="218" length="1" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="特店啟用日" name="field11" start="219" length="8" type="string" trim="true" encoding="UTF-8" checkEmpty="false"/>
+    <FieldInfo desc="特店停用日" name="field12" start="227" length="8" type="string" trim="true" encoding="UTF-8" checkEmpty="false"/>
+    <FieldInfo desc="空白" name="field13" start="235" length="73" type="string" trim="true" encoding="UTF-8" checkEmpty="false"/>
+    <TrailorInfo hasTrailor="true" hasCustTrailor="true" numLines="1"/>
+  </MappingInfo>
+  
+  
+  <!--
+OTAIFF
+dataLength:5886 + lineLength
+129 fields
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="OTAIFF" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" separatorString = "">
+    <FieldInfo desc="儲值檔識別碼(PID)" name="field01" start="0" length="16" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="Mifare晶片序號" name="field02" start="16" length="8" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發卡單位編號" name="field03" start="24" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發卡設備編號" name="field04" start="26" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發行批號" name="field05" start="30" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發出日期" name="field06" start="34" length="8" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="有效日期" name="field07" start="42" length="8" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡片格式版本   " name="field08" start="50" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡片狀態:未初始化、初始化、個人化、鎖卡、停卡" name="field09" start="52" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="自動加值設定" name="field10" start="54" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="自動加值票值數額" name="field11" start="56" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="儲存最大票值數額(餘額上限)" name="field12" start="60" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="每筆可扣減最大票值數額" name="field13" start="64" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留(指定加值設定)" name="field14" start="68" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留(指定加值票值數額)" name="field15" start="70" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="自動加值日期" name="field16" start="74" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續離線自動加值次數上限" name="field17" start="78" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續自動加值次數上限" name="field18" start="80" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續指定加值次數上限" name="field19" start="82" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="HG磁條一軌" name="field20" start="84" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="包的物料號碼" name="field21" start="116" length="36" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡的物料號碼" name="field22" start="152" length="36" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="包號" name="field23" start="188" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="箱號" name="field24" start="220" length="20" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="盒號" name="field25" start="240" length="40" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="SIR" name="field26" start="280" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="ICCID" name="field27" start="312" length="20" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="SERVICEID" name="field28" start="322" length="6" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="SOID" name="field29" start="328" length="16" type="string" trim="true" encoding="UTF-8"/>
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  
+<!--
+IFF
+dataLength:5886 + lineLength
+129 fields
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="IFF" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" separatorString = "">
+    <HeaderInfo hasHeader="false" hasCustHeader="false" numLines="0"/>
+    <FieldInfo desc="檔頭標籤" name="field01" start="0" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="儲值檔識別碼(PID)" name="field02" start="4" length="16" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="餘額上限 (BIL)" name="field03" start="20" length="16" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="餘額下限 (BLL)" name="field04" start="36" length="10" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡片保固期" name="field05" start="46" length="8" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="首次消費" name="field06" start="54" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="累積離線消費金額上限" name="field07" start="56" length="16" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="累積離線消費次數上限" name="field08" start="72" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續離線自動加值次數上限" name="field09" start="74" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續自動加值次數上限" name="field10" start="76" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續指定加值次數上限" name="field11" start="78" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留" name="field12" start="80" length="222" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field13" start="302" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="Mifare晶片序號" name="field14" start="662" length="8" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="廠商批號Maufacturer code" name="field15" start="670" length="24" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="目錄服務指標(1)" name="field16" start="694" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="目錄服務指標(2)" name="field17" start="726" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發卡單位編號" name="field18" start="758" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發卡設備編號" name="field19" start="760" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發行批號" name="field20" start="764" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發出日期" name="field21" start="768" length="8" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="有效日期" name="field22" start="776" length="8" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡片格式版本   " name="field23" start="784" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡片狀態:未初始化、初始化、個人化、鎖卡、停卡" name="field24" start="786" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="檢查碼" name="field25" start="788" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="自動加值設定" name="field26" start="790" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="自動加值票值數額" name="field27" start="792" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="儲存最大票值數額(餘額上限)" name="field28" start="796" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="每筆可扣減最大票值數額" name="field29" start="800" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留(指定加值設定)" name="field30" start="804" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留(指定加值票值數額)" name="field31" start="806" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="自動加值日期" name="field32" start="810" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續離線自動加值次數上限" name="field33" start="814" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續自動加值次數上限" name="field34" start="816" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續指定加值次數上限" name="field35" start="818" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="檢查碼" name="field36" start="820" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="防偽驗證資料" name="field37" start="822" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="主要票值" name="field38" start="854" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="票值備份" name="field39" start="886" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="票值加值記錄" name="field40" start="918" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡片交易狀態資料    " name="field41" start="950" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近兩筆閘門交易記錄(1)" name="field42" start="982" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近兩筆閘門交易記錄(2)" name="field43" start="1014" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近六筆交易記錄(1)" name="field44" start="1046" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近六筆交易記錄(2)" name="field45" start="1078" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近六筆交易記錄(3)" name="field46" start="1110" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近六筆交易記錄(4)" name="field47" start="1142" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近六筆交易記錄(5)" name="field48" start="1174" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近六筆交易記錄(6)" name="field49" start="1206" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="使用者型態(卡種)" name="field50" start="1238" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="使用者截止日期" name="field51" start="1240" length="8" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="使用者序號User id" name="field52" start="1248" length="12" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發卡企業編號" name="field53" start="1260" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留" name="field54" start="1262" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡片押金" name="field55" start="1266" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡別" name="field56" start="1270" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="記名註記" name="field57" start="1272" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="生日MMDD" name="field58" start="1274" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="產品別" name="field59" start="1278" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留" name="field60" start="1280" length="22" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="儲值檔識別碼(PID)  " name="field61" start="1302" length="16" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留" name="field62" start="1318" length="16" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-台鐵" name="field63" start="1334" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-台鐵" name="field64" start="1366" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-台鐵" name="field65" start="1398" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-客運" name="field66" start="1430" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-客運" name="field67" start="1462" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-客運" name="field68" start="1494" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-台北捷運" name="field69" start="1526" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-台北捷運" name="field70" start="1558" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-台北捷運" name="field71" start="1590" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-資料備份區" name="field72" start="1622" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-資料備份區" name="field73" start="1654" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-資料備份區" name="field74" start="1686" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-段次客運" name="field75" start="1718" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-段次客運" name="field76" start="1750" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-段次客運" name="field77" start="1782" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-停車場" name="field78" start="1814" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-停車場" name="field79" start="1846" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-停車場" name="field80" start="1878" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field81" start="1910" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field82" start="1942" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field83" start="1974" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field84" start="2006" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field85" start="2038" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field86" start="2070" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field87" start="2102" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field88" start="2134" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field89" start="2166" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field90" start="2198" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field91" start="2454" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field92" start="2814" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field93" start="3070" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field94" start="3430" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field95" start="3686" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field96" start="4046" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field97" start="4302" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field98" start="4662" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field99" start="4918" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field100" start="5278" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field101" start="5534" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field102" start="5894" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field103" start="6150" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field104" start="6510" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field105" start="6766" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field106" start="7126" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field107" start="7382" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field108" start="7742" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field109" start="7998" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field110" start="8358" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field111" start="8614" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field112" start="8974" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field113" start="9230" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field114" start="9590" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field115" start="9846" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field116" start="10206" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field117" start="10462" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field118" start="10822" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field119" start="11078" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="HG磁條一軌" name="field120" start="11438" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="HG磁條二軌" name="field121" start="11470" length="74" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="HG條碼" name="field122" start="11544" length="26" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="信用卡卡片狀態" name="field123" start="11570" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="包的物料號碼" name="field124" start="11572" length="36" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡的物料號碼" name="field125" start="11608" length="36" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="包號" name="field126" start="11644" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="箱號" name="field127" start="11676" length="20" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="盒號" name="field128" start="11696" length="40" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="空白" name="field129" start="11736" length="36" type="string" trim="true" encoding="UTF-8"/>                                                                                                                                                                                                           
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  
+  <MappingInfo name="IFF2" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" separatorString = "">
+    <HeaderInfo hasHeader="false" hasCustHeader="false" numLines="0"/>
+    <FieldInfo desc="檔頭標籤" name="field01" start="0" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="儲值檔識別碼(PID)" name="field02" start="4" length="16" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="餘額上限 (BIL)" name="field03" start="20" length="16" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="餘額下限 (BLL)" name="field04" start="36" length="10" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡片保固期" name="field05" start="46" length="8" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="首次消費" name="field06" start="54" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="累積離線消費金額上限" name="field07" start="56" length="16" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="累積離線消費次數上限" name="field08" start="72" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續離線自動加值次數上限" name="field09" start="74" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續自動加值次數上限" name="field10" start="76" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續指定加值次數上限" name="field11" start="78" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留" name="field12" start="80" length="222" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field13" start="302" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="Mifare晶片序號" name="field14" start="662" length="8" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="廠商批號Maufacturer code" name="field15" start="670" length="24" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="目錄服務指標(1)" name="field16" start="694" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="目錄服務指標(2)" name="field17" start="726" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發卡單位編號" name="field18" start="758" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發卡設備編號" name="field19" start="760" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發行批號" name="field20" start="764" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發出日期" name="field21" start="768" length="8" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="有效日期" name="field22" start="776" length="8" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡片格式版本   " name="field23" start="784" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡片狀態:未初始化、初始化、個人化、鎖卡、停卡" name="field24" start="786" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="檢查碼" name="field25" start="788" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="自動加值設定" name="field26" start="790" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="自動加值票值數額" name="field27" start="792" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="儲存最大票值數額(餘額上限)" name="field28" start="796" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="每筆可扣減最大票值數額" name="field29" start="800" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留(指定加值設定)" name="field30" start="804" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留(指定加值票值數額)" name="field31" start="806" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="自動加值日期" name="field32" start="810" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續離線自動加值次數上限" name="field33" start="814" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續自動加值次數上限" name="field34" start="816" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續指定加值次數上限" name="field35" start="818" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="檢查碼" name="field36" start="820" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="防偽驗證資料" name="field37" start="822" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="主要票值" name="field38" start="854" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="票值備份" name="field39" start="886" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="票值加值記錄" name="field40" start="918" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡片交易狀態資料    " name="field41" start="950" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近兩筆閘門交易記錄(1)" name="field42" start="982" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近兩筆閘門交易記錄(2)" name="field43" start="1014" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近六筆交易記錄(1)" name="field44" start="1046" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近六筆交易記錄(2)" name="field45" start="1078" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近六筆交易記錄(3)" name="field46" start="1110" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近六筆交易記錄(4)" name="field47" start="1142" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近六筆交易記錄(5)" name="field48" start="1174" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近六筆交易記錄(6)" name="field49" start="1206" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="使用者型態(卡種)" name="field50" start="1238" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="使用者截止日期" name="field51" start="1240" length="8" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="使用者序號User id" name="field52" start="1248" length="12" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發卡企業編號" name="field53" start="1260" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留" name="field54" start="1262" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡片押金" name="field55" start="1266" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡別" name="field56" start="1270" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="記名註記" name="field57" start="1272" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="生日MMDD" name="field58" start="1274" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="產品別" name="field59" start="1278" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留" name="field60" start="1280" length="22" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="儲值檔識別碼(PID)  " name="field61" start="1302" length="16" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留" name="field62" start="1318" length="16" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-台鐵" name="field63" start="1334" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-台鐵" name="field64" start="1366" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-台鐵" name="field65" start="1398" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-客運" name="field66" start="1430" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-客運" name="field67" start="1462" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-客運" name="field68" start="1494" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-台北捷運" name="field69" start="1526" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-台北捷運" name="field70" start="1558" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-台北捷運" name="field71" start="1590" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-資料備份區" name="field72" start="1622" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-資料備份區" name="field73" start="1654" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-資料備份區" name="field74" start="1686" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-段次客運" name="field75" start="1718" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-段次客運" name="field76" start="1750" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-段次客運" name="field77" start="1782" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-停車場" name="field78" start="1814" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-停車場" name="field79" start="1846" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-停車場" name="field80" start="1878" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field81" start="1910" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field82" start="1942" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field83" start="1974" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field84" start="2006" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field85" start="2038" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field86" start="2070" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field87" start="2102" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field88" start="2134" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field89" start="2166" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field90" start="2198" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field91" start="2454" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field92" start="2814" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field93" start="3070" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field94" start="3430" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field95" start="3686" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field96" start="4046" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field97" start="4302" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field98" start="4662" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field99" start="4918" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field100" start="5278" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field101" start="5534" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field102" start="5894" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field103" start="6150" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field104" start="6510" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field105" start="6766" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field106" start="7126" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field107" start="7382" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field108" start="7742" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field109" start="7998" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field110" start="8358" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field111" start="8614" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field112" start="8974" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field113" start="9230" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field114" start="9590" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field115" start="9846" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field116" start="10206" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field117" start="10462" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field118" start="10822" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field119" start="11078" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="HG磁條一軌" name="field120" start="11438" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="HG磁條二軌" name="field121" start="11470" length="74" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="HG條碼" name="field122" start="11544" length="26" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="信用卡卡片狀態" name="field123" start="11570" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="包的物料號碼" name="field124" start="11572" length="36" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡的物料號碼" name="field125" start="11608" length="36" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="包號" name="field126" start="11644" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="箱號" name="field127" start="11676" length="20" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="盒號" name="field128" start="11696" length="40" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="空白" name="field129" start="11736" length="36" type="string" trim="true" encoding="UTF-8"/>                                                                                                                                                                                                           
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+ 
+<!-- 
+  IFF
+dataLength:5886 + lineLength
+129 fields
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="IFF_BANK" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" separatorString = "">
+    <HeaderInfo hasHeader="false" hasCustHeader="false" numLines="0"/>
+    <FieldInfo desc="檔頭標籤" name="field01" start="0" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="儲值檔識別碼(PID)" name="field02" start="4" length="16" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="餘額上限 (BIL)" name="field03" start="20" length="16" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="餘額下限 (BLL)" name="field04" start="36" length="10" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡片保固期" name="field05" start="46" length="8" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="首次消費" name="field06" start="54" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="累積離線消費金額上限" name="field07" start="56" length="16" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="累積離線消費次數上限" name="field08" start="72" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續離線自動加值次數上限" name="field09" start="74" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續自動加值次數上限" name="field10" start="76" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續指定加值次數上限" name="field11" start="78" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留" name="field12" start="80" length="222" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field13" start="302" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="Mifare晶片序號" name="field14" start="662" length="8" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="廠商批號Maufacturer code" name="field15" start="670" length="24" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="目錄服務指標(1)" name="field16" start="694" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="目錄服務指標(2)" name="field17" start="726" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發卡單位編號" name="field18" start="758" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發卡設備編號" name="field19" start="760" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發行批號" name="field20" start="764" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發出日期" name="field21" start="768" length="8" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="有效日期" name="field22" start="776" length="8" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡片格式版本   " name="field23" start="784" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡片狀態:未初始化、初始化、個人化、鎖卡、停卡" name="field24" start="786" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="檢查碼" name="field25" start="788" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="自動加值設定" name="field26" start="790" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="自動加值票值數額" name="field27" start="792" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="儲存最大票值數額(餘額上限)" name="field28" start="796" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="每筆可扣減最大票值數額" name="field29" start="800" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留(指定加值設定)" name="field30" start="804" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留(指定加值票值數額)" name="field31" start="806" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="自動加值日期" name="field32" start="810" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續離線自動加值次數上限" name="field33" start="814" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續自動加值次數上限" name="field34" start="816" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="連續指定加值次數上限" name="field35" start="818" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="檢查碼" name="field36" start="820" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="防偽驗證資料" name="field37" start="822" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="主要票值" name="field38" start="854" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="票值備份" name="field39" start="886" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="票值加值記錄" name="field40" start="918" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡片交易狀態資料    " name="field41" start="950" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近兩筆閘門交易記錄(1)" name="field42" start="982" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近兩筆閘門交易記錄(2)" name="field43" start="1014" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近六筆交易記錄(1)" name="field44" start="1046" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近六筆交易記錄(2)" name="field45" start="1078" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近六筆交易記錄(3)" name="field46" start="1110" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近六筆交易記錄(4)" name="field47" start="1142" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近六筆交易記錄(5)" name="field48" start="1174" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="最近六筆交易記錄(6)" name="field49" start="1206" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="使用者型態(卡種)" name="field50" start="1238" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="使用者截止日期" name="field51" start="1240" length="8" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="使用者序號User id" name="field52" start="1248" length="12" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="發卡企業編號" name="field53" start="1260" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留" name="field54" start="1262" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡片押金" name="field55" start="1266" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡別" name="field56" start="1270" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="記名註記" name="field57" start="1272" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="生日MMDD" name="field58" start="1274" length="4" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="產品別" name="field59" start="1278" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留" name="field60" start="1280" length="22" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="儲值檔識別碼(PID)  " name="field61" start="1302" length="16" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留" name="field62" start="1318" length="16" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-台鐵" name="field63" start="1334" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-台鐵" name="field64" start="1366" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-台鐵" name="field65" start="1398" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-客運" name="field66" start="1430" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-客運" name="field67" start="1462" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-客運" name="field68" start="1494" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-台北捷運" name="field69" start="1526" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-台北捷運" name="field70" start="1558" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-台北捷運" name="field71" start="1590" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-資料備份區" name="field72" start="1622" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-資料備份區" name="field73" start="1654" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-資料備份區" name="field74" start="1686" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-段次客運" name="field75" start="1718" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-段次客運" name="field76" start="1750" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-段次客運" name="field77" start="1782" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-停車場" name="field78" start="1814" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-停車場" name="field79" start="1846" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-停車場" name="field80" start="1878" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field81" start="1910" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field82" start="1942" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field83" start="1974" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field84" start="2006" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field85" start="2038" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field86" start="2070" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field87" start="2102" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field88" start="2134" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="保留-機場捷運" name="field89" start="2166" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field90" start="2198" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field91" start="2454" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field92" start="2814" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field93" start="3070" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field94" start="3430" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field95" start="3686" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field96" start="4046" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field97" start="4302" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field98" start="4662" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field99" start="4918" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field100" start="5278" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field101" start="5534" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field102" start="5894" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field103" start="6150" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field104" start="6510" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field105" start="6766" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field106" start="7126" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field107" start="7382" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field108" start="7742" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field109" start="7998" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field110" start="8358" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field111" start="8614" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field112" start="8974" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field113" start="9230" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field114" start="9590" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field115" start="9846" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field116" start="10206" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field117" start="10462" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="管控資料" name="field118" start="10822" length="256" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="交易資料" name="field119" start="11078" length="360" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="HG磁條一軌" name="field120" start="11438" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="HG磁條二軌" name="field121" start="11470" length="74" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="HG條碼" name="field122" start="11544" length="26" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="信用卡卡片狀態" name="field123" start="11570" length="2" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="包的物料號碼" name="field124" start="11572" length="36" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="卡的物料號碼" name="field125" start="11608" length="36" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="包號" name="field126" start="11644" length="32" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="箱號" name="field127" start="11676" length="20" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="盒號" name="field128" start="11696" length="40" type="string" trim="true" encoding="UTF-8"/>
+	<FieldInfo desc="空白" name="field129" start="11736" length="36" type="string" trim="true" encoding="UTF-8"/>                                                                                                                                                                                                           
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+<!--
+BTCB
+dataLength:129 + lineLength
+11 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field16]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="BTCB" hasCustEncoding = "false" encoding="Big5_HKSCS" lineStyle="dos" separatorString = "">
+    <HeaderInfo hasHeader="true" hasCustHeader="false" numLines="1"/>
+    <FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <FieldInfo desc="卡號" name="field02" start="2" length="20" type="string" trim="true"  encoding="Big5_HKSCS" checkEmpty="true"/>
+	<FieldInfo desc="卡片有效期" name="field03" start="22" length="4" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <FieldInfo desc="交易日期" name="field04" start="26" length="8" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" checkDate="true"/>
+    <FieldInfo desc="交易時間" name="field05" start="34" length="6" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <FieldInfo desc="交易金額" name="field06" start="40" length="14" type="number" trim="true" numFraction="0" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <FieldInfo desc="交易收單單位名稱" name="field07" start="54" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <FieldInfo desc="交易特店名稱" name="field08" start="74" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <FieldInfo desc="交易特店代碼" name="field09" start="94" length="15" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <FieldInfo desc="交易序號(RRN)" name="field10" start="109" length="12" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <FieldInfo desc="交易代碼" name="field11" start="121" length="4" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <FieldInfo desc="剔退/ChargeBack原因" name="field12" start="125" length="4" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  
+<!--
+DTXN
+dataLength:56 + lineLength
+7 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field16]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="DTXN" hasCustEncoding = "false" encoding="Big5_HKSCS" lineStyle="dos" separatorString = "">
+    <HeaderInfo hasHeader="true" hasCustHeader="false" numLines="1"/>
+    <FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <FieldInfo desc="卡號" name="field02" start="2" length="20" type="string" trim="true"  encoding="Big5_HKSCS" checkEmpty="true"/>
+	<FieldInfo desc="卡片有效期" name="field03" start="22" length="4" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <FieldInfo desc="簽帳月份" name="field04" start="26" length="6" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <FieldInfo desc="交易次數" name="field05" start="32" length="6" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <FieldInfo desc="交易總金額" name="field06" start="38" length="14" type="number" trim="true" numFraction="0" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <FieldInfo desc="回覆處理代碼" name="field07" start="52" length="4" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+
+<!--
+BKCD
+dataLength:62 + lineLength
+8 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field08]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="BKCD" hasCustEncoding = "false" encoding="Big5_HKSCS" lineStyle="dos" separatorString="">
+    <HeaderInfo hasHeader="true" hasCustHeader="false" numLines="1"/>
+    <FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="DT" />
+    <FieldInfo desc="異動狀態" name="field02" start="2" length="1" type="string" trim="true"  encoding="Big5_HKSCS" checkEmpty="true" validValues="0,1,2" />
+	<FieldInfo desc="卡號" name="field03" start="3" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+    <FieldInfo desc="卡片有效期" name="field04" start="23" length="4" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="停卡日期" name="field05" start="27" length="8" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false"/>
+    <FieldInfo desc="Happy Go 卡號" name="field06" start="35" length="20" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false"/>
+    <FieldInfo desc="自動加值授權銀行" name="field07" start="55" length="3" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false"/>
+    <FieldInfo desc="回覆處理代碼" name="field08" start="58" length="4" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+
+<!--
+CDRQ
+dataLength:31 + lineLength
+5 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field04]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="CDRQ" hasCustEncoding = "false" encoding="Big5_HKSCS" lineStyle="dos" separatorString="">
+    <HeaderInfo hasHeader="true" hasCustHeader="false" numLines="1"/>
+    <FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="DT" />
+    <FieldInfo desc="詢問原因" name="field02" start="2" length="1" type="string" trim="true"  encoding="Big5_HKSCS" checkEmpty="true" validValues="1,2,3,4" />
+	<FieldInfo desc="卡號" name="field03" start="3" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <FieldInfo desc="卡片有效期" name="field04" start="23" length="4" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <FieldInfo desc="回覆處理代碼" name="field05" start="27" length="4" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+
+<!--
+BMEM
+dataLength:710 + lineLength
+25 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field25]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="BMEM" hasCustEncoding = "false" encoding="Big5_HKSCS" lineStyle="dos" separatorString="">
+    <HeaderInfo hasHeader="true" hasCustHeader="false" numLines="1"/>
+    <FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="DT" />
+    <FieldInfo desc="卡號" name="field02" start="2" length="20" type="string" trim="true"  encoding="Big5_HKSCS" checkEmpty="true" />
+	<FieldInfo desc="卡片狀態" name="field03" start="22" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="0,1,2,3" />
+    <FieldInfo desc="HappyGO卡號" name="field04" start="23" length="13" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="持卡人姓名" name="field05" start="36" length="60" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+    <FieldInfo desc="身份證字號" name="field06" start="96" length="30" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+    <FieldInfo desc="性別" name="field07" start="126" length="1" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" validValues="F,M" />
+    <FieldInfo desc="出生日期" name="field08" start="127" length="8" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" checkDate="true" />
+    <FieldInfo desc="縣市別" name="field09" start="135" length="10" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="郵遞區號" name="field10" start="145" length="5" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="地址" name="field11" start="150" length="300" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="市內電話" name="field12" start="450" length="20" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="行動電話" name="field13" start="470" length="20" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="電子信箱" name="field14" start="490" length="30" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="行銷使用註記" name="field15" start="520" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="Y,N" />
+    <FieldInfo desc="法定代理人姓名" name="field16" start="521" length="60" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="法定代理人身份證號" name="field17" start="581" length="30" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="法定代理人行動電話" name="field18" start="611" length="20" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="法定代理人電話" name="field19" start="631" length="20" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="VIP 註記" name="field20" start="651" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+    <FieldInfo desc="發卡日期" name="field21" start="671" length="8" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" checkDate="true" />
+    <FieldInfo desc="信用卡有效日期" name="field22" start="679" length="4" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+    <FieldInfo desc="特店代號" name="field23" start="683" length="15" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+    <FieldInfo desc="婚姻狀態" name="field24" start="698" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="0,1,2" />
+    <FieldInfo desc="專案代碼" name="field25" start="699" length="20" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="回覆處理代碼" name="field26" start="719" length="4" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  
+  <!--
+BMEM
+dataLength:710 + lineLength
+25 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field25]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="BMEM2" hasCustEncoding = "false" encoding="Big5_HKSCS" lineStyle="dos" separatorString="">
+    <HeaderInfo hasHeader="true" hasCustHeader="false" numLines="1"/>
+    <FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="DT"/>
+	<FieldInfo desc="卡號" name="field02" start="2" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+	<FieldInfo desc="卡片狀態" name="field03" start="22" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="0,1,2,3"/>
+	<FieldInfo desc="HappyGO卡號" name="field04" start="23" length="13" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="國籍" name="field05" start="36" length="3" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+	<FieldInfo desc="職業與行業別" name="field06" start="39" length="2" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="持卡人中文姓名" name="field07" start="41" length="60" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+	<FieldInfo desc="持卡人英文姓名" name="field08" start="101" length="60" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="身份證明文件號碼" name="field09" start="161" length="30" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+	<FieldInfo desc="身分證明文件種類" name="field10" start="191" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="1,2,3,4"/>
+	<FieldInfo desc="性別" name="field11" start="192" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" validValues="F,M"/>
+	<FieldInfo desc="出生日期" name="field12" start="193" length="8" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" checkDate="true"/>
+	<FieldInfo desc="通訊縣市別" name="field13" start="201" length="10" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="通訊郵遞區號" name="field14" start="211" length="5" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="通訊地址" name="field15" start="216" length="300" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="戶籍縣市別" name="field16" start="516" length="10" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="戶籍郵遞區號" name="field17" start="526" length="5" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="戶籍地址" name="field18" start="531" length="300" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="市內電話" name="field19" start="831" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="行動電話" name="field20" start="851" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="電子信箱" name="field21" start="871" length="30" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="行銷使用註記" name="field22" start="901" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="Y,N"/>
+	<FieldInfo desc="法定代理人中文姓名" name="field23" start="902" length="60" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="法定代理人英文姓名" name="field24" start="962" length="60" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="法定代理人身份證明文件號碼" name="field25" start="1022" length="30" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="法定代理人身分證明文件種類" name="field26" start="1052" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="法定代理人國籍" name="field27" start="1053" length="3" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="法定代理人生日" name="field28" start="1056" length="8" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="法定代理人性別" name="field29" start="1064" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" validValues="F,M"/>
+	<FieldInfo desc="法定代理人行動電話" name="field30" start="1065" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="法定代理人電話" name="field31" start="1085" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="VIP 註記" name="field32" start="1105" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+	<FieldInfo desc="發卡日期" name="field33" start="1125" length="8" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+	<FieldInfo desc="信用卡有效日期" name="field34" start="1133" length="4" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+	<FieldInfo desc="特店代號" name="field35" start="1137" length="15" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+	<FieldInfo desc="婚姻狀態" name="field36" start="1152" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="0,1,2"/>
+	<FieldInfo desc="專案代碼" name="field37" start="1153" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="回覆處理代碼" name="field38" start="1173" length="4" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="0000"/>
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  
+  <MappingInfo name="BMEM3" hasCustEncoding = "false" encoding="Big5_HKSCS" lineStyle="dos" separatorString="">
+    <HeaderInfo hasHeader="true" hasCustHeader="false" numLines="1"/>
+    <FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="DT"/>
+	<FieldInfo desc="卡號" name="field02" start="2" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+	<FieldInfo desc="卡片狀態" name="field03" start="22" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="0,1,2,3"/>
+	<FieldInfo desc="HappyGO卡號" name="field04" start="23" length="13" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="國籍" name="field05" start="36" length="3" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+	<FieldInfo desc="職業與行業別" name="field06" start="39" length="2" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="持卡人中文姓名" name="field07" start="41" length="200" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+	<FieldInfo desc="持卡人英文姓名" name="field08" start="241" length="200" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="身份證明文件號碼" name="field09" start="441" length="30" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+	<FieldInfo desc="身分證明文件種類" name="field10" start="471" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="1,2,3,4"/>
+	<FieldInfo desc="性別" name="field11" start="472" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" validValues="F,M"/>
+	<FieldInfo desc="出生日期" name="field12" start="473" length="8" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" checkDate="true"/>
+	<FieldInfo desc="通訊縣市別" name="field13" start="481" length="10" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="通訊郵遞區號" name="field14" start="491" length="5" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="通訊地址" name="field15" start="496" length="300" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="戶籍縣市別" name="field16" start="796" length="10" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="戶籍郵遞區號" name="field17" start="806" length="5" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="戶籍地址" name="field18" start="811" length="300" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="市內電話" name="field19" start="1111" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="行動電話" name="field20" start="1131" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="電子信箱" name="field21" start="1151" length="30" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="行銷使用註記" name="field22" start="1181" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="Y,N"/>
+	<FieldInfo desc="法定代理人中文姓名" name="field23" start="1182" length="200" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="法定代理人英文姓名" name="field24" start="1382" length="200" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="法定代理人身份證明文件號碼" name="field25" start="1582" length="30" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="法定代理人身分證明文件種類" name="field26" start="1612" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="法定代理人國籍" name="field27" start="1613" length="3" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="法定代理人生日" name="field28" start="1616" length="8" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="法定代理人性別" name="field29" start="1624" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" validValues="F,M"/>
+	<FieldInfo desc="法定代理人行動電話" name="field30" start="1625" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="法定代理人電話" name="field31" start="1645" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="VIP 註記" name="field32" start="1665" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+	<FieldInfo desc="發卡日期" name="field33" start="1685" length="8" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+	<FieldInfo desc="信用卡有效日期" name="field34" start="1693" length="4" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true"/>
+	<FieldInfo desc="特店代號" name="field35" start="1697" length="15" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+	<FieldInfo desc="婚姻狀態" name="field36" start="1712" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="0,1,2"/>
+	<FieldInfo desc="專案代碼" name="field37" start="1713" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+	<FieldInfo desc="回覆處理代碼" name="field38" start="1733" length="4" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="0000"/>
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+
+<!--
+BARL
+dataLength:33 + lineLength
+5 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field05]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="BARL" hasCustEncoding = "false" encoding="Big5_HKSCS" lineStyle="dos" separatorString="">
+    <HeaderInfo hasHeader="true" hasCustHeader="false" numLines="1"/>
+    <FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="DT" />
+    <FieldInfo desc="異動狀態" name="field02" start="2" length="1" type="string" trim="true"  encoding="Big5_HKSCS" checkEmpty="true" validValues="A,D" />
+	<FieldInfo desc="卡號" name="field03" start="3" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+    <FieldInfo desc="拒授權設定效期" name="field04" start="23" length="6" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+    <FieldInfo desc="回覆處理代碼" name="field05" start="29" length="4" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+
+<!--
+CDST
+dataLength:53 + lineLength
+2 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field02]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="CDST" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar=" ">
+    <HeaderInfo hasHeader="true" hasCustHeader="true" numLines="1"/>
+	<FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<!-- 庫存類別 (1:入庫, 2:入庫沖正, 3:出庫, 4:退貨入庫, 5:銷毀) -->
+	<FieldInfo desc="庫存類別" name="field02" start="2" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true" validValues="1,2,3,4,5"/>
+	<FieldInfo desc="卡號" name="field03" start="3" length="20" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="銷售客戶" name="field04" start="23" length="15" type="string" trim="true" numFraction="2" encoding="UTF-8"/>
+	<!-- 銷售方式 (0:營業據點, 1:賣斷, 2:寄銷) -->
+	<FieldInfo desc="銷售方式" name="field05" start="38" length="1" type="string" trim="true" numFraction="2" encoding="UTF-8" validValues="0,1,2"/>
+	<FieldInfo desc="異動日期" name="field06" start="39" length="8" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="異動時間" name="field07" start="47" length="6" type="string" trim="true" numFraction="2" encoding="UTF-8" checkEmpty="true"/>
+	<TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  
+<!--
+ERPT
+dataLength:118 + lineLength
+10 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field09]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="ERPT" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" separatorString = "">
+    <HeaderInfo hasHeader="true" hasCustHeader="true" numLines="1"/>
+    <FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" encoding="UTF-8" checkEmpty="true" validValues="DT"/>
+    <FieldInfo desc="帳務歸屬代碼" name="field02" start="2" length="4" type="string" trim="true"  encoding="UTF-8" checkEmpty="true"/>
+	<FieldInfo desc="結帳日期" name="field03" start="6" length="8" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="抛檔日期" name="field04" start="14" length="8" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="空白" name="field05" start="22" length="1" type="string" trim="true" encoding="UTF-8" checkEmpty="false"/>
+    <FieldInfo desc="收單單位代號" name="field06" start="23" length="8" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="總數量" name="field07" start="31" length="13" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="總金額" name="field08" start="44" length="13" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="補助金額" name="field09" start="57" length="13" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="空白" name="field10" start="70" length="48" type="string" trim="true" encoding="UTF-8" checkEmpty="false"/>
+    <TrailorInfo hasTrailor="true" hasCustTrailor="true" numLines="1"/>
+  </MappingInfo>
+  
+    <!--
+BMEM
+dataLength:710 + lineLength
+25 fields
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field25]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="RBMEM" hasCustEncoding = "false" encoding="Big5_HKSCS" lineStyle="dos" separatorString="">
+    <HeaderInfo hasHeader="true" hasCustHeader="false" numLines="1"/>
+    <FieldInfo desc="檔頭標籤" name="field01" start="0" length="2" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="DT" />
+    <FieldInfo desc="卡號" name="field02" start="2" length="20" type="string" trim="true"  encoding="Big5_HKSCS" checkEmpty="true" />
+	<FieldInfo desc="卡片狀態" name="field03" start="22" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="0,1,2,3" />
+    <FieldInfo desc="HappyGO卡號" name="field04" start="23" length="13" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="持卡人姓名" name="field05" start="36" length="60" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+    <FieldInfo desc="身份證字號" name="field06" start="96" length="30" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+    <FieldInfo desc="性別" name="field07" start="126" length="1" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" validValues="F,M" />
+    <FieldInfo desc="出生日期" name="field08" start="127" length="8" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" checkDate="true" />
+    <FieldInfo desc="縣市別" name="field09" start="135" length="10" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="郵遞區號" name="field10" start="145" length="5" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="地址" name="field11" start="150" length="300" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="市內電話" name="field12" start="450" length="20" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="行動電話" name="field13" start="470" length="20" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="電子信箱" name="field14" start="490" length="30" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="行銷使用註記" name="field15" start="520" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="Y,N" />
+    <FieldInfo desc="法定代理人姓名" name="field16" start="521" length="60" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="法定代理人身份證號" name="field17" start="581" length="30" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="法定代理人行動電話" name="field18" start="611" length="20" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="法定代理人電話" name="field19" start="631" length="20" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="VIP 註記" name="field20" start="651" length="20" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+    <FieldInfo desc="發卡日期" name="field21" start="671" length="8" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" checkDate="true" />
+    <FieldInfo desc="信用卡有效日期" name="field22" start="679" length="4" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+    <FieldInfo desc="特店代號" name="field23" start="683" length="15" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+    <FieldInfo desc="婚姻狀態" name="field24" start="698" length="1" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" validValues="0,1,2" />
+    <FieldInfo desc="專案代碼" name="field25" start="699" length="20" type="string" trim="false" encoding="Big5_HKSCS" checkEmpty="false" />
+    <FieldInfo desc="回覆處理代碼" name="field26" start="719" length="4" type="string" trim="true" encoding="Big5_HKSCS" checkEmpty="true" />
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  <MappingInfo name="JCIC_CUST" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" separatorString = "">
+	    <HeaderInfo hasHeader="false" hasCustHeader="false" numLines="0"/>
+	    <FieldInfo desc="身分證字號" name="field01" start="0" length="10" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+	    <FieldInfo desc="驗證日期" name="field02" start="10" length="8" type="string" trim="true"  encoding="UTF-8" checkEmpty="true"/>
+		<FieldInfo desc="驗證結果代碼" name="field03" start="18" length="1" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+	    <FieldInfo desc="驗證結果說明" name="field04" start="19" length="40" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+	    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+	  </MappingInfo>
+  <MappingInfo name="JCIC_CARD" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" separatorString = "">
+	    <HeaderInfo hasHeader="false" hasCustHeader="false" numLines="0"/>
+	    <FieldInfo desc="卡號" name="field01" start="0" length="16" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+		<FieldInfo desc="通報種類" name="field02" start="16" length="2" type="string" trim="true"  encoding="UTF-8" checkEmpty="true"/>
+		<FieldInfo desc="通報日期" name="field03" start="18" length="7" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+		<FieldInfo desc="通報種類說明" name="field04" start="25" length="80" type="string" trim="true" encoding="UTF-8" checkEmpty="true"/>
+	    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+  <!--
+GP_CARD
+不固定長度
+contain fix field[first field, name is field01]
+先不計 space field[last field, name is field03]
+有些設定值可以不設, 會有預設處理, 請參考上面說明
+-->
+  <MappingInfo name="GP_CARD" hasCustEncoding = "false" encoding="UTF-8" lineStyle="dos" ignoreChar="," separatorString = ",">
+    <HeaderInfo hasHeader="false" hasCustHeader="false" numLines="0"/>
+    <FieldInfo desc="卡號 " name="field01" start="0" length="20" type="string" trim="true" numFraction="0" encoding="UTF-8" checkEmpty="true"/>
+    <FieldInfo desc="卡號綁卡日期 " name="field02" start="20" length="14" type="string" trim="true" numFraction="0" encoding="UTF-8" checkEmpty=""/>
+    <FieldInfo desc="個資同意聲明 " name="field03" start="34" length="100" type="string" trim="true" numFraction="0" encoding="UTF-8" checkEmpty=""/>    
+    <TrailorInfo hasTrailor="false" hasCustTrailor="false" numLines="0"/>
+  </MappingInfo>
+</MappingInfos>

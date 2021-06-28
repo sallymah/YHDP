@@ -1,0 +1,37 @@
+/*
+ * (版權及授權描述)
+ * Copyright 2007 (C) Hyweb Technology Coperation.
+ * All Rights Reserved.
+ *
+ * 2008/4/17
+ */
+package tw.com.hyweb.svc.yhdp.batch.daycut;
+
+import java.sql.Connection;
+
+import tw.com.hyweb.core.cp.batch.framework.generic.RecoverHandler;
+import tw.com.hyweb.core.cp.common.misc.Constants;
+import tw.com.hyweb.service.db.DBService;
+
+/**
+ * @author Clare
+ * 
+ */
+public class DayCutRecoverHandler implements RecoverHandler
+{
+    private final String[] tables;
+
+    public DayCutRecoverHandler(String[] tables)
+    {
+        this.tables = tables;
+    }
+
+    public void recover(Connection connection, String batchDate) throws Exception
+    {
+        for (String table : tables)
+        {
+            String sql = "update " + table + " set CUT_DATE=null,CUT_TIME=null,CUT_RCODE='" + Constants.RCODE_0000_OK + "' where CUT_DATE='" + batchDate + "' and CUT_RCODE<>'" + Constants.RCODE_0000_OK + "'";
+            DBService.getDBService().sqlAction(sql, connection, false);
+        }
+    }
+}

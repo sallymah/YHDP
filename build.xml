@@ -1,0 +1,1286 @@
+<?xml version="1.0"?>
+<!-- ===========================================================================
+
+                           *===================*
+                           | How to build      |
+                           *===================*
+
+
+Install the build tools
+=======================
+
+The build system is based on Jakarta Ant, and JUnit if we want to perform
+unit testing during build.
+
+ - JDK >= 1.7.
+ - Set JAVA_HOME environment variable.
+   e.g. set JAVA_HOME=c:\jdk1.7 (Win32)
+        export JAVA_HOME=/usr/local/IBMJava2-13 (Unix)
+
+============================================================================ -->
+
+<project name="hyweb-svc" default="usage" basedir=".">
+    <property environment="env" />
+    <tstamp>
+        <format property="NOW" pattern="yyyyMMddHHmmss" locale="tw" />
+        <format property="TODAY" pattern="yyyyMMdd" locale="tw" />
+    </tstamp>
+    <property name="layer" value="L3" />
+    <property name="name" value="${ant.project.name}" />
+    <property name="online" value="online" />
+    <property name="batch" value="batch" />
+    <property name="campaign" value="campaign" />
+    <property name="service" value="service" />
+    <property name="report" value="report" />
+    <property name="common" value="common" />
+    <property name="core" value="core" />
+	<property name="util" value="util" />
+    <property name="lms" value="lms" />
+    <property name="svc" value="svc" />
+    <property name="ol" value="ol" />
+    <property name="hsm" value="hsm" />
+
+    <property name="version" value="1.0" />
+    <property name="year" value="2006-2010" />
+    <property name="javadoc.packages" value="tw.com.hyweb.*" />
+
+    <property name="log.dir" value="log" />
+    <property name="src.dir" value="src/main" />
+    <property name="src-ws.dir" value="src/ws" />
+    <property name="lib.dir" value="lib" />
+	<property name="lib-ws.dir" value="lib.ws" />
+    <property name="bin.dir" value="bin" />
+    <property name="dll.dir" value="dll" />
+    <property name="build.dir" value="build" />
+    <property name="config.dir" value="config" />
+	<property name="prod.dir" value="ws-starbucks-cxf/prod config" />
+    <property name="testsrc.dir" value="src/JUnitTest" />
+    <property name="class.dir" value="${build.dir}/classes" />
+    <property name="junitReport.dir" value="JUnitReport" />
+    <property name="build.javadocs" value="API" />
+
+    <property name="system.dir" value="${env.SystemRoot}/System32" />
+    <property name="unittest.timeout" value="280000" />
+	
+	<property name="sys" value="" />
+
+    <!-- build classpath -->
+    <path id="build.classpath">
+        <pathelement location="${class.dir}" />
+        <pathelement location="${config.dir}" />
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar" />
+        </fileset>
+<!--
+        <fileset dir="${lib-ws.dir}">
+            <include name="**/*.jar" />
+        </fileset>
+-->
+    </path>
+
+    <!-- web service build classpath -->
+    <path id="build-ws.classpath">
+        <path refid="build.classpath"/>
+        <fileset dir="${lib-ws.dir}">
+            <include name="**/*.jar" />
+        </fileset>
+    </path>
+
+    <!-- =================================================================== -->
+    <!-- Help on usage                                                       -->
+    <!-- =================================================================== -->
+    <target name="usage">
+        <echo message="${ant.version}" />
+        <echo message="" />
+        <echo message="JCP Build file" />
+        <echo message="------------------------------------------------------" />
+        <echo message="" />
+        <echo message="available targets are:" />
+        <echo message="" />
+        <echo message="init             --> initialize resource" />
+        <echo message="checkout         --> check out files from subversion" />
+
+        <echo message="clean            --> cleans up the directory" />
+        <echo message="cleanUnitTest    --> cleans up the directory" />
+        <echo message="compile          --> compiles the source code" />
+        <echo message="compileUnitTest  --> compiles the source code" />
+        <echo message="run              --> run master Link program" />
+        <echo message="runUnitTest      --> runs unitTest and gen report" />
+        <echo message="javadocs         --> generates the API documentation" />
+        <echo message="jar-all          --> package all in one jar file" />
+        <echo message="zip              --> package zip file" />
+        <echo message="del.svn          --> delete all .svn dir from input dir" />
+        <echo message="runCipherUtil    --> encrype string or decrypt string" />
+        <echo message="" />
+        <echo message=" See the comments inside the build.xml for details." />
+        <echo message="------------------------------------------------------" />
+        <echo message="" />
+        <echo message="" />
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Prints environment values                              -->
+    <!-- =================================================================== -->
+    <target name="info" description="Echo system properties">
+        <echo message=" ${build.classpath} " />
+        <echoproperties />
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Prepare the root directory                                          -->
+    <!-- =================================================================== -->
+    <target name="initDirs">
+        <mkdir dir="${log.dir}" />
+        <mkdir dir="${src.dir}" />
+        <mkdir dir="${lib.dir}" />
+        <mkdir dir="${bin.dir}" />
+        <mkdir dir="${dll.dir}" />
+        <mkdir dir="${build.dir}" />
+        <mkdir dir="${config.dir}" />
+        <mkdir dir="${testsrc.dir}" />
+        <mkdir dir="${class.dir}" />
+        <mkdir dir="${junitReport.dir}" />
+        <mkdir dir="${build.javadocs}" />
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Prints useful build environment values                              -->
+    <!-- =================================================================== -->
+    <target name="env">
+        <echo message="JAVA_HOME = ${env.JAVA_HOME}" />
+        <echo message="user.home = ${user.home}" />
+        <echo message="java.class.path = ${java.class.path}" />
+        <echo message="java.library.path = ${java.library.path}" />
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- check nteventlogappender.dll if not found copy dll to dll.dir       -->
+    <!-- =================================================================== -->
+    <target name="checkLibrary">
+        <echo message="copy dll file to system ..." />
+    	<!--<copy todir="${system.dir}" failonerror="false">
+            <fileset dir="${dll.dir}">
+                <include name="wrapper.dll" unless="${dll.present}" />
+            </fileset>
+        </copy>-->
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Check out file from SubVersion                                      -->
+    <!-- =================================================================== -->
+    <target name="checkout">
+        <property name="svn" location="/usr/local/bin/svn" />
+        <input message="Please enter username " addproperty="username" />
+        <input message="Please enter password " addproperty="password" />
+        <exec executable="${svn}">
+            <arg value="co" />
+            <arg value="http://10.10.10.38/svnroot/096BA025/3 Controlled/3G SourceCode/Host"/>
+            <arg value="." />
+            <arg value="--username" />
+            <arg value="${username}" />
+            <arg value="--password" />
+            <arg value="${password}" />
+        </exec>
+        <echo message="check ok" />
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Prepare the build directory                                         -->
+    <!-- =================================================================== -->
+    <target name="init" depends="initDirs, env, checkLibrary">
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Cleanup                                                             -->
+    <!-- =================================================================== -->
+    <target name="clean" description="Cleanup">
+        <delete includeemptydirs="true">
+            <fileset dir="${build.dir}">
+                <include name="**/*" />
+            </fileset>
+            <fileset dir="${bin.dir}">
+                <include name="**/*" />
+            </fileset>
+        </delete>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Cleanup Unit Test                                                   -->
+    <!-- =================================================================== -->
+    <target name="cleanUnitTest" description="Cleanup Unit Test">
+        <delete includeemptydirs="true">
+            <fileset dir="${junitReport.dir}">
+                <include name="**/*Test*.class" />
+            </fileset>
+
+            <fileset dir="${junitReport.dir}">
+                <include name="*.xml" />
+                <include name="*.html" />
+            </fileset>
+        </delete>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Compile the source code                                             -->
+    <!-- =================================================================== -->
+    <target name="compile" depends="init" description="Compile the source code">
+        <mkdir dir="${class.dir}" />
+
+        <javac destdir="${class.dir}"
+               debug="on"
+               deprecation="on"
+               optimize="on"
+			   includeantruntime="false"
+               source="1.7"
+               encoding="utf8"
+               includes="**/*.java">
+            <classpath refid="build.classpath" />
+            <src path="${src.dir}" />
+        </javac>
+
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Compile the unittest source code                                    -->
+    <!-- =================================================================== -->
+    <target name="compileUnitTest"
+            depends="init"
+            description="Compile the unit test source code">
+        <mkdir dir="${class.dir}" />
+
+        <javac destdir="${class.dir}"
+               debug="on"
+               deprecation="on"
+               optimize="on"
+			   includeantruntime="false"
+               source="1.7"
+               includes="**/*.java">
+            <classpath refid="build.classpath" />
+            <src path="${src.dir}" />
+            <src path="${testsrc.dir}" />
+        </javac>
+
+    </target>
+
+
+    <!-- =================================================================== -->
+    <!-- Generate Key Store                                                  -->
+    <!-- =================================================================== -->
+    <property name="keystore" value="config/cnc.keystore" />
+    <property name="keystorepwd" value="CNCPWD" />
+    <property name="keyTempAlias" value="CNCTEMP" />
+    <property name="keyAliasPwd" value="CNCPWD" />
+    <property name="storeType" value="JCEKS" />
+
+    <!-- gen Key Store -->
+    <target name="genKeyStore">
+        <input message="Do you want to reset encrypt key from keystore(You have to execute enPwd.bat after reset encrypt key)?"
+            validargs="y,n" addproperty="do.genkeystore"
+        />
+        <condition property="do.abort">
+            <equals arg1="n" arg2="${do.genkeystore}" />
+        </condition>
+        <fail>
+            <condition>
+                <isset property="do.abort" />
+            </condition>
+        </fail>
+        <move file="${keystore}" tofile="${keystore}.${NOW}" failonerror="false" />
+        <genkey alias="${keyTempAlias}" keypass="${keyAliasPwd}"
+                keystore="${keystore}" storepass="${keystorepwd}" storetype="${storeType}">
+            <dname>
+                <param name="O" value="FISC" />
+            </dname>
+        </genkey>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Run CipherUtil                                                      -->
+    <!-- =================================================================== -->
+    <target name="runCipherUtil" depends="compile">
+        <input message="Please enter string. Ex:encrypt 1234 or decrypt D7AFE75AF1E18D0C2B6F229543D6BC40 " addproperty="value" />
+        <java classname="tw.com.hyweb.util.CipherUtil" fork="yes">
+            <arg line="${value}" />
+            <classpath refid="build.classpath" />
+        </java>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Run unit test                                                       -->
+    <!-- =================================================================== -->
+    <target name="run" depends="compile">
+        <java classname="tw.com.hyweb.online.DefMain" fork="yes">
+            <arg line="default" />
+            <classpath refid="build.classpath" />
+        </java>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Run unit test                                                       -->
+    <!-- =================================================================== -->
+    <target name="runUnitTest" depends="cleanUnitTest, compileUnitTest">
+
+        <junit printsummary="true" fork="no" timeout="${unittest.timeout}">
+            <formatter type="xml" />
+            <batchtest fork="yes" todir="${junitReport.dir}">
+                <fileset dir="${testsrc.dir}">
+                    <include name="**/tw/com/hyweb/**/*Test*.java" />
+                    <exclude name="**/AllTests.java" />
+                    <exclude name="**/MainTest.java" />
+                </fileset>
+            </batchtest>
+
+            <classpath>
+                <pathelement location="${class.dir}" />
+                <path refid="build.classpath" />
+            </classpath>
+        </junit>
+
+        <junitreport todir="${junitReport.dir}">
+            <fileset dir="${junitReport.dir}">
+                <include name="TEST-*.xml" />
+            </fileset>
+            <report format="noframes"
+                    todir="${junitReport.dir}"
+                    styledir="${junitReport.dir}" />
+        </junitreport>
+
+        <property name="browser"
+                  location="C:/Program Files/Internet Explorer/IEXPLORE.EXE" />
+
+        <property name="file" location="${junitReport.dir}/${TODAY}_JunitReport.html" />
+        <copy file="${junitReport.dir}/junit-noframes.html" tofile="${file}" />
+        <exec executable="${browser}" spawn="true" failonerror="false">
+            <arg value="${file}" />
+        </exec>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Create the API documentation                                        -->
+    <!-- =================================================================== -->
+    <target name="javadocs" description="Create the API documentation">
+        <mkdir dir="${build.javadocs}" />
+        <javadoc packagenames="${javadoc.packages}"
+                 sourcepath="${src.dir}"
+                 destdir="${build.javadocs}"
+                 author="true"
+                 version="true"
+                 use="true"
+                 windowtitle="${name} API"
+                 doctitle="${name}"
+                 link="http://java.sun.com/j2se/1.7.0/docs/api/"
+                 bottom="Copyright &#169; ${year} Hyweb Technology Coperation. All Rights Reserved.">
+            <classpath refid="build.classpath" />
+        </javadoc>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- add jar all for jar conline batch campaign report common            -->
+    <!-- =================================================================== -->
+    <target name="jar-all">
+        <input message="Please enter svn version to build jar " addproperty="svn.version" />
+        <mkdir dir="${bin.dir}" />
+        <antcall target="jar-core-common">
+            <param name="svn.version" value="${svn.version}" />
+        </antcall>
+        <antcall target="jar-core-campaign">
+            <param name="svn.version" value="${svn.version}" />
+        </antcall>
+        <antcall target="jar-core-online">
+            <param name="svn.version" value="${svn.version}" />
+        </antcall>
+        <antcall target="jar-core-batch">
+            <param name="svn.version" value="${svn.version}" />
+        </antcall>
+        <antcall target="jar-core-report">
+            <param name="svn.version" value="${svn.version}" />
+        </antcall>
+        <!--
+    <antcall target="jar-core-housekeep">
+            <param name="svn.version" value="${svn.version}"/>
+        </antcall>
+        -->
+        <antcall target="jar-core-service">
+            <param name="svn.version" value="${svn.version}" />
+        </antcall>
+        <antcall target="jar-lms-online">
+            <param name="svn.version" value="${svn.version}" />
+        </antcall>
+        <antcall target="jar-lms-batch">
+            <param name="svn.version" value="${svn.version}" />
+        </antcall>
+        <antcall target="jar-lms-report">
+            <param name="svn.version" value="${svn.version}" />
+        </antcall>
+        <antcall target="jar-svc-online">
+            <param name="svn.version" value="${svn.version}" />
+        </antcall>
+        <antcall target="jar-svc-batch">
+            <param name="svn.version" value="${svn.version}" />
+        </antcall>
+        <antcall target="jar-svc-campaign">
+            <param name="svn.version" value="${svn.version}" />
+        </antcall>
+        <antcall target="jar-svc-report">
+            <param name="svn.version" value="${svn.version}" />
+        </antcall>
+        <antcall target="jar-ol-online">
+            <param name="svn.version" value="${svn.version}" />
+        </antcall>
+        <antcall target="jar-ol-batch">
+            <param name="svn.version" value="${svn.version}" />
+        </antcall>
+        <antcall target="jar-ol-campaign">
+            <param name="svn.version" value="${svn.version}" />
+        </antcall>
+        <antcall target="jar-ol-report">
+            <param name="svn.version" value="${svn.version}" />
+        </antcall>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- jar core common                                                   -->
+    <!-- =================================================================== -->
+    <target name="jar-core-common" depends="compile">
+        <input message="Please enter svn version to build jar " addproperty="svn.version" />
+        <mkdir dir="${bin.dir}" />
+        <delete file="${bin.dir}/${layer}-${core}-${common}.jar" />
+        <jar jarfile="${bin.dir}/${layer}-${core}-${common}.jar">
+            <!--attribute must follow manifest spec: no space no spce char-->
+            <manifest>
+                <attribute name="Built-SVN-Version" value="${svn.version}" />
+            </manifest>
+            <fileset dir="${class.dir}">
+                <include name="tw/com/hyweb/${core}/**/*.class" />
+                <exclude name="tw/com/hyweb/${core}/cp/${online}/**/*.*" />
+                <exclude name="tw/com/hyweb/${core}/cp/${batch}/**/*.*" />
+                <exclude name="tw/com/hyweb/${core}/${campaign}/**/*.*" />
+                <exclude name="tw/com/hyweb/${core}/${service}/**/*.*" />
+                <exclude name="tw/com/hyweb/${core}/cp/${report}/**/*.*" />
+                <!--
+        <exclude name="tw/com/hyweb/${core}/cp/${housekeep}/**/*.*" />
+        -->
+            </fileset>
+        </jar>
+        <jar jarfile="${bin.dir}/${layer}-${core}-${common}-src.jar">
+            <!--attribute must follow manifest spec: no space no spce char-->
+            <manifest>
+                <attribute name="Built-SVN-Version" value="${svn.version}" />
+            </manifest>
+            <fileset dir="${src.dir}">
+                <include name="tw/com/hyweb/${core}/**/*.java" />
+                <exclude name="tw/com/hyweb/${core}/cp/${online}/**/*.*" />
+                <exclude name="tw/com/hyweb/${core}/cp/${batch}/**/*.*" />
+                <exclude name="tw/com/hyweb/${core}/${campaign}/**/*.*" />
+                <exclude name="tw/com/hyweb/${core}/${service}/**/*.*" />
+                <exclude name="tw/com/hyweb/${core}/cp/${report}/**/*.*" />
+                <!--
+        <exclude name="tw/com/hyweb/${core}/cp/${housekeep}/**/*.*" />
+        -->
+            </fileset>
+        </jar>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- jar core online                                                   -->
+    <!-- =================================================================== -->
+    <target name="jar-core-online" depends="compile">
+        <input message="Please enter svn version to build jar " addproperty="svn.version" />
+        <mkdir dir="${bin.dir}" />
+        <antcall target="jar-cp-module">
+            <param name="svn.version" value="${svn.version}" />
+            <param name="module.name" value="${online}" />
+            <param name="func" value="${core}" />
+        </antcall>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- jar core batch                                                    -->
+    <!-- =================================================================== -->
+    <target name="jar-core-batch" depends="compile">
+        <input message="Please enter svn version to build jar " addproperty="svn.version" />
+        <mkdir dir="${bin.dir}" />
+        <antcall target="jar-cp-module">
+            <param name="svn.version" value="${svn.version}" />
+            <param name="module.name" value="${batch}" />
+            <param name="func" value="${core}" />
+        </antcall>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- jar core campaign                                                         -->
+    <!-- =================================================================== -->
+    <target name="jar-core-campaign" depends="compile">
+        <input message="Please enter svn version to build jar " addproperty="svn.version" />
+        <mkdir dir="${bin.dir}" />
+
+        <delete file="${bin.dir}/${layer}-${core}-${campaign}.jar" />
+        <jar jarfile="${bin.dir}/${layer}-${core}-${campaign}.jar">
+            <!--attribute must follow manifest spec: no space no spce char-->
+            <manifest>
+                <attribute name="Built-SVN-Version" value="${svn.version}" />
+            </manifest>
+            <fileset dir="${class.dir}">
+                <include name="tw/com/hyweb/${core}/${campaign}/**/*.class" />
+                <exclude name="tw/com/hyweb/${core}/${campaign}/AwardExtend.class" />
+                <exclude name="tw/com/hyweb/${core}/${campaign}/RedeemExtend.class" />
+            </fileset>
+        </jar>
+        <jar jarfile="${bin.dir}/${layer}-${core}-${campaign}-src.jar">
+            <!--attribute must follow manifest spec: no space no spce char-->
+            <manifest>
+                <attribute name="Built-SVN-Version" value="${svn.version}" />
+            </manifest>
+            <fileset dir="${src.dir}">
+                <include name="tw/com/hyweb/${core}/${campaign}/**/*.java" />
+                <exclude name="tw/com/hyweb/${core}/${campaign}/AwardExtend.java" />
+                <exclude name="tw/com/hyweb/${core}/${campaign}/RedeemExtend.java" />
+            </fileset>
+        </jar>
+        <delete file="${bin.dir}/${layer}-${core}-${campaign}-ext.jar" />
+        <jar jarfile="${bin.dir}/${layer}-${core}-${campaign}-ext.jar">
+            <!--attribute must follow manifest spec: no space no spce char-->
+            <manifest>
+                <attribute name="Built-SVN-Version" value="${svn.version}" />
+            </manifest>
+            <fileset dir="${class.dir}">
+                <include name="tw/com/hyweb/${core}/${campaign}/AwardExtend.class" />
+                <include name="tw/com/hyweb/${core}/${campaign}/RedeemExtend.class" />
+            </fileset>
+        </jar>
+        <jar jarfile="${bin.dir}/${layer}-${core}-${campaign}-ext-src.jar">
+            <!--attribute must follow manifest spec: no space no spce char-->
+            <manifest>
+                <attribute name="Built-SVN-Version" value="${svn.version}" />
+            </manifest>
+            <fileset dir="${src.dir}">
+                <include name="tw/com/hyweb/${core}/${campaign}/AwardExtend.java" />
+                <include name="tw/com/hyweb/${core}/${campaign}/RedeemExtend.java" />
+            </fileset>
+        </jar>
+    </target>
+
+
+    <!-- =================================================================== -->
+    <!-- jar core service                                                         -->
+    <!-- =================================================================== -->
+    <target name="jar-core-service" depends="compile">
+        <input message="Please enter svn version to build jar " addproperty="svn.version" />
+        <mkdir dir="${bin.dir}" />
+
+        <delete file="${bin.dir}/${layer}-${core}-${service}.jar" />
+        <jar jarfile="${bin.dir}/${layer}-${core}-${service}.jar">
+            <!--attribute must follow manifest spec: no space no spce char-->
+            <manifest>
+                <attribute name="Built-SVN-Version" value="${svn.version}" />
+            </manifest>
+            <fileset dir="${class.dir}">
+                <include name="tw/com/hyweb/${core}/${service}/${hsm}/HsmResult.class" />
+                <include name="tw/com/hyweb/${core}/${service}/${hsm}/HsmInterface.class" />
+            </fileset>
+        </jar>
+        <jar jarfile="${bin.dir}/${layer}-${core}-${service}-src.jar">
+            <!--attribute must follow manifest spec: no space no spce char-->
+            <manifest>
+                <attribute name="Built-SVN-Version" value="${svn.version}" />
+            </manifest>
+            <fileset dir="${src.dir}">
+                <include name="tw/com/hyweb/${core}/${service}/${hsm}/HsmResult.java" />
+                <include name="tw/com/hyweb/${core}/${service}/${hsm}/HsmInterface.java" />
+            </fileset>
+        </jar>
+
+        <delete file="${bin.dir}/${layer}-${core}-${service}-ext.jar" />
+        <jar jarfile="${bin.dir}/${layer}-${core}-${service}-ext.jar">
+            <!--attribute must follow manifest spec: no space no spce char-->
+            <manifest>
+                <attribute name="Built-SVN-Version" value="${svn.version}" />
+            </manifest>
+            <fileset dir="${class.dir}">
+                <include name="tw/com/hyweb/${core}/${service}/**/*.class" />
+                <exclude name="tw/com/hyweb/${core}/${service}/${hsm}/HsmResult.class" />
+                <exclude name="tw/com/hyweb/${core}/${service}/${hsm}/HsmInterface.class" />
+            </fileset>
+        </jar>
+        <jar jarfile="${bin.dir}/${layer}-${core}-${service}-ext-src.jar">
+            <!--attribute must follow manifest spec: no space no spce char-->
+            <manifest>
+                <attribute name="Built-SVN-Version" value="${svn.version}" />
+            </manifest>
+            <fileset dir="${src.dir}">
+                <include name="tw/com/hyweb/${core}/${service}/**/*.java" />
+                <exclude name="tw/com/hyweb/${core}/${service}/${hsm}/HsmResult.java" />
+                <exclude name="tw/com/hyweb/${core}/${service}/${hsm}/HsmInterface.java" />
+            </fileset>
+        </jar>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- jar core report                                                     -->
+    <!-- =================================================================== -->
+    <target name="jar-core-report" depends="compile">
+        <input message="Please enter svn version to build jar " addproperty="svn.version" />
+        <mkdir dir="${bin.dir}" />
+        <antcall target="jar-cp-module">
+            <param name="svn.version" value="${svn.version}" />
+            <param name="module.name" value="${report}" />
+            <param name="func" value="${core}" />
+        </antcall>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- jar core housekeep                                                  -->
+    <!-- =================================================================== -->
+    <!--
+  <target name="jar-core-housekeep" depends="compile">
+        <input message="Please enter svn version to build jar " addproperty="svn.version" />
+        <mkdir dir="${bin.dir}" />
+        <antcall target="jar-cp-module">
+            <param name="svn.version" value="${svn.version}"/>
+            <param name="module.name" value="${housekeep}"/>
+            <param name="func" value="${core}"/>
+        </antcall>
+    </target>
+    -->
+
+    <!-- =================================================================== -->
+    <!-- jar lms online                                                      -->
+    <!-- =================================================================== -->
+    <target name="jar-lms-online" depends="compile">
+        <input message="Please enter svn version to build jar " addproperty="svn.version" />
+        <mkdir dir="${bin.dir}" />
+        <antcall target="jar-cp-module">
+            <param name="svn.version" value="${svn.version}" />
+            <param name="module.name" value="${online}" />
+            <param name="func" value="${lms}" />
+        </antcall>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- jar lms batch                                                       -->
+    <!-- =================================================================== -->
+    <target name="jar-lms-batch" depends="compile">
+        <input message="Please enter svn version to build jar " addproperty="svn.version" />
+        <mkdir dir="${bin.dir}" />
+        <antcall target="jar-cp-module">
+            <param name="svn.version" value="${svn.version}" />
+            <param name="module.name" value="${batch}" />
+            <param name="func" value="${lms}" />
+        </antcall>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- jar lms report                                                      -->
+    <!-- =================================================================== -->
+    <target name="jar-lms-report" depends="compile">
+        <input message="Please enter svn version to build jar " addproperty="svn.version" />
+        <mkdir dir="${bin.dir}" />
+        <antcall target="jar-cp-module">
+            <param name="svn.version" value="${svn.version}" />
+            <param name="module.name" value="${report}" />
+            <param name="func" value="${lms}" />
+        </antcall>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- jar svc online                                                      -->
+    <!-- =================================================================== -->
+    <target name="jar-svc-online" depends="compile">
+        <input message="Please enter svn version to build jar " addproperty="svn.version" />
+        <mkdir dir="${bin.dir}" />
+        <antcall target="jar-cp-module">
+            <param name="svn.version" value="${svn.version}" />
+            <param name="module.name" value="${online}" />
+            <param name="func" value="${svc}" />
+        </antcall>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- jar svc batch                                                       -->
+    <!-- =================================================================== -->
+    <target name="jar-svc-batch" depends="compile">
+        <!--<input message="Please enter svn version to build jar " addproperty="svn.version" />-->
+        <mkdir dir="${bin.dir}" />
+        <antcall target="jar-cp-module">
+            <param name="svn.version" value="${TODAY}" />
+            <param name="module.name" value="${batch}" />
+            <param name="func" value="${svc}" />
+        </antcall>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- jar svc campaign                                                    -->
+    <!-- =================================================================== -->
+    <target name="jar-svc-campaign" depends="compile">
+        <input message="Please enter svn version to build jar " addproperty="svn.version" />
+        <mkdir dir="${bin.dir}" />
+        <antcall target="jar-cp-module">
+            <param name="svn.version" value="${svn.version}"/>
+            <param name="module.name" value="${campaign}"/>
+            <param name="func" value="${svc}"/>
+        </antcall>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- jar svc report                                                      -->
+    <!-- =================================================================== -->
+    <target name="jar-svc-report" depends="compile">
+        <input message="Please enter svn version to build jar " addproperty="svn.version" />
+        <mkdir dir="${bin.dir}" />
+        <antcall target="jar-cp-module">
+            <param name="svn.version" value="${svn.version}" />
+            <param name="module.name" value="${report}" />
+            <param name="func" value="${svc}" />
+        </antcall>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- jar ol online                                                       -->
+    <!-- =================================================================== -->
+    <target name="jar-ol-online" depends="compile">
+        <input message="Please enter svn version to build jar " addproperty="svn.version" />
+        <mkdir dir="${bin.dir}" />
+        <antcall target="jar-cp-module">
+            <param name="svn.version" value="${svn.version}" />
+            <param name="module.name" value="${online}" />
+            <param name="func" value="${ol}" />
+        </antcall>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- jar ol batch                                                        -->
+    <!-- =================================================================== -->
+    <target name="jar-ol-batch" depends="compile">
+        <input message="Please enter svn version to build jar " addproperty="svn.version" />
+        <mkdir dir="${bin.dir}" />
+        <antcall target="jar-cp-module">
+            <param name="svn.version" value="${svn.version}" />
+            <param name="module.name" value="${batch}" />
+            <param name="func" value="${ol}" />
+        </antcall>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- jar ol campaign                                                     -->
+    <!-- =================================================================== -->
+    <target name="jar-ol-campaign" depends="compile">
+        <input message="Please enter svn version to build jar " addproperty="svn.version" />
+        <mkdir dir="${bin.dir}" />
+
+        <delete file="${bin.dir}/${layer}-${ol}-${campaign}.jar" />
+        <jar jarfile="${bin.dir}/${layer}-${ol}-${campaign}.jar">
+            <!--attribute must follow manifest spec: no space no spce char-->
+            <manifest>
+                <attribute name="Built-SVN-Version" value="${svn.version}" />
+            </manifest>
+            <fileset dir="${class.dir}">
+                <include name="tw/com/hyweb/${ol}/${campaign}/**/*.class" />
+                <exclude name="tw/com/hyweb/${ol}/${campaign}/OfflineAwardExtend.class" />
+            </fileset>
+        </jar>
+        <jar jarfile="${bin.dir}/${layer}-${ol}-${campaign}-src.jar">
+            <!--attribute must follow manifest spec: no space no spce char-->
+            <manifest>
+                <attribute name="Built-SVN-Version" value="${svn.version}" />
+            </manifest>
+            <fileset dir="${src.dir}">
+                <include name="tw/com/hyweb/${ol}/${campaign}/**/*.java" />
+                <exclude name="tw/com/hyweb/${ol}/${campaign}/OfflineAwardExtend.java" />
+            </fileset>
+        </jar>
+        <delete file="${bin.dir}/${layer}-${ol}-${campaign}-ext.jar" />
+        <jar jarfile="${bin.dir}/${layer}-${ol}-${campaign}-ext.jar">
+            <!--attribute must follow manifest spec: no space no spce char-->
+            <manifest>
+                <attribute name="Built-SVN-Version" value="${svn.version}" />
+            </manifest>
+            <fileset dir="${class.dir}">
+                <include name="tw/com/hyweb/${ol}/${campaign}/OfflineAwardExtend.class" />
+            </fileset>
+        </jar>
+        <jar jarfile="${bin.dir}/${layer}-${ol}-${campaign}-ext-src.jar">
+            <!--attribute must follow manifest spec: no space no spce char-->
+            <manifest>
+                <attribute name="Built-SVN-Version" value="${svn.version}" />
+            </manifest>
+            <fileset dir="${src.dir}">
+                <include name="tw/com/hyweb/${ol}/${campaign}/OfflineAwardExtend.java" />
+            </fileset>
+        </jar>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- jar ol report                                                       -->
+    <!-- =================================================================== -->
+    <target name="jar-ol-report" depends="compile">
+        <input message="Please enter svn version to build jar " addproperty="svn.version" />
+        <mkdir dir="${bin.dir}" />
+        <antcall target="jar-cp-module">
+            <param name="svn.version" value="${svn.version}" />
+            <param name="module.name" value="${report}" />
+            <param name="func" value="${ol}" />
+        </antcall>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- jar module by input name                                            -->
+    <!-- =================================================================== -->
+    <target name="jar-cp-module" depends="compile">
+        <delete file="${bin.dir}/${layer}-${func}-${module.name}.jar" />
+        <jar jarfile="${bin.dir}/${layer}-${func}-${module.name}.jar">
+            <!--attribute must follow manifest spec: no space no spce char-->
+            <manifest>
+                <attribute name="Built-SVN-Version" value="${svn.version}" />
+            </manifest>
+            <fileset dir="${class.dir}">
+                <include name="tw/com/hyweb/${func}/yhdp/${module.name}/**/*.class" />
+            	<include name="tw/com/hyweb/${core}/**/*.class" />
+            	<include name="tw/com/hyweb/${util}/**/*.class" />
+            	<exclude name="tw/com/hyweb/svc/yhdp/batch/cmd/*.*" />
+            </fileset>
+        </jar>
+        <jar jarfile="${bin.dir}/${layer}-${func}-${module.name}-src.jar">
+            <!--attribute must follow manifest spec: no space no spce char-->
+            <manifest>
+                <attribute name="Built-SVN-Version" value="${svn.version}" />
+            </manifest>
+            <fileset dir="${src.dir}">
+                <include name="tw/com/hyweb/${func}/yhdp/${module.name}/**/*.java" />
+            	<include name="tw/com/hyweb/${core}/**/*.java" />
+            	<include name="tw/com/hyweb/${util}/**/*.java" />
+            	<exclude name="tw/com/hyweb/svc/yhdp/batch/cmd/*.*" />
+            </fileset>
+        </jar>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Pack AP                                                             -->
+    <!-- =================================================================== -->
+    <target name="zip">
+        <echo message="PACK ALL AT ${name}.zip " />
+        <delete file="${name}.zip" />
+        <zip destfile="${name}.zip" update="true">
+            <fileset dir=".">
+                <include name="*.xml" />
+                <include name="*.bat" />
+                <include name="*.sh" />
+                <include name="${bin.dir}/**/*.*" />
+                <include name="${dll.dir}/**/*.*" />
+                <include name="${build.javadocs}**/*.*" />
+                <include name="${lib.dir}/**/*.*" />
+                <include name="${src.dir}/**/*.*" />
+                <include name="${testsrc.dir}/**/*.*" />
+                <include name="${config.dir}/**/*.*" />
+            </fileset>
+        </zip>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- zip patch jar file                                                -->
+    <!-- =================================================================== -->
+    <target name="patchonline">
+        <echo message="PACK ALL AT ${name}jar " />
+        <delete file="patchonline.zip" />
+        <zip zipfile="patchonline.zip" update="true">
+            <fileset dir=".">
+                <include name="bin/L3-*.jar" />
+                <exclude name="bin/L3-*src.jar" />
+                <include name="lib/L2-*.jar" />
+                <include name="${config.dir}/loyalty/*.xml" />
+                <exclude name="${config.dir}/loyalty/*.dtd" />
+                <exclude name="${config.dir}/loyalty/ip.properties" />
+                <exclude name="${config.dir}/loyalty/log4j.xml" />
+            </fileset>
+        </zip>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- zip batch patch jar file                                            -->
+    <!-- =================================================================== -->
+    <target name="patchbatch">
+        <echo message="PACK ALL AT ${name}jar " />
+        <delete file="patchbatch.zip" />
+        <zip zipfile="patchbatch.zip" update="true">
+            <fileset dir=".">
+                <include name="bin/L3-*.jar" />
+                <exclude name="bin/L3-*src.jar" />
+                <include name="lib/L2-*.jar" />
+            </fileset>
+        </zip>
+    </target>
+	
+    <!-- =================================================================== -->
+    <!-- Cleanup .svn meta data                                              -->
+    <!-- =================================================================== -->
+    <target name="del.svn" description="Cleanup .svn dir">
+        <input message="Please enter dir to clean .svn " addproperty="destdir" />
+        <delete includeEmptyDirs="true">
+            <fileset dir="${destdir}" defaultexcludes="no">
+                <include name="**/.svn" />
+                <include name="**/.svn/**" />
+            </fileset>
+        </delete>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Cleanup .class                                              -->
+    <!-- =================================================================== -->
+    <target name="del.class" description="Cleanup .svn dir">
+        <input message="Please enter dir to clean .svn " addproperty="destdir" />
+        <delete includeEmptyDirs="true">
+            <fileset dir="${destdir}" defaultexcludes="no">
+                <include name="**/*.class" />
+            </fileset>
+        </delete>
+    </target>
+    <!-- =================================================================== -->
+    <!-- fix file for win and unix                                           -->
+    <!-- =================================================================== -->
+    <target name="fixcrlf">
+        <fixcrlf srcDir="${basedir}" includes="**/*.bat" eol="crlf" eof="asis" />
+        <fixcrlf srcDir="${basedir}" includes="**/*.sh" eol="lf" eof="remove" />
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Compile the web service source code                                 -->
+    <!-- =================================================================== -->
+    <target name="compile-ws" depends="compile" description="Compile the web services source code">
+        <javac destdir="${class.dir}" debug="on" deprecation="on" optimize="on" includeantruntime="false" source="1.7" encoding="utf8" includes="**/*.java">
+            <classpath refid="build.classpath" />
+            <src path="${src-ws.dir}" />
+        </javac>
+    </target>
+	
+	 <target name="compile-ws-cxf" depends="compile" description="Compile the web services source code">
+	        <javac destdir="${class.dir}" debug="on" deprecation="on" optimize="on" includeantruntime="false" source="1.7" encoding="utf8" includes="**/*.java">
+	            <classpath refid="build.classpath" />
+	            <src path="${src-ws.dir}/tw/com/hyweb/cp/ws/**" />
+	        </javac>
+	 </target>
+	
+	<target name="compile-ws-starbucks-cxf" description="Compile the web services source code">
+		    <javac destdir="${class.dir}" debug="on" deprecation="on" optimize="on" includeantruntime="false" source="1.7" encoding="utf8" includes="**/*.java">
+		         <classpath refid="build.classpath" />
+		         <src path="${src-ws.dir}/tw/com/hyweb/starbucks/ws" />
+		    </javac>
+	</target>
+
+    <!-- =================================================================== -->
+    <!-- war web service                                                     -->
+    <!-- =================================================================== -->
+    <target name="war-ws" depends="compile-ws, jar-core-common">
+        <war destfile="${bin.dir}/hyweb-ws.war" webxml="${config.dir}/ws/web.xml">
+            <webinf dir="${config.dir}/ws">
+                <include name="applicationContext.xml" />
+            </webinf>
+            <lib dir="${lib-ws.dir}">
+                <include name="*.jar" />
+                <exclude name="servlet-api.jar" />
+            </lib>
+            <lib dir="${lib.dir}">
+                <include name="hyweb-layer1.jar" />
+                <include name="hyweb-dao.jar" />
+                <include name="commons-lang-*.jar" />
+            	<include name="L2-ws.jar" />
+            	<include name="L2-core-campaign*.jar" />
+        		<include name="L2-core-common.jar" />
+        		<include name="L2-ol-campaign*.jar" />
+            </lib>
+            <lib dir="${lib.dir}/dom4j-1.6.1">
+                <include name="*.jar" />
+            </lib>
+            <lib dir="${bin.dir}">
+                <include name="${layer}-core-common.jar" />
+                <include name="${layer}-core-campaign.jar" />
+                <include name="${layer}-core-campaign-ext.jar" />
+                <include name="${layer}-ol-campaign.jar" />
+                <include name="${layer}-ol-campaign-ext.jar" />
+            </lib>
+            <classes dir="${class.dir}">
+                <include name="tw/com/hyweb/cp/ws/**/*.class" />
+            </classes>
+            <classes dir="${config.dir}/ws">
+                <include name="log4j.xml" />
+            </classes>
+            <classes dir=".">
+                <include name="${config.dir}/cnc.keystore" />
+                <include name="${config.dir}/dbservice.properties" />
+            </classes>
+        </war>
+   	</target>
+
+
+	<target name="war-ws-cxf" depends="compile-ws">
+		<input message="Please enter svn version to build jar " addproperty="svn.version" />
+		
+		<war destfile="${bin.dir}/hyweb-ws-cxf.war_${svn.version}" webxml="${config.dir}/ws-cxf/web.xml">
+			<manifest>
+                <attribute name="Built-SVN-Version" value="${TODAY}" />
+            </manifest>
+			
+			<webinf dir="${config.dir}/ws-cxf">
+	            <include name="applicationContext.xml" />
+	        	<include name="txnfields.xml" />
+	        	<include name="custfields.xml" />
+	        	<include name="balancefields.xml" />
+            </webinf>
+        	<lib dir="${lib.dir}/dom4j-1.6.1">
+                <include name="dom4j-1.6.1.jar" />	          
+            </lib>
+            <lib dir="${lib-ws.dir}/cxf">
+                <include name="*.jar" />	          
+            </lib>
+            <lib dir="${lib.dir}">
+            	<include name="hyweb-layer1.jar" />
+            	<include name="hyweb-dao.jar" />
+            	<include name="L2-core-batch.jar" />
+            	<include name="L2-core-campaign*.jar" />
+            	<include name="L2-ol-campaign*.jar" />
+            	<include name="L2-svc-campaign*.jar" />
+            	<include name="L2-core-common.jar" />
+            	<include name="L2-core-service.jar" />
+            	<include name="L2-core-service-ext.jar" />
+            	<include name="log4j-1.2.13.jar"/>
+            	<include name="jpos.jar"/>
+            	<include name="ojdbc5.jar" />
+            	<include name="commons-*.jar" />
+            </lib>
+            <classes dir="${class.dir}">
+                <include name="tw/com/hyweb/core/**/*.class" />
+            	<include name="tw/com/hyweb/cp/**/*.class" />
+            	<include name="tw/com/hyweb/yhdp/ws/**/*.class" />
+            	<include name="tw/com/hyweb/util/**/*.class" />
+            </classes>
+            <classes dir="${config.dir}/ws-cxf">
+                <include name="log4j.xml" />
+            </classes>
+        	<classes dir=".">
+                <include name="${config.dir}/cnc.keystore" />
+        		<include name="${config.dir}/batch.properties" />
+        		<include name="${config.dir}/batch/MappingInfos.xml" />
+            </classes>
+			<classes dir="${config.dir}/dbservice/${svn.version}">
+                <include name="${config.dir}/dbservice.properties" />
+				<include name="${config.dir}/hsmservice.properties" />
+            </classes>
+        </war>
+    </target>
+	
+		<target name="war-ws-starbucks-cxf" depends="compile-ws-starbucks-cxf">
+		        <war destfile="${bin.dir}/hyweb-ws-starbucks-cxf.war" webxml="${config.dir}/ws-starbucks-cxf/web.xml">
+		            <webinf dir="${config.dir}/ws-starbucks-cxf">
+		                <include name="*.xml" />
+		            </webinf>
+		            <lib dir="${lib.dir}/ws/cxf">
+		                <include name="*.jar" />	          
+		            </lib>
+		        	<lib dir="${lib.dir}/dom4j-1.6.1">
+		        		<include name="dom4j-1.6.1.jar" />	          
+		        	</lib>
+		        	<lib dir="${lib.dir}/ws">
+		        		<include name="commons-*.jar" />	          
+		        	</lib>
+		            <lib dir="${lib.dir}">
+		            	<include name="hyweb-layer1.jar" />
+		            	<include name="hyweb-dao.jar" />
+		            	<include name="L2-core-batch.jar" />
+		            	<include name="L2-core-online.jar" />
+		            	<include name="L2-core-common.jar" />
+		            	<include name="L2-core-campaign.jar" />
+		            	<include name="log4j-1.2.13.jar" />
+		            	<include name="json-lib-2.3-jdk15.jar"/>
+		            	<include name="ezmorph-1.0.4.jar"/>
+		            	<include name="jpos.jar"/>
+		            	<include name="ojdbc14.jar" />
+		            </lib>
+		            <classes dir="${class.dir}">
+		                <include name="tw/com/hyweb/starbucks/ws/**/*.class" />
+		            </classes>
+		            <classes dir="${config.dir}/ws-starbucks-cxf">
+		                <include name="log4j.xml" />
+		            </classes>
+		        	<classes dir=".">
+		        	    <include name="${config.dir}/cnc.keystore" />
+		        	    <include name="${config.dir}/dbservice.properties" />
+		        		<include name="${config.dir}/hsmservice.properties" />
+		        	</classes>
+		        </war>
+		  </target>
+    	<target name="war-ws-starbucks-cxf-prod" depends="compile-ws-starbucks-cxf">
+	        <war destfile="${bin.dir}/hyweb-ws-starbucks-cxf-Production.war" webxml="${config.dir}/ws-starbucks-cxf/web.xml">
+	            <webinf dir="${config.dir}/ws-starbucks-cxf/prod config">
+	                <include name="*.xml" />
+	            </webinf>
+	            <lib dir="${lib.dir}/ws/cxf">
+	                <include name="*.jar" />	          
+	            </lib>
+	        	<lib dir="${lib.dir}/dom4j-1.6.1">
+	        		<include name="dom4j-1.6.1.jar" />	          
+	        	</lib>
+	        	<lib dir="${lib.dir}/ws">
+	        		<include name="commons-*.jar" />	          
+	        	</lib>
+	            <lib dir="${lib.dir}">
+	            	<include name="hyweb-layer1.jar" />
+	            	<include name="hyweb-dao.jar" />
+	            	<include name="L2-core-batch.jar" />
+	            	<include name="L2-core-online.jar" />
+	            	<include name="L2-core-common.jar" />
+	            	<include name="L2-core-campaign.jar" />
+	            	<include name="log4j-1.2.13.jar" />
+	            	<include name="json-lib-2.3-jdk15.jar"/>
+	            	<include name="ezmorph-1.0.4.jar"/>
+	            	<include name="jpos.jar"/>
+	            	<include name="ojdbc14.jar" />
+	            </lib>
+	            <classes dir="${class.dir}">
+	                <include name="tw/com/hyweb/starbucks/ws/**/*.class" />
+	            </classes>
+	            <classes dir="${config.dir}/ws-starbucks-cxf/prod config">
+	                <include name="log4j.xml" />
+	            </classes>
+	        	<classes dir="./${config.dir}/${prod.dir}">
+	        	    <include name="${config.dir}/cnc.keystore" />
+	        	    <include name="${config.dir}/dbservice.properties" />
+	        		<include name="${config.dir}/hsmservice.properties" />
+	        	</classes>
+	        </war>
+	  </target>
+    <!-- =================================================================== -->
+    <!-- jar web service                                                     -->
+    <!-- =================================================================== -->
+    <target name="jar-ws" depends="compile-ws">
+        <jar jarfile="${bin.dir}/${layer}-ws.jar">
+            <fileset dir="${class.dir}">
+                <include name="tw/com/hyweb/cp/ws/**/*.class" />
+            </fileset>
+        </jar>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- jar web service client from server                                  -->
+    <!-- =================================================================== -->
+    <taskdef name="wsgen" classname="org.codehaus.xfire.gen.WsGenTask" classpathref="build.classpath" />
+    <target name="jar-ws-client">
+        <wsgen outputDirectory="${build.dir}/ws-client/src" wsdl="http://10.10.10.13:8080/hyweb-ws/services/CardNoGenerationService?wsdl" package="tw.com.hyweb.cp.ws.cardnogenerator" overwrite="true" />
+        <mkdir dir="${build.dir}/ws-client/classes" />
+        <javac destdir="${build.dir}/ws-client/classes" debug="on" deprecation="on" optimize="on" includeantruntime="false" source="1.7" includes="**/*.java">
+            <classpath refid="build.classpath" />
+            <src path="${build.dir}/ws-client/src" />
+        </javac>
+        <mkdir dir="${bin.dir}" />
+        <delete file="${bin.dir}/${layer}-hyweb-ws.jar" />
+        <jar jarfile="${bin.dir}/${layer}-hyweb-ws.jar">
+            <fileset dir="${build.dir}/ws-client/classes">
+                <include name="tw/com/hyweb/**/*.class" />
+            </fileset>
+        </jar>
+    </target>
+
+
+    <!-- =================================================================== -->
+    <!-- Install as NT service interactive                                   -->
+    <!-- =================================================================== -->
+    <target name="installService">
+        <input addproperty="app.dir">
+        Please enter name to install
+        ex.
+            loyalty            : loyalty Online Service
+        </input>
+        <input addproperty="service.name">
+        Please enter service name
+        ex.
+            hyweb            : hyweb.exe will show and hyweb.conf will read to config
+        </input>
+        <copy file="${env.JAVA_HOME}/bin/java.exe" tofile="${env.JAVA_HOME}/bin/${service.name}.exe" />
+        <copy file="${config.dir}/wrapper.conf" tofile="${config.dir}/${app.dir}/${service.name}.conf" />
+        <replace file="${config.dir}/${app.dir}/${service.name}.conf" token="wrapper.java.command=%JAVA_HOME%/bin/java" value="wrapper.java.command=%JAVA_HOME%/bin/${service.name}.exe" />
+        <replace file="${config.dir}/${app.dir}/${service.name}.conf" token="wrapper.console.title=HYWEB" value="wrapper.console.title=${service.name}" />
+        <replace file="${config.dir}/${app.dir}/${service.name}.conf" token="wrapper.ntservice.name=HYWEB" value="wrapper.ntservice.name=${service.name}" />
+        <replace file="${config.dir}/${app.dir}/${service.name}.conf" token="wrapper.ntservice.displayname=HYWEB" value="wrapper.ntservice.displayname=${service.name}" />
+        <replace file="${config.dir}/${app.dir}/${service.name}.conf" token="wrapper.ntservice.description=HYWEB" value="wrapper.ntservice.description=${service.name}" />
+        <exec executable="InstallApp-NT.bat">
+            <arg line="${config.dir}/${app.dir}/${service.name}.conf" />
+        </exec>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Uninstall as NT service interactive                              -->
+    <!-- =================================================================== -->
+    <target name="uninstallService">
+        <input addproperty="app.dir">
+        Please enter name to uninstall
+        ex.
+            loyalty            : loyalty Online Service
+        </input>
+        <input addproperty="service.name">
+        Please enter service name
+        ex.
+            hyweb            : hyweb.exe will show and hyweb.conf will read to config
+        </input>
+        <exec executable="UninstallApp-NT.bat">
+            <arg line="${config.dir}/${app.dir}/${service.name}.conf" />
+        </exec>
+    </target>
+
+    <target name="insDev">
+        <antcall target="installService">
+            <param name="app.dir" value="loyalty"/>
+            <param name="service.name" value="HywebSvcDev"/>
+        </antcall>
+    </target>
+    <target name="uninsDev">
+        <antcall target="uninstallService">
+            <param name="app.dir" value="loyalty"/>
+            <param name="service.name" value="HywebSvcDev"/>
+        </antcall>
+    </target>
+    <target name="insDemo">
+        <antcall target="installService">
+            <param name="app.dir" value="loyalty"/>
+            <param name="service.name" value="HywebSvcDemo"/>
+        </antcall>
+    </target>
+    <target name="uninsDemo">
+        <antcall target="uninstallService">
+            <param name="app.dir" value="loyalty"/>
+            <param name="service.name" value="HywebSvcDemo"/>
+        </antcall>
+    </target>
+    <target name="insFt">
+        <antcall target="installService">
+            <param name="app.dir" value="loyalty"/>
+            <param name="service.name" value="HywebSvcFt"/>
+        </antcall>
+    </target>
+    <target name="uninsFt">
+        <antcall target="uninstallService">
+            <param name="app.dir" value="loyalty"/>
+            <param name="service.name" value="HywebSvcFt"/>
+        </antcall>
+    </target>
+    <target name="insSit">
+        <antcall target="installService">
+            <param name="app.dir" value="loyalty"/>
+            <param name="service.name" value="HywebSvcSit"/>
+        </antcall>
+    </target>
+    <target name="uninsSit">
+        <antcall target="uninstallService">
+            <param name="app.dir" value="loyalty"/>
+            <param name="service.name" value="HywebSvcSit"/>
+        </antcall>
+    </target>
+    <target name="insProduct">
+        <antcall target="installService">
+            <param name="app.dir" value="loyalty"/>
+            <param name="service.name" value="HywebSvc"/>
+        </antcall>
+    </target>
+    <target name="uninsProduct">
+        <antcall target="uninstallService">
+            <param name="app.dir" value="loyalty"/>
+            <param name="service.name" value="HywebSvc"/>
+        </antcall>
+    </target>
+</project>

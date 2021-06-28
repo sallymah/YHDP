@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+    <bean id="NFieldsFilter" class="tw.com.hyweb.online.filter.NFieldsFilter">
+    <!--在request有帶而response不需要的欄位要加在下面濾掉 -->
+        <property name="fields">
+            <props>
+                <prop key="0100">5 8 9 16 17 27 28</prop>
+                <prop key="0110">5 8 9 16 17 27 28</prop>
+                <prop key="0120">5 8 9 16 17 27 28</prop>
+                <prop key="0130">5 8 9 16 17 27 28</prop>
+                <prop key="0210">5 8 9 16 17 27 28</prop>
+                <prop key="0420">5 8 9 16 17 27 28</prop>
+                <prop key="0430">5 8 9 16 17 27 28</prop>
+                <prop key="0510">5 8 9 16 17 27 28 41 42</prop>
+                <prop key="0800">5 8 9 16 17 27 28</prop>
+                <prop key="0810">5 8 9 16 17 27 28</prop>
+                <prop key="0230">4</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="Field58NTagFilter" class="tw.com.hyweb.svc.yhdp.online.filter.TlvTagFilter">
+        <property name="tagsMC">
+            <!--response filter-->
+            <props>
+               <!-- Active Card -->
+                <prop key="7117">FF21 FF22 FF23 FF25 FF26 FF2A FF2B FF2C FF32 FF35 FF38 FF39 FF3D FF3E FF3A FF3B FF43 FF44 FF51 FF52 FF62</prop>
+
+                <!-- Reload -->
+                <prop key="7707">FF21 FF22 FF23 FF25 FF26 FF2A FF2B FF2C FF32 FF35 FF38 FF39 FF3D FF3E FF3A FF3B FF43 FF44 FF51 FF52 FF62</prop>
+                <prop key="7747">FF21 FF22 FF23 FF25 FF26 FF2A FF2B FF2C FF32 FF35 FF38 FF39 FF3D FF3E FF3A FF3B FF43 FF44 FF51 FF52 FF62</prop>
+                <prop key="7757">FF21 FF22 FF23 FF25 FF26 FF2A FF2B FF2C FF32 FF35 FF38 FF39 FF3D FF3E FF3A FF3B FF43 FF44 FF51 FF52 FF62</prop>              
+
+				<!-- Reload void -->
+                <prop key="7708">FF21 FF2A FF2B FF2C FF38 FF39 FF3A FF3B FF3D FF44 FF51 FF52 FF62</prop>
+                <prop key="7748">FF21 FF2A FF2B FF2C FF38 FF39 FF3A FF3B FF3D FF44 FF51 FF52 FF62</prop>
+                <prop key="7758">FF21 FF2A FF2B FF2C FF38 FF39 FF3A FF3B FF3D FF44 FF51 FF52 FF62</prop>
+                
+				<!-- Connect Validator -->
+                <prop key="7257">FF2A FF2C FF44 FF55</prop>
+                
+                <!-- Card Register -->
+                <prop key="7267">FF2A FF2C FF35 FF44</prop>
+                
+                <!-- Purchase Award -->
+                <prop key="7887">FF2A FF2C FF44 FF42 FF6B FF6C</prop>
+                
+                <!-- Refund Card -->
+                <prop key="7527">FF2A FF2C FF3D FF38 FF39 FF44</prop>
+                
+                <!-- Refund Card void -->
+                <prop key="7528">FF21 FF2A FF2B FF2C FF38 FF39 FF3A FF3B FF3D FF44 FF51 FF52 FF62</prop>
+                
+                <!-- ReActivate Card -->
+                <prop key="7247">FF2A FF2C FF3D FF44</prop>
+                
+                 <!--LMS AppointReload -->
+                <prop key="7307">FF21 FF22 FF23 FF25 FF26 FF2A FF2C FF32 FF38 FF39 FF3A FF3B FF43 FF44 FF51 FF52 FF62</prop>
+                
+                <!--LMS ComeStoreAward -->
+                <prop key="7807">FF21 FF22 FF23 FF25 FF26 FF2A FF2C FF32 FF38 FF39 FF3A FF3B FF43 FF44 FF51 FF52 FF62</prop>
+                
+                <!--LMS Repair -->
+                <prop key="7507">FF21 FF22 FF23 FF25 FF26 FF2A FF2C FF32 FF38 FF39 FF3A FF3B FF43 FF44 FF51 FF52 FF62</prop>
+                
+                <!--LMS Batch Repair -->
+                <prop key="7537">FF21 FF22 FF23 FF25 FF26 FF2A FF2C FF32 FF38 FF39 FF3A FF3B FF43 FF44 FF51 FF52 FF62</prop>
+                
+                <!--LMS Parameter Download -->
+                <prop key="7337">FF2A FF2C FF64 DF66</prop>
+                
+                 <!--LMS BlackList Download -->
+                <prop key="7357">FF2A FF2C FF64 DF65</prop>
+                
+				<!-- sale void -->
+                <prop key="7208">FF21 FF2A FF2B FF2C FF38 FF39 FF3A FF3B FF3D FF44 FF51 FF52 FF62</prop>
+                <prop key="7218">FF21 FF2A FF2B FF2C FF38 FF39 FF3A FF3B FF3D FF44 FF51 FF52 FF62</prop>
+                <prop key="7648">FF21 FF2A FF2B FF2C FF38 FF39 FF3A FF3B FF3D FF44 FF51 FF52 FF62</prop>
+                
+                <!-- refund void -->
+                <prop key="7646">FF21 FF2A FF2B FF2C FF38 FF39 FF3A FF3B FF3D FF44 FF51 FF52 FF62</prop>
+                <prop key="7206">FF21 FF2A FF2B FF2C FF38 FF39 FF3A FF3B FF3D FF44 FF51 FF52 FF62</prop>
+                <prop key="7216">FF21 FF2A FF2B FF2C FF38 FF39 FF3A FF3B FF3D FF44 FF51 FF52 FF62</prop>
+                <prop key="7506">FF21 FF2A FF2B FF2C FF38 FF39 FF3A FF3B FF3D FF44 FF51 FF52 FF62</prop>
+                
+                <prop key="7347">FF2A FF2C FF44 FF38 FF39 FF3A FF3B FF51 FF52 FF62</prop>
+                
+                <prop key="7327">FF22 FF2A FF2C FF63 DF66 DF65</prop>
+                
+                <prop key="7367">FF2A FF2C FF48 FF56</prop>
+                <prop key="7377">FF2A FF2C</prop>
+                
+            </props>
+        </property>
+    </bean>
+    <bean id="ReversalFilter" class="tw.com.hyweb.svc.yhdp.online.filter.ReversalFilter"></bean>
+</beans>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+  <bean id="TXN_BUS" class="tw.com.hyweb.svc.yhdp.batch.framework.traffics.bus">
+    <property name="fileNameZip"><value>TXNS_ZIP</value></property>
+    <property name="fileName"><value>TXN</value></property>
+    <property name="fileNameR"><value>TXNR</value></property>
+    <property name="fileNameRZip"><value>TXNR_ZIP</value></property>
+    <property name="separatorString"><value>_.</value></property>
+    <property name="memIds">
+      <util:list>
+      </util:list>
+    </property>
+  </bean> 
+  
+  <bean id="TXNS_TRA" class="tw.com.hyweb.svc.yhdp.batch.framework.traffics.tra">
+    <property name="fileNameZip"><value>TXNS_TRA_ZIP</value></property>
+    <property name="fileName"><value>TXNS_TRA</value></property>
+    <property name="fileNameR"><value>TXNR_TRA</value></property>
+    <property name="fileNameRZip"><value>TXNR_TRA_ZIP</value></property>
+    <property name="separatorString"><value>_.</value></property>
+    <property name="memIds">
+      <util:list>
+      </util:list>
+    </property>
+  </bean> 
+  
+  <bean id="TXNS_TRTC" class="tw.com.hyweb.svc.yhdp.batch.framework.traffics.trtc">
+    <property name="fileNameZip"><value>TXNS_TRTC_ZIP</value></property>
+    <property name="fileName"><value>TXNS_TRTC</value></property>
+    <property name="fileNameR"><value>TXNR_TRTC</value></property>
+    <property name="fileNameRZip"><value>TXNR_TRTC_ZIP</value></property>
+    <property name="separatorString"><value>_.</value></property>
+    <property name="memIds">
+      <util:list>
+      </util:list>
+    </property>
+  </bean> 
+  
+  <bean id="TXNS_TYRTC" class="tw.com.hyweb.svc.yhdp.batch.framework.traffics.tmc">
+    <property name="fileNameZip"><value>TXNS_TYRTC_ZIP</value></property>
+    <property name="fileName"><value>TXNS_TYRTC</value></property>
+    <property name="fileNameR"><value>TXNR_TYRTC</value></property>
+    <property name="fileNameRZip"><value>TXNR_TYRTC_ZIP</value></property>
+    <property name="separatorString"><value>_.</value></property>
+    <property name="memIds">
+      <util:list>
+      </util:list>
+    </property>
+  </bean> 
+  
+  <bean id="TXNS_KRTC" class="tw.com.hyweb.svc.yhdp.batch.framework.traffics.krtc">
+    <property name="fileNameZip"><value>TXNS_KRTC_ZIP</value></property>
+    <property name="fileName"><value>TXNS_KRTC</value></property>
+    <property name="fileNameR"><value>TXNR_KRTC</value></property>
+    <property name="fileNameRZip"><value>TXNR_KRTC_ZIP</value></property>
+    <property name="separatorString"><value>_.</value></property>
+    <property name="memIds">
+      <util:list>
+      </util:list>
+    </property>
+  </bean>
+  
+  <bean id="TXNS_CARPARK" class="tw.com.hyweb.svc.yhdp.batch.framework.traffics.carpark">
+    <property name="fileNameZip"><value>TXNS_CARPARK_ZIP</value></property>
+    <property name="fileName"><value>TXNS_CARPARK</value></property>
+    <property name="fileNameR"><value>TXNR_CARPARK</value></property>
+    <property name="fileNameRZip"><value>TXNR_CARPARK_ZIP</value></property>
+    <property name="separatorString"><value>_.</value></property>
+    <property name="memIds">
+      <util:list>
+      </util:list>
+    </property>
+  </bean>
+  
+  <bean id="TXNS_KLRT" class="tw.com.hyweb.svc.yhdp.batch.framework.traffics.klrt">
+    <property name="fileNameZip"><value>TXNS_KLRT_ZIP</value></property>
+    <property name="fileName"><value>TXNS_KLRT</value></property>
+    <property name="fileNameR"><value>TXNR_KLRT</value></property>
+    <property name="fileNameRZip"><value>TXNR_KLRT_ZIP</value></property>
+    <property name="separatorString"><value>_.</value></property>
+    <property name="memIds">
+      <util:list>
+      </util:list>
+    </property>
+  </bean>
+  
+  <bean id="TXNS_NMNS" class="tw.com.hyweb.svc.yhdp.batch.framework.traffics.nmns">
+    <property name="fileNameZip"><value>TXNS_NMNS_ZIP</value></property>
+    <property name="fileName"><value>TXNS_NMNS</value></property>
+    <property name="fileNameR"><value>TXNR_NMNS</value></property>
+    <property name="fileNameRZip"><value>TXNR_NMNS_ZIP</value></property>
+    <property name="separatorString"><value>_.</value></property>
+    <property name="memIds">
+      <util:list>
+      </util:list>
+    </property>
+  </bean>
+  
+  <bean id="TXNS_TMRT" class="tw.com.hyweb.svc.yhdp.batch.framework.traffics.tmrt">
+    <property name="fileNameZip"><value>TXNS_TMRT_ZIP</value></property>
+    <property name="fileName"><value>TXNS_TMRT</value></property>
+    <property name="fileNameR"><value>TXNR_TMRT</value></property>
+    <property name="fileNameRZip"><value>TXNR_TMRT_ZIP</value></property>
+    <property name="separatorString"><value>_.</value></property>
+    <property name="memIds">
+      <util:list>
+      </util:list>
+    </property>
+  </bean>
+  
+  <bean id="TXNS_DHLRT" class="tw.com.hyweb.svc.yhdp.batch.framework.traffics.dhlrt">
+    <property name="fileNameZip"><value>TXNS_DHLRT_ZIP</value></property>
+    <property name="fileName"><value>TXNS_DHLRT</value></property>
+    <property name="fileNameR"><value>TXNR_DHLRT</value></property>
+    <property name="fileNameRZip"><value>TXNR_DHLRT_ZIP</value></property>
+    <property name="separatorString"><value>_.</value></property>
+    <property name="memIds">
+      <util:list>
+      </util:list>
+    </property>
+  </bean>
+<<<<<<< .mine
+
+||||||| .r7013
+  <!-- 
+=======
+  
+  <bean id="TXNS_CBike" class="tw.com.hyweb.svc.yhdp.batch.framework.traffics.cbike">
+    <property name="fileNameZip"><value>TXNS_CBike_ZIP</value></property>
+    <property name="fileName"><value>TXNS_CBike</value></property>
+    <property name="fileNameR"><value>TXNR_CBike</value></property>
+    <property name="fileNameRZip"><value>TXNR_CBike_ZIP</value></property>
+    <property name="separatorString"><value>_.</value></property>
+    <property name="memIds">
+      <util:list>
+      </util:list>
+    </property>
+  </bean>
+  
+  <!-- 
+>>>>>>> .r7514
+  <bean id="TEFD_BUS" class="tw.com.hyweb.svc.yhdp.batch.framework.trafficsTefr.bus">
+    <property name="fileNameZip"><value>TEFD_BUS_ZIP</value></property>
+    <property name="fileName"><value>TEFD_BUS</value></property>
+    <property name="fileNameR"><value>TEFR_BUS</value></property>
+    <property name="fileNameRZip"><value>TEFR_BUS_ZIP</value></property>
+    <property name="separatorString"><value>_.</value></property>
+    <property name="memIds">
+      <util:list>
+  			<value>00043057</value>
+  			<value>00100097</value>
+  			<value>00077081</value>
+  			<value>00061001</value>
+      </util:list>
+    </property>
+  </bean>
+    <!-- 
+  <bean id="TEFD_TRA" class="tw.com.hyweb.svc.yhdp.batch.framework.trafficsTefr.tra">
+    <property name="fileNameZip"><value>TEFD_TRA_ZIP</value></property>
+    <property name="fileName"><value>TEFD_TRA</value></property>
+    <property name="fileNameR"><value>TEFR_TRA</value></property>
+    <property name="fileNameRZip"><value>TEFR_TRA_ZIP</value></property>
+    <property name="separatorString"><value>_.</value></property>
+    <property name="memIds">
+      <util:list>
+      </util:list>
+    </property>
+  </bean>
+  
+  <bean id="TEFD_TRTC" class="tw.com.hyweb.svc.yhdp.batch.framework.trafficsTefr.trtc">
+    <property name="fileNameZip"><value>TEFD_TRTC_ZIP</value></property>
+    <property name="fileName"><value>TEFD_TRTC</value></property>
+    <property name="fileNameR"><value>TEFR_TRTC</value></property>
+    <property name="fileNameRZip"><value>TEFR_TRTC_ZIP</value></property>
+    <property name="separatorString"><value>_.</value></property>
+    <property name="memIds">
+      <util:list>
+      </util:list>
+    </property>
+  </bean>
+  
+  <bean id="TEFD_TYRTC" class="tw.com.hyweb.svc.yhdp.batch.framework.trafficsTefr.tmc">
+    <property name="fileNameZip"><value>TEFD_TYRTC_ZIP</value></property>
+    <property name="fileName"><value>TEFD_TYRTC</value></property>
+    <property name="fileNameR"><value>TEFR_TYRTC</value></property>
+    <property name="fileNameRZip"><value>TEFR_TYRTC_ZIP</value></property>
+    <property name="separatorString"><value>_.</value></property>
+    <property name="memIds">
+      <util:list>
+      </util:list>
+    </property>
+  </bean>
+  
+  <bean id="TEFD_KRTC" class="tw.com.hyweb.svc.yhdp.batch.framework.trafficsTefr.krtc">
+    <property name="fileNameZip"><value>TEFD_KRTC_ZIP</value></property>
+    <property name="fileName"><value>TEFD_KRTC</value></property>
+    <property name="fileNameR"><value>TEFR_KRTC</value></property>
+    <property name="fileNameRZip"><value>TEFR_KRTC_ZIP</value></property>
+    <property name="separatorString"><value>_.</value></property>
+    <property name="memIds">
+      <util:list>
+      </util:list>
+    </property>
+  </bean>
+  
+  <bean id="TEFD_CARPARK" class="tw.com.hyweb.svc.yhdp.batch.framework.trafficsTefr.carpark">
+    <property name="fileNameZip"><value>TEFD_CARPARK_ZIP</value></property>
+    <property name="fileName"><value>TEFD_CARPARK</value></property>
+    <property name="fileNameR"><value>TEFR_CARPARK</value></property>
+    <property name="fileNameRZip"><value>TEFR_CARPARK_ZIP</value></property>
+    <property name="separatorString"><value>_.</value></property>
+    <property name="memIds">
+      <util:list>
+      </util:list>
+    </property>
+  </bean>
+   -->
+</beans>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+   <bean id="houseKeepTermParVer" class="tw.com.hyweb.core.cp.batch.housekeep.HouseKeepTermParVer">
+      <property name="keepDay" value="60" />
+      <property name="keepVersion" value="2" />
+   </bean>
+</beans>

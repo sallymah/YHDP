@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+ Version: 1.0.0
+ Date: 2007-01-03
+-->
+<beans>
+    <bean id="Context" class="tw.com.hyweb.online.Context">
+    </bean>
+    
+    <bean id="TCPPackager" class="tw.com.hyweb.online.packager.TCPPackager"
+        init-method="init">
+        <property name="pool" ref="TCPPackagerObjectPool"/>
+        <property name="context" ref="Context"/>
+    </bean>
+    <bean id="TCPPackagerObjectPool"
+        class="org.apache.commons.pool.impl.GenericObjectPool">
+        <property name="factory" ref="TCPPackagerObjectFactory"/>
+        <property name="maxActive" value="10"/>
+        <property name="maxIdle" value="10"/>
+        <property name="minIdle" value="10"/>
+    </bean>
+    <bean id="TCPPackagerObjectFactory"
+        class="tw.com.hyweb.iso.Bitmap2PackagerPoolableObjectFactory"
+        destroy-method="destroy">
+        <constructor-arg index="0" type="java.lang.String">
+            <value>config/default/isoconfig.xml</value>
+        </constructor-arg>
+    </bean>
+</beans>

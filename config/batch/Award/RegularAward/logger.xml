@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="TxLogger" class="tw.com.hyweb.online.TxLogger" />
+	
+	<bean id="BaseTxLogger" class="tw.com.hyweb.core.cp.online.loyalty.logger.BaseTxLogger" />
+	
+	<bean id="TxLoggerEmpty" class="tw.com.hyweb.core.cp.online.loyalty.logger.TxLoggerEmpty" />
+	
+	<bean id="AwardTxLogger" class="tw.com.hyweb.svc.thig.batch.award.AwardTxLogger" />
+	
+</beans>

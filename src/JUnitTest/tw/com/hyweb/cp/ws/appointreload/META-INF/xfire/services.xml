@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://xfire.codehaus.org/config/1.0">
+  <service>
+    <serviceClass>tw.com.hyweb.cp.ws.appointreload.AppointReloadServiceImpl</serviceClass>
+    <wsdlURL>file:/D:/HYWEB/04.專案(未結案)/精誠儲值卡營運平台(Systex%20SVC)/SOURCE/Host/src/JUnitTest/tw/com/hyweb/cp/ws/appointreload/AppointReloadService.wsdl</wsdlURL>
+    <serviceFactory>org.codehaus.xfire.jaxb2.JaxbServiceFactory</serviceFactory>
+  </service>
+</beans>
+

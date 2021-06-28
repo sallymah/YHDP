@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+  <bean id="logBackup2File" class="tw.com.hyweb.core.cp.batch.housekeep.LogBackup2File">
+    <property name="houseKeepingHome"><value>/path/to/output_dir</value></property>
+
+    <property name="backupFilesSettings">
+      <list>
+        <ref bean="batch_log"/>
+        <ref bean="online_log"/>
+        <ref bean="campaign_log"/>
+        <ref bean="opmenu_log"/>
+        <ref bean="report_log"/>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="batch_log" class="tw.com.hyweb.core.cp.batch.housekeep.BackupFilesSetting">
+    <property name="name"><value>batch_log</value></property>
+    <property name="directory"><value>/path/to/logdir/batch</value></property>
+  	<property name="beforeDays"><value>5</value></property>
+    <property name="keepDays"><value>5</value></property>
+    <property name="firstDir2NameFlag"><value>false</value></property>
+  </bean>
+
+  <bean id="online_log" class="tw.com.hyweb.core.cp.batch.housekeep.BackupFilesSetting">
+    <property name="name"><value>online_log</value></property>
+    <property name="directory"><value>/path/to/logdir/loyalty</value></property>
+  	<property name="beforeDays"><value>30</value></property>
+    <property name="keepDays"><value>30</value></property>
+    <property name="firstDir2NameFlag"><value>false</value></property>
+  </bean>
+
+  <bean id="campaign_log" class="tw.com.hyweb.core.cp.batch.housekeep.BackupFilesSetting">
+    <property name="name"><value>campaign_log</value></property>
+    <property name="directory"><value>/path/to/logdir/campaign_log</value></property>
+  	<property name="beforeDays"><value>30</value></property>
+    <property name="keepDays"><value>30</value></property>
+    <property name="firstDir2NameFlag"><value>false</value></property>
+  </bean>
+
+  <bean id="opmenu_log" class="tw.com.hyweb.core.cp.batch.housekeep.BackupFilesSetting">
+    <property name="name"><value>opmenu_log</value></property>
+    <property name="directory"><value>/path/to/logdir/opmenu_log</value></property>
+  	<property name="beforeDays"><value>30</value></property>
+    <property name="keepDays"><value>30</value></property>
+    <property name="firstDir2NameFlag"><value>false</value></property>
+  </bean>
+
+  <bean id="report_log" class="tw.com.hyweb.core.cp.batch.housekeep.BackupFilesSetting">
+    <property name="name"><value>report_log</value></property>
+    <property name="directory"><value>/path/to/logdir/batchrpt</value></property>
+  	<property name="beforeDays"><value>30</value></property>
+    <property name="keepDays"><value>30</value></property>
+    <property name="firstDir2NameFlag"><value>true</value></property>
+  </bean>
+</beans>

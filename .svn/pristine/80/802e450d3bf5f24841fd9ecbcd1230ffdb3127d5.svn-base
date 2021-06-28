@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+    <!-- 設定參數下載程式中，異動會影響到所有的EDC之Table名稱及query condition -->
+    <util:map id="fullCheckTableConditionMap">
+        <entry key="TB_AWARD_PROG">
+            <value>PROG_ID IN (porgIdList)</value>
+                    <!-- <value>STATUS='1' AND 'batchDate' BETWEEN VALID_SDATE AND VALID_EDATE</value> -->
+        </entry>
+        <entry key="TB_ISS_BIN">
+            <null />
+        </entry>
+    </util:map>
+
+    <!-- 設定參數下載程式中，異動會影響到單一收單行所有EDC之Table名稱及query condition -->
+    <util:map id="partialCheckTableConditionMap">
+    	<entry key="TB_BONUS">
+            <null />
+        </entry>
+        <entry key="TB_MEMBER">
+            <null />
+        </entry>
+        <entry key="TB_MERCH">
+            <null />
+        </entry>
+        <entry key="TB_ACQ_DEF">
+            <null />
+        </entry>
+        <entry key="TB_ACQ_PAR">
+            <null />
+        </entry>
+        <entry key="TB_REDEEM_FUNC">
+            <value>STATUS='1' AND 'batchDate' BETWEEN VALID_SDATE AND VALID_EDATE</value>
+        </entry>
+        <entry key="TB_RELOAD_FUNC">
+            <value>STATUS='1' AND 'batchDate' BETWEEN VALID_SDATE AND VALID_EDATE</value>
+        </entry>
+        <entry key="TB_OFFUS_MSG">
+            <value>'batchDate' BETWEEN VALID_SDATE AND VALID_EDATE</value>
+        </entry>
+    </util:map>
+
+    <!-- 設定參數下載程式中，異動會影響到單一收單行所有EDC之Table名稱及存放收單Member Id之欄位 (有可能是ACQ_MEM_ID，也有可能是MEM_ID) -->
+    <util:map id="partialCheckTableAcquirerFieldMap">
+    	<entry key="TB_BONUS">
+            <value>MEM_ID</value>
+        </entry>
+        <entry key="TB_MEMBER">
+            <value>MEM_ID</value>
+        </entry>
+        <entry key="TB_MERCH">
+            <value>MERCH_ID</value>
+        </entry>
+        <entry key="TB_ACQ_DEF">
+            <value>ACQ_MEM_ID</value>
+        </entry>
+        <entry key="TB_ACQ_PAR">
+            <value>ACQ_MEM_ID</value>
+        </entry>
+        <entry key="TB_REDEEM_FUNC">
+            <value>ACQ_MEM_ID</value>
+        </entry>
+        <entry key="TB_RELOAD_FUNC">
+            <value>ACQ_MEM_ID</value>
+        </entry>
+        <entry key="TB_OFFUS_MSG">
+            <value>ACQ_MEM_ID</value>
+        </entry>
+    </util:map>
+
+</beans>

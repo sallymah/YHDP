@@ -1,0 +1,212 @@
+<?xml version="1.0"?>
+<!-- ===========================================================================
+
+                           *===================*
+                           | How to build      |
+                           *===================*
+
+
+Install the build tools
+=======================
+
+The build system is based on Jakarta Ant, and JUnit if we want to perform
+unit testing during build.
+
+ - JDK >= 1.5.
+ - Set JAVA_HOME environment variable.
+   e.g. set JAVA_HOME=c:/jdk1.5 (Win32)
+        export JAVA_HOME=/usr/local/IBMJava2-13 (Unix)
+
+============================================================================ -->
+
+<project name="hyweb-layer3-SVC" default="usage" basedir=".">
+	<tstamp>
+		<format property="NOW" pattern="yyyyMMdd" locale="tw" />
+		<format property="TODAY" pattern="yyyyMMdd" locale="tw" />
+	</tstamp>
+	<property name="name" value="${ant.project.name}" />
+	<property name="bin.dir" value="bin" />
+	<property name="config.dir" value="config" />
+	<property name="lib.dir" value="lib" />
+	<property name="ap.dir" value="loyalty" />
+	<property name="batch.dir" value="batch" />
+	<property name="patch.file" value="patchbatch.zip" />
+	<property name="host.dir" value="Host_Batch" />
+	<property name="host01.dir" value="Host_Batch01" />
+	<property name="host02.dir" value="Host_Batch02" />
+	<property name="host03.dir" value="Host_Batch03" />
+	<property name="patchbackup.dir" value="patchbatchbackup" />
+
+	<!-- =================================================================== -->
+	<!-- usage                                                               -->
+	<!-- =================================================================== -->
+	<target name="usage">
+		<echo message="${ant.version}" />
+		<echo message="" />
+		<echo message="JCP Build file" />
+		<echo message="------------------------------------------------------" />
+		<echo message="" />
+		<echo message="available targets are:" />
+		<echo message="" />
+		<echo message="patch                  --> install batch" />
+		<echo message="unpatch                --> restore batch" />
+		<echo message="" />
+		<echo message=" See the comments inside the patchbatch.xml for details." />
+		<echo message="------------------------------------------------------" />
+		<echo message="" />
+		<echo message="" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- init Host, Host_01, Host_02, Host_03 directory                      -->
+	<!-- =================================================================== -->
+	<target name="initHost">
+		<mkdir dir="${host.dir}" />
+		<mkdir dir="${host01.dir}" />
+		<mkdir dir="${host02.dir}" />
+		<mkdir dir="${host03.dir}" />
+		<mkdir dir="${patchbackup.dir}" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- chmodHostXX                                                         -->
+	<!-- =================================================================== -->
+	<target name="chmodHostXX">
+		<chmod perm="755" type="file">
+			<fileset dir="${host.dir}">
+				<include name="**/*.sh" />
+			</fileset>
+		</chmod>
+		<chmod perm="755" type="file">
+			<fileset dir="${host01.dir}">
+				<include name="**/*.sh" />
+			</fileset>
+		</chmod>
+		<chmod perm="755" type="file">
+			<fileset dir="${host02.dir}">
+				<include name="**/*.sh" />
+			</fileset>
+		</chmod>
+		<chmod perm="755" type="file">
+			<fileset dir="${host03.dir}">
+				<include name="**/*.sh" />
+			</fileset>
+		</chmod>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- backup bin, conifg, lib files from fromHost to toHost               -->
+	<!-- =================================================================== -->
+	<target name="backupHost">
+		<copy todir="${toHost}" preservelastmodified="true" overwrite="${overwriteFlag}">
+			<fileset dir="${fromHost}">
+				<include name="${bin.dir}/**/*" />
+				<include name="${config.dir}/**/*" />
+				<include name="${lib.dir}/**/*" />
+				<include name="*.xml" />
+				<include name="*.sh" />
+				<include name="*.bat" />
+				<exclude name="${config.dir}/**/dbservice.properties" />
+				<exclude name="${config.dir}/**/batch.properties" />
+				<exclude name="${config.dir}/**/ip.properties" />
+				<exclude name="${config.dir}/**/cnc.keystore" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- patch Batch                                                         -->
+	<!-- =================================================================== -->
+	<target name="patch">
+		<input message="是否要執行過版Batch模組?" addproperty="confirm" validargs="y,n" defaultvalue="n" />
+		<fail>
+			<condition>
+				<or>
+					<equals arg1="n" arg2="${confirm}" />
+				</or>
+			</condition>
+		</fail>
+		<antcall target="initHost" />
+		<antcall target="backupHost">
+			<param name="fromHost" value="${host02.dir}" />
+			<param name="toHost" value="${host03.dir}" />
+			<param name="overwriteFlag" value="false" />
+		</antcall>
+		<antcall target="backupHost">
+			<param name="fromHost" value="${host01.dir}" />
+			<param name="toHost" value="${host02.dir}" />
+			<param name="overwriteFlag" value="false" />
+		</antcall>
+		<antcall target="backupHost">
+			<param name="fromHost" value="${host.dir}" />
+			<param name="toHost" value="${host01.dir}" />
+			<param name="overwriteFlag" value="false" />
+		</antcall>
+		<unzip src="${patch.file}" dest="${host.dir}">
+			<patternset>
+				<exclude name="${config.dir}/**/dbservice.properties" />
+				<exclude name="${config.dir}/**/batch.properties" />
+				<exclude name="${config.dir}/**/ip.properties" />
+				<exclude name="${config.dir}/**/cnc.keystore" />
+			</patternset>
+		</unzip>
+		<antcall target="fixcrlf" />
+		<antcall target="chmodHostXX" />
+		<move file="${patch.file}" tofile="${patchbackup.dir}/${patch.file}.${NOW}" failonerror="false" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- unpatch Batch                                                       -->
+	<!-- =================================================================== -->
+	<target name="unpatch">
+		<input message="是否要執行退版Batch模組?" addproperty="confirm" validargs="y,n" defaultvalue="n" />
+		<fail>
+			<condition>
+				<or>
+					<equals arg1="n" arg2="${confirm}" />
+				</or>
+			</condition>
+		</fail>
+		<antcall target="initHost" />
+		<antcall target="backupHost">
+			<param name="fromHost" value="${host01.dir}" />
+			<param name="toHost" value="${host.dir}" />
+			<param name="overwriteFlag" value="true" />
+		</antcall>
+		<antcall target="backupHost">
+			<param name="fromHost" value="${host02.dir}" />
+			<param name="toHost" value="${host01.dir}" />
+			<param name="overwriteFlag" value="true" />
+		</antcall>
+		<antcall target="backupHost">
+			<param name="fromHost" value="${host03.dir}" />
+			<param name="toHost" value="${host02.dir}" />
+			<param name="overwriteFlag" value="true" />
+		</antcall>
+		<antcall target="chmodHostXX" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- fix file for win and unix                                           -->
+	<!-- =================================================================== -->
+	<target name="fixcrlf" depends="fixwin, fixunix">
+		<fixcrlf srcDir="${host.dir}" includes="**/*.bat" eol="crlf" eof="asis" />
+		<fixcrlf srcDir="${host.dir}" includes="**/*.sh" eol="lf" eof="remove" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- fix file for win                                                    -->
+	<!-- =================================================================== -->
+	<target name="fixwin" if="is.Windows">
+		<fixcrlf srcDir="${host.dir}" includes="**/*.properties" eol="crlf" eof="asis" />
+		<fixcrlf srcDir="${host.dir}" includes="**/*.xml" eol="crlf" eof="asis" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- fix file for unix                                                   -->
+	<!-- =================================================================== -->
+	<target name="fixunix" if="is.Unix">
+		<fixcrlf srcDir="${host.dir}" includes="**/*.properties" eol="lf" eof="remove" />
+		<fixcrlf srcDir="${host.dir}" includes="**/*.xml" eol="lf" eof="remove" />
+	</target>
+</project>

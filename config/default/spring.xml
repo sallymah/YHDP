@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+ Version: 1.0.0
+ Date: 2007-01-03
+-->
+<beans>
+    <import resource="mediator.xml"/>
+    <bean id="Main" class="tw.com.hyweb.online.DefMain" init-method="init">
+        <property name="appListener" ref="ApListener"/>
+        <property name="serviceList">
+            <list>
+                <ref bean="Client"/>
+                <ref bean="Server"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="ConsoleInputService"
+        class="tw.com.hyweb.online.ConsoleInputService">
+    </bean>
+    
+</beans>

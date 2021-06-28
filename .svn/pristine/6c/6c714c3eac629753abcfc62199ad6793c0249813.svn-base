@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+  <bean id="filesIn" class="tw.com.hyweb.core.cp.batch.framework.filesin.FilesIn">
+    <!-- okFilePending: 決定 OK file 檔名要如何 pending -->
+    <!-- <property name="okFilePending"><value>.OK</value></property> -->
+    <!-- renameAfterCopy: 檔案從 temp 目錄 copy 到 work 目錄成功後, temp 目錄中的檔案是否要做 rename 的動作 -->
+    <!-- ex: NEWCARD.2007030601 -> NEWCARD.2007030601.MOVED -->
+    <property name="renameAfterCopy"><value>false</value></property>
+    <property name="renamePending"><value>.MOVED</value></property>
+    <!-- deleteAfterCopy: 檔案從 temp 目錄 copy 到 work 目錄成功後, temp 目錄中的檔案是否要做刪除的動作 -->
+    <!-- 二選一, (renameAfterCopy, deleteAfterCopy) = (true, true) -> (false, true) -->
+    <property name="deleteAfterCopy"><value>true</value></property>
+    <!-- fileTypes 的設定, 沒設, 都處理, 有設, 只處理有設的 fileTypes -->
+<!--
+    <property name="fileTypes">
+      <list>
+        <value>A</value>
+        <value>B</value>
+      </list>
+    </property>
+-->
+    <!-- 設定如何解析檔案的部份 -->
+    <property name="filenameBeans">
+      <list>
+<!--
+        <ref bean="ficase1FB"/>
+-->
+<!--
+        <ref bean="ficase2FB"/>
+-->
+<!--
+        <ref bean="ficase3FB"/>
+-->
+        <ref bean="ficase4FB"/>
+      </list>
+    </property>
+  </bean>
+<!-- case1: 沒有用 memId -->
+<!--
+INSERT INTO TB_FILE_INFO
+ (FILE_NAME, IN_OUT, FILE_TYPE, DATA_LEN, FILE_NAME_PATTERN, LOCAL_PATH)
+ VALUES
+ ('FICASE1', 'I', 'X', 10, 'FICASE1.\d{10}', 'in/FICASE1/')
+-->
+<!--
+  <bean id="ficase1FB" class="tw.com.hyweb.core.cp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>FICASE1</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>8</value></property>
+    <property name="fileDateEnd"><value>16</value></property>
+    <property name="seqnoStart"><value>16</value></property>
+    <property name="seqnoEnd"><value>18</value></property>
+  </bean>
+-->
+<!-- case2: 有用目錄來區隔 memId, 00000000 在中間 -->
+<!--
+INSERT INTO TB_FILE_INFO
+ (FILE_NAME, IN_OUT, FILE_TYPE, DATA_LEN, FILE_NAME_PATTERN, LOCAL_PATH)
+ VALUES
+ ('FICASE2', 'I', 'X', 10, 'FICASE2.\d{10}', 'in/00000000/FICASE2/')
+-->
+<!--
+  <bean id="ficase2FB" class="tw.com.hyweb.core.cp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>FICASE2</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>8</value></property>
+    <property name="fileDateEnd"><value>16</value></property>
+    <property name="seqnoStart"><value>16</value></property>
+    <property name="seqnoEnd"><value>18</value></property>
+  </bean>
+-->
+<!-- case3: 有用目錄來區隔 memId, 00000000 在最後 -->
+<!--
+INSERT INTO TB_FILE_INFO
+ (FILE_NAME, IN_OUT, FILE_TYPE, DATA_LEN, FILE_NAME_PATTERN, LOCAL_PATH)
+ VALUES
+ ('FICASE3', 'I', 'X', 10, 'FICASE3.\d{10}', 'in/FICASE3/00000000/')
+-->
+<!--
+  <bean id="ficase3FB" class="tw.com.hyweb.core.cp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>FICASE3</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>8</value></property>
+    <property name="fileDateEnd"><value>16</value></property>
+    <property name="seqnoStart"><value>16</value></property>
+    <property name="seqnoEnd"><value>18</value></property>
+  </bean>
+-->
+<!-- case4: 沒有用目錄來區隔 memId, 但用檔名來區分 memId -->
+<!--
+INSERT INTO TB_FILE_INFO
+ (FILE_NAME, IN_OUT, FILE_TYPE, DATA_LEN, FILE_NAME_PATTERN, LOCAL_PATH)
+ VALUES
+ ('FICASE4', 'I', 'X', 10, 'FICASE4.\d{8}.\d{10}', 'in/FICASE4/')
+-->
+  <bean id="ficase4FB" class="tw.com.hyweb.core.cp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>FICASE4</value></property>
+    <property name="memIdStart"><value>8</value></property>
+  	<property name="memIdEnd"><value>16</value></property>
+    <property name="fileDateStart"><value>17</value></property>
+    <property name="fileDateEnd"><value>25</value></property>
+    <property name="seqnoStart"><value>25</value></property>
+    <property name="seqnoEnd"><value>27</value></property>
+  </bean>
+</beans>

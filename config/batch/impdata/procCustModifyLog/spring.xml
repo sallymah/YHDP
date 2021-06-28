@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<bean id="ProcCustModifyLog" class="tw.com.hyweb.svc.yhdp.batch.impdata.ProcCustModifyLog">
+		<property name="fileNameLists">
+			<util:list>
+				<value>PERSON_ID</value>
+				<value>LOC_NAME</value>
+				<value>GENDER</value>
+				<value>BIRTHDAY</value>
+				<value>MARRIAGE</value>
+				<value>TEL_HOME</value>
+				<value>MOBILE</value>
+				<value>ZIP_CODE</value>
+				<value>ADDRESS</value>
+				<value>EMAIL</value>
+				<value>CITY</value>
+				<value>LEGAL_AGENT_NAME</value>
+				<value>LEGAL_AGENT_PID</value>
+				<value>LEGAL_AGENT_MOBILE</value>
+				<value>LEGAL_AGENT_PHONE</value>
+				<value>DM_FLAG</value>
+				<value>MBR_REG_DATE</value>
+				<value>MERCH_ID</value>
+				<value>REG_RECYCLE_STATUS</value>
+				<value>REG_RECYCLE_DATE</value>
+			</util:list>
+		</property>
+	</bean>
+</beans>

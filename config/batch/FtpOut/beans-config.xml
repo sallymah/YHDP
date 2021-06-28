@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+   <import resource="../datasource.xml" />
+
+   <bean id="ftpOut" class="tw.com.hyweb.core.ftp.batch.framework.ftp.FileTransferProcessor">
+		<constructor-arg>
+			<bean id="preValidator" class="tw.com.hyweb.core.ftp.batch.framework.ftp.validation.RemotePathValidator">
+				<constructor-arg>
+					<bean class="tw.com.hyweb.core.ftp.batch.framework.ftp.validation.RemoteFileNotExistValidator">
+						<constructor-arg>
+							<bean class="tw.com.hyweb.core.ftp.batch.framework.ftp.validation.BinaryFileTypeValidator">
+								<constructor-arg>
+									<bean class="tw.com.hyweb.core.ftp.batch.framework.ftp.validation.RemoteFileSizeValidator">
+										<constructor-arg>
+											<bean class="tw.com.hyweb.core.ftp.batch.framework.ftp.strategy.OKFileTransport">
+												<constructor-arg>
+								 					<bean class="tw.com.hyweb.core.ftp.batch.framework.ftp.strategy.UploadStrategy">
+														<property name="uplaodDirection"><value>O</value></property>
+														<property name="uploadPathMatcheList">
+												   			<list>
+												       			<bean class="tw.com.hyweb.svc.yhdp.batch.framework.pathMatche.PersoFactoryUpPath" />
+												       			<bean class="tw.com.hyweb.svc.yhdp.batch.framework.pathMatche.AllMemberUpPath" />
+												       			<bean class="tw.com.hyweb.svc.yhdp.batch.framework.pathMatche.HGCardGroupUpPath" />
+												   			</list>
+														</property>
+													</bean>
+												</constructor-arg>
+											</bean>
+										</constructor-arg>
+									</bean>
+								</constructor-arg>
+							</bean>
+						</constructor-arg>
+					</bean>
+				</constructor-arg>
+			</bean>
+		</constructor-arg>
+		<property name="dataSource" ref="dataSource" />
+		<property name="programName"><value>FtpOut</value></property>
+	</bean>
+
+</beans>

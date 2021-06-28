@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>  
+	<bean id="threadPoolJobExecutor" class="tw.com.hyweb.svc.yhdp.batch.preoperation.CheckPersoFeeback.JobExecutor.ThreadPoolJobExecutor">
+		<constructor-arg index="0" type="int"><value>0</value></constructor-arg>    <!--  0為LinkedBlockingQueue/其他ArrayBlockingQueue -->
+		<constructor-arg index="1" type="int"><value>10</value></constructor-arg>    <!--  corePoolSize -->
+		<constructor-arg index="2" type="int"><value>10</value></constructor-arg>    <!--  maximumPoolSize -->
+		<constructor-arg index="3" type="long"><value>60</value></constructor-arg>  <!--  keepAliveTime -->
+		<constructor-arg index="4" type="int"><value>100</value></constructor-arg>  <!--  每個Threa一次處理的數量 -->
+	</bean>
+	
+</beans>

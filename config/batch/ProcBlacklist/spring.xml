@@ -1,0 +1,10 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+Version: 1.0.0
+Date: 2007-03-28
+-->
+<beans>
+	<bean id="ProcBlacklist" class="tw.com.hyweb.svc.yhdp.batch.ProcBlacklist.ProcBlacklist" init-method="">
+	    <property name="sleepTime"><value>500</value></property>
+	</bean>
+</beans>

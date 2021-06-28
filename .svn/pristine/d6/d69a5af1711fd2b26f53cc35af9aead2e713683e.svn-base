@@ -1,0 +1,12 @@
+# for stress testing run with tw.com.hyweb.online.edcSim.EdcSimulator
+# ex. java -DconfigFile=config/EdcSimulator.properties tw.com.hyweb.online.edcSim.EdcSimulator
+connIP = 10.10.10.16
+connPort = 2211
+#connIP = samson
+#connPort = 5000
+
+edcNum = 100
+txnNum = 250
+cancelTxnNum = 0
+
+realTxnNum = 200

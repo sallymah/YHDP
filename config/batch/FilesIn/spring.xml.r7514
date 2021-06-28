@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+  <bean id="filesIn" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilesIn">
+	<!-- renameAfterCopy: 檔案從 temp 目錄 copy 到 work 目錄成功後, temp 目錄中的檔案是否要做 rename 的動作 -->
+    <!-- ex: NEWCARD.2007030601 -> NEWCARD.2007030601.MOVED -->
+	<property name="programName"><value>FilesIn</value></property>
+	<property name="fileInfoInOut"><value>I</value></property>
+    <property name="renameAfterCopy"><value>false</value></property>
+    <property name="renamePending"><value>.MOVED</value></property>
+    <!-- deleteAfterCopy: 檔案從 temp 目錄 copy 到 work 目錄成功後, temp 目錄中的檔案是否要做刪除的動作 -->
+    <!-- 二選一, (renameAfterCopy, deleteAfterCopy) = (true, true) -> (false, true) -->
+    <!-- 二選一, (renameAfterCopy, deleteAfterCopy) = (false, false), 程式針對 temp 目錄的檔案不額外處理, 但會檢查 TB_INCTL 是否已存在 -->
+    <property name="deleteAfterCopy"><value>true</value></property>
+	
+	<property name="downloadPathMatcheList">
+		<list>
+			<bean class="tw.com.hyweb.svc.yhdp.batch.framework.pathMatche.PersoFactoryDownPath" />
+			<!-- <bean class="tw.com.hyweb.svc.yhdp.batch.framework.pathMatche.TrnAliasDownPath" /> -->
+		</list>
+	</property>
+	
+    <!-- fileTypes 的設定, 沒設, 都處理, 有設, 只處理有設的 fileTypes -->
+    <property name="fileTypes">
+      <list>
+        <value>B</value>  <!-- 批次交換檔 -->
+        <value>P</value>  <!-- 製卡檔 -->
+      </list>
+    </property>
+    
+    <!-- 設定如何解析檔案的部份 -->
+    <property name="filenameBeans">
+      <list>
+        <ref bean="MERCH"/>
+        <ref bean="TERM"/>
+        <ref bean="BATCH"/>
+		<ref bean="DESTROY"/>
+		<ref bean="REFUNDIN"/>
+		<ref bean="RESTOCKIN"/>
+		<ref bean="STOCKIN"/>
+		<ref bean="STOCKOUT"/>
+		<ref bean="BLACKLIST"/>
+		<ref bean="CARD"/>
+		<ref bean="CUST"/>
+		<ref bean="LPTSAM"/>
+		<ref bean="IMPTXNDTL"/>
+		<ref bean="YMEMGR"/>
+		<ref bean="YMEMBER"/>
+		<ref bean="IFF"/>
+		<ref bean="IFF2"/>
+		<ref bean="IFF_BANK"/>
+		<ref bean="APPLOAD"/>
+		<ref bean="MERC"/>
+		<ref bean="IMPCPCTXNDTL"/>
+		<ref bean="BTCB"/>
+		<ref bean="DTXN"/>
+		<ref bean="BKCD"/>
+		<ref bean="CDRQ"/>
+		<ref bean="BMEM"/>
+		<ref bean="BMEM2"/>
+		<ref bean="BARL"/>
+		<ref bean="TXN"/>
+		<ref bean="TXNS_KRTC"/>
+		<ref bean="TXNS_TYRTC"/>
+		<ref bean="TXNS_TRA"/>
+		<ref bean="TXNS_TRTC"/>
+		<ref bean="TXNS_CARPARK"/>
+		<ref bean="TXNS_DHLRT"/>
+		<ref bean="TXNS_CBike"/>
+		<ref bean="TXNS_KLRT"/>
+		<ref bean="TXNS_NMNS"/>
+		<ref bean="TXNS_TMRT"/>
+		<ref bean="R_TRN_TXN"/>
+		<!-- <ref bean="TEFD_BUS"/>
+		<ref bean="TEFD_TRA"/>
+		<ref bean="TEFD_TRTC"/>
+		<ref bean="TEFD_TYRTC"/>
+		<ref bean="TEFD_KRTC"/>
+		<ref bean="TEFD_CARPARK"/> 
+		<ref bean="TEFD_KLRT"/>	-->
+		<ref bean="CDST"/>	
+		<ref bean="IMPFMTXNDTL"/>
+		<ref bean="ERPT"/>
+		<ref bean="GP_CARD"/>
+		
+      </list>
+    </property>
+  </bean>
+  
+    <!--TXN_[A-Z0-9]*_[A-Z0-9]*_\d{14}_\d{2}.dat_\d{14}-->
+  <bean id="IMPFMTXNDTL" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>IMPFMTXNDTL</value></property>
+    <property name="memIdStart"><value>7</value></property>
+  	<property name="memIdEnd"><value>15</value></property>
+    <property name="fileDateStart"><value>16</value></property>
+    <property name="fileDateEnd"><value>24</value></property>
+    <property name="seqnoStart"><value>24</value></property>
+    <property name="seqnoEnd"><value>28</value></property>
+  </bean>
+  
+  <!--TXN_[A-Z0-9]*_[A-Z0-9]*_\d{14}_\d{2}.dat_\d{14}-->
+  <bean id="TXN" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TXN</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>-1</value></property>
+    <property name="fileDateEnd"><value>-1</value></property>
+    <property name="seqnoStart"><value>-1</value></property>
+    <property name="seqnoEnd"><value>-1</value></property>
+  </bean>
+  
+  <!--<bean id="TEFD_BUS" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TEFD_BUS</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>14</value></property>
+    <property name="fileDateEnd"><value>22</value></property>
+    <property name="seqnoStart"><value>22</value></property>
+    <property name="seqnoEnd"><value>25</value></property>
+  </bean>
+  
+  <bean id="TEFD_TRA" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TEFD_TRA</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>15</value></property>
+    <property name="fileDateEnd"><value>23</value></property>
+    <property name="seqnoStart"><value>23</value></property>
+    <property name="seqnoEnd"><value>26</value></property>
+  </bean>
+  
+  <bean id="TEFD_TRTC" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TEFD_TRTC</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>16</value></property>
+    <property name="fileDateEnd"><value>24</value></property>
+    <property name="seqnoStart"><value>24</value></property>
+    <property name="seqnoEnd"><value>27</value></property>
+  </bean>
+  
+  <bean id="TEFD_TYRTC" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TEFD_TYRTC</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>15</value></property>
+    <property name="fileDateEnd"><value>23</value></property>
+    <property name="seqnoStart"><value>23</value></property>
+    <property name="seqnoEnd"><value>26</value></property>
+  </bean>
+  
+  <bean id="TEFD_KRTC" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TEFD_KRTC</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>16</value></property>
+    <property name="fileDateEnd"><value>24</value></property>
+    <property name="seqnoStart"><value>24</value></property>
+    <property name="seqnoEnd"><value>27</value></property>
+  </bean>
+  
+  <bean id="TEFD_CARPARK" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TEFD_CARPARK</value></property>
+    <property name="memIdStart"><value>5</value></property>
+  	<property name="memIdEnd"><value>13</value></property>
+    <property name="fileDateStart"><value>16</value></property>
+    <property name="fileDateEnd"><value>24</value></property>
+    <property name="seqnoStart"><value>24</value></property>
+    <property name="seqnoEnd"><value>27</value></property>
+  </bean> 
+  
+  <bean id="TEFD_KLRT" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TEFD_KLRT</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>16</value></property>
+    <property name="fileDateEnd"><value>24</value></property>
+    <property name="seqnoStart"><value>24</value></property>
+    <property name="seqnoEnd"><value>27</value></property>
+  </bean>
+  
+  -->
+  
+  <!--TXNS_KRTC_\d{11}.DAT_\d{14}-->
+  <bean id="TXNS_KRTC" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TXNS_KRTC</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>-1</value></property>
+    <property name="fileDateEnd"><value>-1</value></property>
+    <property name="seqnoStart"><value>-1</value></property>
+    <property name="seqnoEnd"><value>-1</value></property>
+  </bean>
+  
+  <!--TXNS_TYRTC_\d{2}_\d{4}_\d{13}.DAT_\d{14} -->
+  <bean id="TXNS_TYRTC" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TXNS_TYRTC</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>-1</value></property>
+    <property name="fileDateEnd"><value>-1</value></property>
+    <property name="seqnoStart"><value>-1</value></property>
+    <property name="seqnoEnd"><value>-1</value></property>
+  </bean>
+  
+  <!--TXNS_TRA_\d{11}.DAT_\d{14}-->
+  <bean id="TXNS_TRA" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TXNS_TRA</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>-1</value></property>
+    <property name="fileDateEnd"><value>-1</value></property>
+    <property name="seqnoStart"><value>-1</value></property>
+    <property name="seqnoEnd"><value>-1</value></property>
+  </bean>
+  
+  <!--TXNS_TRTC_\d{11}.DAT_\d{14}-->
+  <bean id="TXNS_TRTC" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TXNS_TRTC</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>-1</value></property>
+    <property name="fileDateEnd"><value>-1</value></property>
+    <property name="seqnoStart"><value>-1</value></property>
+    <property name="seqnoEnd"><value>-1</value></property>
+  </bean>
+  
+  <!--TXNS_\d{8}_\d{10}.DAT_\d{14}-->
+  <bean id="TXNS_CARPARK" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TXNS_CARPARK</value></property>
+    <property name="memIdStart"><value>5</value></property>
+  	<property name="memIdEnd"><value>13</value></property>
+    <property name="fileDateStart"><value>-1</value></property>
+    <property name="fileDateEnd"><value>-1</value></property>
+    <property name="seqnoStart"><value>-1</value></property>
+    <property name="seqnoEnd"><value>-1</value></property>
+  </bean>
+  
+  <!--TXNS_KLRT_\d{11}.DAT_\d{14}-->
+  <bean id="TXNS_KLRT" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TXNS_KLRT</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>-1</value></property>
+    <property name="fileDateEnd"><value>-1</value></property>
+    <property name="seqnoStart"><value>-1</value></property>
+    <property name="seqnoEnd"><value>-1</value></property>
+  </bean>
+  
+  <!--TXNS_NMNS_\d{11}.DAT_\d{14}-->
+  <bean id="TXNS_NMNS" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TXNS_NMNS</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>-1</value></property>
+    <property name="fileDateEnd"><value>-1</value></property>
+    <property name="seqnoStart"><value>-1</value></property>
+    <property name="seqnoEnd"><value>-1</value></property>
+  </bean>
+  
+  <!--TXNS_TMRT_\d{11}.DAT_\d{14}-->
+  <bean id="TXNS_TMRT" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TXNS_TMRT</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>-1</value></property>
+    <property name="fileDateEnd"><value>-1</value></property>
+    <property name="seqnoStart"><value>-1</value></property>
+    <property name="seqnoEnd"><value>-1</value></property>
+  </bean>
+  
+  <!--TXNS_DHLRT_\d{11}.DAT_\d{14}-->
+  <bean id="TXNS_DHLRT" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TXNS_DHLRT</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>-1</value></property>
+    <property name="fileDateEnd"><value>-1</value></property>
+    <property name="seqnoStart"><value>-1</value></property>
+    <property name="seqnoEnd"><value>-1</value></property>
+  </bean>
+  
+  <!--TXNS_CBike_\d{11}.DAT_\d{14}-->
+  <bean id="TXNS_CBike" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TXNS_CBike</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>-1</value></property>
+    <property name="fileDateEnd"><value>-1</value></property>
+    <property name="seqnoStart"><value>-1</value></property>
+    <property name="seqnoEnd"><value>-1</value></property>
+  </bean>
+  
+  <!--R_TRN_TXN_\d{8}.DAT_\d{11}-->
+  <bean id="R_TRN_TXN" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>R_TRN_TXN</value></property>
+    <property name="memIdStart"><value>10</value></property>
+  	<property name="memIdEnd"><value>18</value></property>
+    <property name="fileDateStart"><value>19</value></property>
+    <property name="fileDateEnd"><value>27</value></property>
+    <property name="seqnoStart"><value>27</value></property>
+    <property name="seqnoEnd"><value>30</value></property>
+  </bean>
+  
+  <!-- TEFD.MMMMMMMM.YYYYMMDDNN -->
+  <bean id="IMPCPCTXNDTL" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>IMPCPCTXNDTL</value></property>
+    <property name="memIdStart"><value>5</value></property>
+  	<property name="memIdEnd"><value>13</value></property>
+    <property name="fileDateStart"><value>14</value></property>
+    <property name="fileDateEnd"><value>22</value></property>
+    <property name="seqnoStart"><value>22</value></property>
+    <property name="seqnoEnd"><value>26</value></property>
+  </bean> 
+  
+  <!-- Txn_{MERCHID}_{TERMID}_yyyymmddhhmm_{BATCHNO} -->
+  <bean id="IMPTXNDTL" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>IMPTXNDTL</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>29</value></property>
+    <property name="fileDateEnd"><value>37</value></property>
+    <property name="seqnoStart"><value>-1</value></property>
+    <property name="seqnoEnd"><value>-1</value></property>
+  </bean> 
+  
+  <!--MERCH.YYYYMMDDNN-->
+  <bean id="MERCH" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>MERCH</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>6</value></property>
+    <property name="fileDateEnd"><value>14</value></property>
+    <property name="seqnoStart"><value>14</value></property>
+    <property name="seqnoEnd"><value>16</value></property>
+  </bean>
+  
+  <!--TERM.YYYYMMDDNN-->
+  <bean id="TERM" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>TERM</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>5</value></property>
+    <property name="fileDateEnd"><value>13</value></property>
+    <property name="seqnoStart"><value>13</value></property>
+    <property name="seqnoEnd"><value>15</value></property>
+  </bean>
+  
+  <!--BATCH.YYYYMMDDNN-->
+  <bean id="BATCH" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>BATCH</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>6</value></property>
+    <property name="fileDateEnd"><value>14</value></property>
+    <property name="seqnoStart"><value>14</value></property>
+    <property name="seqnoEnd"><value>16</value></property>
+  </bean>
+    
+  <!--Card_NNNNNNNNN_NNNNN_YYYYMMDD_NN.txt-->
+  <bean id="CARD" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>CARD</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+  	<!-- <property name="cardProductStart"><value>5</value></property>
+  	<property name="cardProductEnd"><value>8</value></property>
+  	<property name="binNoStart"><value>8</value></property>
+  	<property name="binNoEnd"><value>14</value></property> -->
+    <property name="fileDateStart"><value>21</value></property>
+    <property name="fileDateEnd"><value>29</value></property>
+    <property name="seqnoStart"><value>30</value></property>
+    <property name="seqnoEnd"><value>32</value></property>
+  </bean>
+  
+  <!--STOCKIN.YYYYMMDDNN-->
+  <bean id="STOCKIN" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>STOCKIN</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>8</value></property>
+    <property name="fileDateEnd"><value>16</value></property>
+    <property name="seqnoStart"><value>16</value></property>
+    <property name="seqnoEnd"><value>18</value></property>
+  </bean>
+  
+  <!--RESTOCKIN.YYYYMMDDNN-->
+  <bean id="RESTOCKIN" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>RESTOCKIN</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>10</value></property>
+    <property name="fileDateEnd"><value>18</value></property>
+    <property name="seqnoStart"><value>18</value></property>
+    <property name="seqnoEnd"><value>20</value></property>
+  </bean>
+  
+  <!--REFUNDIN.YYYYMMDDNN-->
+  <bean id="REFUNDIN" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>REFUNDIN</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>9</value></property>
+    <property name="fileDateEnd"><value>17</value></property>
+    <property name="seqnoStart"><value>17</value></property>
+    <property name="seqnoEnd"><value>19</value></property>
+  </bean>
+  
+  <!--STOCKOUT.YYYYMMDDNN-->
+  <bean id="STOCKOUT" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>STOCKOUT</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>9</value></property>
+    <property name="fileDateEnd"><value>17</value></property>
+    <property name="seqnoStart"><value>17</value></property>
+    <property name="seqnoEnd"><value>19</value></property>
+  </bean>
+  
+  <!--DESTROY.YYYYMMDDNN-->
+  <bean id="DESTROY" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>DESTROY</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>8</value></property>
+    <property name="fileDateEnd"><value>16</value></property>
+    <property name="seqnoStart"><value>16</value></property>
+    <property name="seqnoEnd"><value>18</value></property>
+  </bean>
+  
+  <!--BLACKLIST.YYYYMMDDNN-->
+  <bean id="BLACKLIST" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>BLACKLIST</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>10</value></property>
+    <property name="fileDateEnd"><value>18</value></property>
+    <property name="seqnoStart"><value>18</value></property>
+    <property name="seqnoEnd"><value>20</value></property>
+  </bean>
+  
+  <!--CUST.YYYYMMDDNN-->
+  <bean id="CUST" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>CUST</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>5</value></property>
+    <property name="fileDateEnd"><value>13</value></property>
+    <property name="seqnoStart"><value>13</value></property>
+    <property name="seqnoEnd"><value>15</value></property>
+  </bean>
+  
+  <!--LPTSAM.YYYYMMDDNN-->
+  <bean id="LPTSAM" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>LPTSAM</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>7</value></property>
+    <property name="fileDateEnd"><value>15</value></property>
+    <property name="seqnoStart"><value>15</value></property>
+    <property name="seqnoEnd"><value>17</value></property>
+  </bean>
+  
+  <!--YMEMGR.YYYYMMDDNN-->
+  <bean id="YMEMGR" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>YMEMGR</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>7</value></property>
+    <property name="fileDateEnd"><value>15</value></property>
+    <property name="seqnoStart"><value>15</value></property>
+    <property name="seqnoEnd"><value>17</value></property>
+  </bean>
+  
+  <!--YMEMBER.YYYYMMDDNN-->
+  <bean id="YMEMBER" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>YMEMBER</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>8</value></property>
+    <property name="fileDateEnd"><value>16</value></property>
+    <property name="seqnoStart"><value>16</value></property>
+    <property name="seqnoEnd"><value>18</value></property>
+  </bean>
+  
+  <bean id="IFF_BANK" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>IFF_BANK</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>12</value></property>
+    <property name="fileDateEnd"><value>20</value></property>
+    <property name="seqnoStart"><value>-1</value></property>
+    <property name="seqnoEnd"><value>-1</value></property>
+  </bean>
+  
+  <!--IFFXX.YYYYMMDDHHMMNNNNNNNN-->
+  <bean id="IFF2" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>IFF2</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>6</value></property>
+    <property name="fileDateEnd"><value>14</value></property>
+    <property name="seqnoStart"><value>-1</value></property>
+    <property name="seqnoEnd"><value>-1</value></property>
+  </bean>	
+  
+  <!--IFFXX.1.YYYYMMDDHHMMNNNNNNNN-->
+  <bean id="IFF" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>IFF</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>8</value></property>
+    <property name="fileDateEnd"><value>16</value></property>
+    <property name="seqnoStart"><value>-1</value></property>
+    <property name="seqnoEnd"><value>-1</value></property>
+  </bean>	
+  
+  <!--YYYYMMDDNNNN_HGTOYHDP_HG-->
+  <bean id="APPLOAD" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>HGTOYHDP_HG</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>0</value></property>
+    <property name="fileDateEnd"><value>8</value></property>
+    <property name="seqnoStart"><value>8</value></property>
+    <property name="seqnoEnd"><value>11</value></property>
+  </bean>	
+  
+  <!--MERC.EEEEEEEE.YYYYMMDDNN-->
+  <bean id="MERC" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>MERC</value></property>
+    <property name="memIdStart"><value>5</value></property>
+  	<property name="memIdEnd"><value>13</value></property>
+    <property name="fileDateStart"><value>14</value></property>
+    <property name="fileDateEnd"><value>22</value></property>
+    <property name="seqnoStart"><value>22</value></property>
+    <property name="seqnoEnd"><value>24</value></property>
+  </bean>
+  
+  <!--BTCB.MMMMMMMM.YYYYMMDDNN-->
+  <bean id="BTCB" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>BTCB</value></property>
+    <property name="memIdStart"><value>5</value></property>
+  	<property name="memIdEnd"><value>13</value></property>
+    <property name="fileDateStart"><value>14</value></property>
+    <property name="fileDateEnd"><value>22</value></property>
+    <property name="seqnoStart"><value>22</value></property>
+    <property name="seqnoEnd"><value>24</value></property>
+  </bean>
+  
+  <!--DTXN.MMMMMMMM.YYYYMMDDNN-->
+  <bean id="DTXN" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>DTXN</value></property>
+    <property name="memIdStart"><value>5</value></property>
+  	<property name="memIdEnd"><value>13</value></property>
+    <property name="fileDateStart"><value>14</value></property>
+    <property name="fileDateEnd"><value>22</value></property>
+    <property name="seqnoStart"><value>22</value></property>
+    <property name="seqnoEnd"><value>24</value></property>
+  </bean>
+
+  <!--BKCD.MMMMMMMM.YYYYMMDDNN-->
+  <bean id="BKCD" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>BKCD</value></property>
+    <property name="memIdStart"><value>5</value></property>
+  	<property name="memIdEnd"><value>13</value></property>
+    <property name="fileDateStart"><value>14</value></property>
+    <property name="fileDateEnd"><value>22</value></property>
+    <property name="seqnoStart"><value>22</value></property>
+    <property name="seqnoEnd"><value>24</value></property>
+  </bean>
+  
+  <!--CDRQ.MMMMMMMM.YYYYMMDDNN-->
+  <bean id="CDRQ" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>CDRQ</value></property>
+    <property name="memIdStart"><value>5</value></property>
+  	<property name="memIdEnd"><value>13</value></property>
+    <property name="fileDateStart"><value>14</value></property>
+    <property name="fileDateEnd"><value>22</value></property>
+    <property name="seqnoStart"><value>22</value></property>
+    <property name="seqnoEnd"><value>24</value></property>
+  </bean>
+  
+  <!--BMEM.MMMMMMMM.YYYYMMDDNN-->
+  <bean id="BMEM" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>BMEM</value></property>
+    <property name="memIdStart"><value>5</value></property>
+  	<property name="memIdEnd"><value>13</value></property>
+    <property name="fileDateStart"><value>14</value></property>
+    <property name="fileDateEnd"><value>22</value></property>
+    <property name="seqnoStart"><value>22</value></property>
+    <property name="seqnoEnd"><value>24</value></property>
+  </bean>
+  
+  <!--BMEM.MMMMMMMM.YYYYMMDDNN-->
+  <bean id="BMEM2" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>BMEM2</value></property>
+    <property name="memIdStart"><value>5</value></property>
+  	<property name="memIdEnd"><value>13</value></property>
+    <property name="fileDateStart"><value>14</value></property>
+    <property name="fileDateEnd"><value>22</value></property>
+    <property name="seqnoStart"><value>22</value></property>
+    <property name="seqnoEnd"><value>24</value></property>
+  </bean>
+  
+  <!--BARL.MMMMMMMM.YYYYMMDDNN-->
+  <bean id="BARL" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>BARL</value></property>
+    <property name="memIdStart"><value>5</value></property>
+  	<property name="memIdEnd"><value>13</value></property>
+    <property name="fileDateStart"><value>14</value></property>
+    <property name="fileDateEnd"><value>22</value></property>
+    <property name="seqnoStart"><value>22</value></property>
+    <property name="seqnoEnd"><value>24</value></property>
+  </bean>
+  
+  <!--CDST.YYYYMMDDNN-->
+  <bean id="CDST" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>CDST</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>5</value></property>
+    <property name="fileDateEnd"><value>13</value></property>
+    <property name="seqnoStart"><value>13</value></property>
+    <property name="seqnoEnd"><value>15</value></property>
+  </bean>
+  
+  <!--匯入政府補助交通手續費ERPT-->
+<!--FilesIn-->
+  <bean id="ERPT" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>ERPT</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>5</value></property>
+    <property name="fileDateEnd"><value>13</value></property>
+    <property name="seqnoStart"><value>13</value></property>
+    <property name="seqnoEnd"><value>15</value></property>
+  </bean>
+  
+  <!--CARDYYYYMMDD.CSV-->
+  <bean id="GP_CARD" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>GP_CARD</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>4</value></property>
+    <property name="fileDateEnd"><value>12</value></property>
+    <property name="seqnoStart"><value>-1</value></property>
+    <property name="seqnoEnd"><value>-1</value></property>
+  </bean>
+</beans> 
+<!--###### 以下為設定範例 ######-->
+
+    <!-- 設定如何解析檔案的部份 -->
+<!--
+    <property name="filenameBeans">
+      <list>
+        <ref bean="ficase1FB"/>
+        <ref bean="ficase2FB"/>
+        <ref bean="ficase3FB"/>
+        <ref bean="ficase4FB"/>
+      </list>
+    </property>
+-->
+<!-- case1: 沒有用 memId -->
+<!--
+INSERT INTO TB_FILE_INFO
+ (FILE_NAME, IN_OUT, FILE_TYPE, DATA_LEN, FILE_NAME_PATTERN, LOCAL_PATH)
+ VALUES
+ ('FICASE1', 'I', 'X', 10, 'FICASE1.\d{10}', 'in/FICASE1/')
+-->
+<!--
+  <bean id="ficase1FB" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>FICASE1</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>8</value></property>
+    <property name="fileDateEnd"><value>16</value></property>
+    <property name="seqnoStart"><value>16</value></property>
+    <property name="seqnoEnd"><value>18</value></property>
+  </bean>
+-->
+<!-- case2: 有用目錄來區隔 memId, 00000000 在中間 -->
+<!--
+INSERT INTO TB_FILE_INFO
+ (FILE_NAME, IN_OUT, FILE_TYPE, DATA_LEN, FILE_NAME_PATTERN, LOCAL_PATH)
+ VALUES
+ ('FICASE2', 'I', 'X', 10, 'FICASE2.\d{10}', 'in/00000000/FICASE2/')
+-->
+<!--
+  <bean id="ficase2FB" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>FICASE2</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>8</value></property>
+    <property name="fileDateEnd"><value>16</value></property>
+    <property name="seqnoStart"><value>16</value></property>
+    <property name="seqnoEnd"><value>18</value></property>
+  </bean>
+-->
+<!-- case3: 有用目錄來區隔 memId, 00000000 在最後 -->
+<!--
+INSERT INTO TB_FILE_INFO
+ (FILE_NAME, IN_OUT, FILE_TYPE, DATA_LEN, FILE_NAME_PATTERN, LOCAL_PATH)
+ VALUES
+ ('FICASE3', 'I', 'X', 10, 'FICASE3.\d{10}', 'in/FICASE3/00000000/')
+-->
+<!--
+  <bean id="ficase3FB" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>FICASE3</value></property>
+    <property name="memIdStart"><value>-1</value></property>
+  	<property name="memIdEnd"><value>-1</value></property>
+    <property name="fileDateStart"><value>8</value></property>
+    <property name="fileDateEnd"><value>16</value></property>
+    <property name="seqnoStart"><value>16</value></property>
+    <property name="seqnoEnd"><value>18</value></property>
+  </bean>
+-->
+<!-- case4: 沒有用目錄來區隔 memId, 但用檔名來區分 memId -->
+<!--
+INSERT INTO TB_FILE_INFO
+ (FILE_NAME, IN_OUT, FILE_TYPE, DATA_LEN, FILE_NAME_PATTERN, LOCAL_PATH)
+ VALUES
+ ('FICASE4', 'I', 'X', 10, 'FICASE4.\d{8}.\d{10}', 'in/FICASE4/')
+-->
+<!--
+  <bean id="ficase4FB" class="tw.com.hyweb.core.ftp.batch.framework.filesin.FilenameBean">
+    <property name="fileName"><value>FICASE4</value></property>
+    <property name="memIdStart"><value>8</value></property>
+  	<property name="memIdEnd"><value>16</value></property>
+    <property name="fileDateStart"><value>17</value></property>
+    <property name="fileDateEnd"><value>25</value></property>
+    <property name="seqnoStart"><value>25</value></property>
+    <property name="seqnoEnd"><value>27</value></property>
+  </bean>
+-->

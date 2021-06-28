@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    
+    <bean id="DailyJob" class="tw.com.hyweb.core.cp.batch.dailyjob.DailyJob">
+		<property name="isLms"><value>true</value></property>
+		<property name="isSvc"><value>false</value></property>
+		
+        <property name="dailyJobMap">
+            <map>
+                <entry key="SimulateAppointReloadDownload">
+                   <list>
+                      <value>runSimulateAppointReloadDownload</value>
+                   </list>
+                </entry>
+               
+               <entry key="SimulateBalTransferDownload">
+                   <list>
+                      <value>runSimulateBalTransferDownload</value>
+                   </list>
+                </entry>
+                
+                <entry key="ExtendCouponChipBase">
+                   <list>
+                      <value>runExtendCouponChipBase</value>
+                   </list>
+                </entry>
+                
+                <entry key="ExtendCouponHostBase">
+                   <list>
+                      <value>runExtendCouponHostBase</value>
+                   </list>
+                </entry>
+                
+                <entry key="ErrHandle">
+                   <list>
+                      <value>runProcOnlTxnErr</value>
+                      <value>runProcUnbalTermBatch</value>
+                      <value>runPatchUnbalTermBatch</value>
+                      <value>runCutOnlTxnPro</value>
+                   </list>
+                </entry>
+                
+                <entry key="OnlineTxn">
+                   <list>
+                      <value>runCutOnlTxn</value>
+                   </list>
+                </entry>
+                
+                <entry key="CapturedTxn">
+                   <list>
+                      <value>runCutCapturedTxn</value>
+                   </list>
+                </entry>
+                
+                <entry key="AdjustTxn">
+                   <list>
+                      <value>runCutAdjustTxn</value>
+                   </list>
+                </entry>
+                
+                
+                <entry key="Balance">
+                   <list>
+                      <value>runProcBalance</value>
+                   </list>
+                </entry>
+                
+                <entry key="ImportNewCardFile">
+                   <list>
+                      <value>runImpCard</value>
+                   </list>
+                </entry>
+                
+                
+                
+                
+                <entry key="ImportCustFile">
+                   <list>
+                   <null/>
+                   </list>
+                </entry>
+                
+                <entry key="ImportCardStatusFile">
+                   <list>
+                      <value>runImpCrdSta</value>
+                   </list>
+                </entry>
+                
+                <entry key="ImportCardReplaceFile">
+                   <list>
+                      <value>runImpCardReplace</value>
+                   </list>
+                </entry>
+                
+                <entry key="ImportMerchantFile">
+                   <list>
+                      <value>runImpMerch</value>
+                   </list>
+                </entry>
+                
+                <entry key="ImportTerminalFile">
+                   <list>
+                      <value>runImpTerm</value>
+                   </list>
+                </entry>
+                
+                
+            </map>
+        </property>
+    </bean>
+    
+    
+</beans>
+
+

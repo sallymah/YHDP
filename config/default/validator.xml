@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+ Version: 1.0.0
+ Date: 2007-01-03
+-->
+<beans>
+    <bean id="MFieldsValidator"
+        class="tw.com.hyweb.online.validator.MFieldsValidator">
+        <property name="fields">
+            <props>
+                <prop key="0100">11</prop>
+                <prop key="0110">11 39</prop>
+                <prop key="0120">11</prop>
+                <prop key="0130">11 39</prop>
+                <prop key="0420">11</prop>
+                <prop key="0430">11 39</prop>
+                <prop key="0800">11</prop>
+                <prop key="0810">11 39</prop>
+            </props>
+        </property>
+    </bean>
+</beans>

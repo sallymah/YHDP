@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+
+    <bean id="AppointReloadReversal" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.BatchBaseController">
+        <property name="acceptMti"><value>0400</value></property>
+        <property name="acceptProcCode"><value>888888</value></property>
+        <property name="acceptLmsProcCode"><value>7307</value></property>
+        <property name="txLogger">
+            <ref bean="TxLoggerEmpty"/>
+        </property>
+        <property name="validatorList">
+            <list>
+                <ref bean="MerchantValidator" />
+                <ref bean="TerminalValidator" />
+                <ref bean="AcquireValidator" />
+                <ref bean="MacValidator" />
+            </list>
+        </property>
+        <property name="generalFiller">
+            <list>
+                <ref bean="CardInfoFiller" />
+                <ref bean="BonusBaseFiller" />
+                <ref bean="IssuerFiller" />
+                <ref bean="AcquirerFiller" />
+            </list>
+        </property>
+         <property name="bizAction">
+            <list>
+                <ref bean="OriginalTxnDataFiller"/>
+                <ref bean="UpdateOnlTxnImpInfo"/> 
+                <ref bean="CheckDueDay"/>
+                <ref bean="ReversalAppointReload"/>
+                <ref bean="ReversalOnlTxn"/>
+                <ref bean="ReversalChipBalAction"/>
+            </list>
+        </property>
+    </bean>
+</beans>

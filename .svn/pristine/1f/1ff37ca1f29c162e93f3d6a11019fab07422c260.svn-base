@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+  <bean id="procAppointList" class="tw.com.hyweb.core.cp.batch.impfiles.ProcAppointList">
+    <!-- 匯入多少筆 commit 一次, default 1000, impfiles setting -->
+    <property name="recordsPerCommit"><value>1000</value></property>
+    <!-- commit 一次後暫停多少 ms, default 500, impfiles setting -->
+    <property name="sleepPerCommit"><value>500</value></property>
+    <!-- account 的 regionId 是從 acctId 的 acctRegionIdStart 到 acctRegionIdEnd(不含) -->
+    <!-- ex: acctId 為 "12345678012345678912", acctRegionIdStart = 0, acctRegionIdEnd = 8, 則 regionId = "12345678" -->
+    <property name="acctRegionIdStart"><value>0</value></property>
+    <property name="acctRegionIdEnd"><value>8</value></property>
+    <!-- customer 的 regionId 是從 custId 的 custRegionIdStart 到 custRegionIdEnd(不含) -->
+    <!-- ex: custId 為 "12345678012345678912", custRegionIdStart = 0, custRegionIdEnd = 8, 則 regionId = "12345678" -->
+    <property name="custRegionIdStart"><value>0</value></property>
+    <property name="custRegionIdEnd"><value>8</value></property>
+  </bean>
+</beans>

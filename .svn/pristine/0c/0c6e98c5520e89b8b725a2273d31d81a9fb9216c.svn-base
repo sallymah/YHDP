@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<bean id="ProcFeeCalModifyLog" class="tw.com.hyweb.svc.yhdp.batch.impdata.ProcFeeCalModifyLog">
+		<property name="fileNameLists">
+			<util:list>
+				<value>CAL_DESC</value>
+				<value>CAL_FORMULA</value>
+				<value>CAL_BASE</value>
+				<value>CARRY_DIGIT</value>
+				<value>CARRY_TYPE</value>
+				<value>UPPER_BOUND</value>
+				<value>FEE_RATE</value>
+			</util:list>
+		</property>
+	</bean>
+</beans>

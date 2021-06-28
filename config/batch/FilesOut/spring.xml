@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+  <bean id="filesOut" class="tw.com.hyweb.core.ftp.batch.framework.filesout.FilesOut">
+  	<property name="programName"><value>FilesOut</value></property>
+    <!-- okFilePending: 決定 OK file 檔名要如何 pending -->
+    <!-- <property name="okFilePending"><value>.OK</value></property> -->
+    <!-- deleteAfterCopy: 檔案從 work 目錄 copy 到 temp 目錄成功後, work 目錄中的檔案是否要做刪除的動作 -->
+    <property name="fileInfoInOut"><value>O</value></property>
+    <property name="deleteAfterCopy"><value>false</value></property>
+    <property name="usingLike"><value>false</value></property>
+    
+    <property name="uploadPathMatcheList">
+		<list>
+			<bean class="tw.com.hyweb.svc.yhdp.batch.framework.pathMatche.PersoFactoryUpPath" />
+			<bean class="tw.com.hyweb.svc.yhdp.batch.framework.pathMatche.HGCardGroupUpPath"/>
+		</list>
+	</property>
+    
+    <!-- fileTypes 的設定, 沒設, 都處理, 有設, 只處理有設的 fileTypes -->
+    <property name="fileTypes">
+      <list>
+        <value>B</value>  <!-- 批次交換檔 -->
+        <value>P</value>  <!-- 製卡檔 -->
+      </list>
+    </property>
+  </bean>
+</beans>

@@ -1,0 +1,16 @@
+[main] 20200417 11:55:40 INFO  AbstractBatchBasic   L:109  - begin running
+[main] 20200417 11:55:47 WARN  DBService            L:794  - DBCP borrow connection time: 6191 ms. batch
+[main] 20200417 11:55:47 DEBUG TbBatchResultMgr     L:60   - sql: INSERT INTO TB_BATCH_RESULT(PROGRAM_NAME, START_DATE, START_TIME, END_DATE, END_TIME, WORK_FLAG, RCODE, ERROR_DESC, PAR_MON, PAR_DAY, LINK_CONTROL, JOB_ID, JOB_TIME, MEM_ID, RECOVER_VALUE) VALUES ('ProcUpdateTmpTrans', '20200417', '115540', '', '', '0', '0000', '', '04', '17', 'N', '000', '000000', '', '')
+[main] 20200417 11:55:47 DEBUG TbBatchResultMgr     L:64   - TB_BATCH_RESULT: 1 record inserted
+[main] 20200417 11:55:47 DEBUG TbBatchResultMgr     L:65   - [TbBatchResultInfo  sProgramName:ProcUpdateTmpTrans sStartDate:20200417 sStartTime:115540 sEndDate: sEndTime: sWorkFlag:0 sRcode:0000 sErrorDesc: sParMon:04 sParDay:17 sLinkControl:N sJobId:000 sJobTime:000000 sMemId: sRecoverValue:]
+[main] 20200417 11:55:47 INFO  ProcUpdateTmpTrans   L:159  - batchDate:20151015
+[main] 20200417 11:55:47 INFO  ProcUpdateTmpTrans   L:166  - init() ok.
+
+[main] 20200417 11:55:47 DEBUG DBService            L:1155 - UPDATE TB_TMP_TRANS SET REGEN_STATUS = '2',REGEN_SOURCE_DATE= '20151015',APRV_DATE = '20151015',UPT_SRC = 'B' WHERE RCODE = '1007' AND  REGEN_STATUS ='0' AND IMP_DATE = '20151015' AND FILE_NAME IN ('TXN', 'TXNS_TRTC', 'TXNS_TYRTC', 'TXNS_KRTC', 'TXNS_TRA', 'TXNS_CARPARK', 'TXNS_DHLRT', 'TXNS_CBike', 'TXNS_KLRT', 'TXNS_NMNS', 'TXNS_TMRT', 'TXNS_TPZOO', 'TXNS_HCZOO', 'TXNS_SYMRT') AND ACQ_MEM_ID IN (SELECT MEM_ID FROM TB_MEMBER WHERE IGNORE_MAC_INVLIAD ='1' )
+[main] 20200417 11:55:47 WARN  DBService            L:1179 - SQL stmt update time: 27 ms[UPDATE TB_TMP_TRANS SET REGEN_STATUS = '2',REGEN_SOURCE_DATE= '20151015',APRV_DATE = '20151015',UPT_SRC = 'B' WHERE RCODE = '1007' AND  REGEN_STATUS ='0' AND IMP_DATE = '20151015' AND FILE_NAME IN ('TXN', 'TXNS_TRTC', 'TXNS_TYRTC', 'TXNS_KRTC', 'TXNS_TRA', 'TXNS_CARPARK', 'TXNS_DHLRT', 'TXNS_CBike', 'TXNS_KLRT', 'TXNS_NMNS', 'TXNS_TMRT', 'TXNS_TPZOO', 'TXNS_HCZOO', 'TXNS_SYMRT') AND ACQ_MEM_ID IN (SELECT MEM_ID FROM TB_MEMBER WHERE IGNORE_MAC_INVLIAD ='1' )]
+[main] 20200417 11:55:47 DEBUG DBService            L:1183 - update(insert) count:0
+[main] 20200417 11:55:47 DEBUG TbBatchResultMgr     L:147  - sql: UPDATE TB_BATCH_RESULT SET END_DATE = '20200417', END_TIME = '115547', WORK_FLAG = '1', RCODE = '0000', ERROR_DESC = '', PAR_MON = '04', PAR_DAY = '17', LINK_CONTROL = 'N', MEM_ID = '', RECOVER_VALUE = '' WHERE PROGRAM_NAME = 'ProcUpdateTmpTrans' AND START_DATE = '20200417' AND START_TIME = '115540' AND JOB_ID = '000' AND JOB_TIME = '000000'
+[main] 20200417 11:55:47 DEBUG TbBatchResultMgr     L:151  - TB_BATCH_RESULT: 1 record updated
+[main] 20200417 11:55:47 DEBUG TbBatchResultMgr     L:152  - [TbBatchResultInfo  sProgramName:ProcUpdateTmpTrans sStartDate:20200417 sStartTime:115540 sEndDate:20200417 sEndTime:115547 sWorkFlag:1 sRcode:0000 sErrorDesc: sParMon:04 sParDay:17 sLinkControl:N sJobId:000 sJobTime:000000 sMemId: sRecoverValue:]
+[main] 20200417 11:55:47 INFO  AbstractBatchBasic   L:150  - end running
+

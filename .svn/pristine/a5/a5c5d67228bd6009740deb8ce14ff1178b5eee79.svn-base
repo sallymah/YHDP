@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+<bean id="BatchResultDecorator" class="tw.com.hyweb.core.cp.batch.framework.BatchResultDecorator" init-method="init">
+	<property name="batchMediator"><ref bean="BatchInctlDecorator" /></property>
+	<property name="procName"><value>ImpTest</value></property>
+</bean>
+
+<bean id="BatchInctlDecorator" class="tw.com.hyweb.core.cp.batch.framework.BatchInctlDecorator" init-method="init">
+	<property name="batchMediator"><ref bean="BatchDirector" /></property>
+	<property name="bankNo"><value>00600000</value></property>
+	<property name="fileName"><value>TEST</value></property>
+</bean>
+
+<bean id="BatchDirector" class="tw.com.hyweb.core.cp.batch.framework.BatchDirector" init-method="init">
+	<property name="incoming"><ref bean="ImpTest" /></property>
+	<property name="outgoing"><ref bean="ImpTest" /></property>
+</bean>
+
+<bean id="ImpTest" class="tw.com.hyweb.core.cp.batch.test.ImpTest">
+        <property name="packager"><ref bean="BatchPackager" /></property>
+</bean>
+
+<bean id="InputStream" class="java.io.FileInputStream">
+    <constructor-arg index="0" type="java.lang.String"><value>config\batch\ImpTest\layoutconfig.xml</value></constructor-arg>
+</bean>
+<bean id="BatchPackager" class="tw.com.hyweb.core.cp.batch.framework.BatchPackager" init-method="loadConfig">
+    <constructor-arg index="0"><ref bean="InputStream"/></constructor-arg>
+</bean>
+
+
+</beans>

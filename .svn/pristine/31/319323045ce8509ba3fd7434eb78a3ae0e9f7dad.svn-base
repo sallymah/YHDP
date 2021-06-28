@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+
+	<bean id="Field04Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.Field04Action"/>
+    
+    <!--use one data define to class is good style. samson-->
+    <bean id="RewardPCodeTxCode" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="properties">
+            <props>
+                <!-- Activation -->
+                <prop key="7117">8807</prop>
+
+                <!-- Reload -->
+                <prop key="7707">8807</prop>
+                <prop key="7747">8807</prop>
+                <prop key="7757">8807</prop>
+
+                <prop key="7708">8808</prop>
+                <prop key="7748">8808</prop>
+                <prop key="7758">8808</prop>
+
+                <!-- Sale -->
+                <prop key="7647">8807</prop>
+
+                <!-- Sale Void -->
+                <prop key="7648">8808</prop>
+
+                <!-- Sale Refund -->
+                <prop key="7646">8806</prop>
+                
+                <!-- 卡轉卡-扣點 -->
+                <prop key="7397">8807</prop>
+
+                <!-- 卡轉卡-扣點 Void -->
+                <prop key="7398">8808</prop>
+
+                <!-- 卡轉卡-扣點 Refund -->
+                <prop key="7396">8806</prop>
+                
+                <!-- 卡轉卡-加點 -->
+                <prop key="7347">8527</prop><!-- 資料放在redeem -->
+                
+                <!-- 回饋 or 回饋取消 or 回饋退貨 -->
+                <prop key="7807">8807</prop>
+                <prop key="7207">8807</prop>
+                <prop key="7217">8807</prop>
+                <prop key="7247">8807</prop>
+                
+                <!-- Redeen refund -->
+                <prop key="7206">8806</prop>
+                <prop key="7246">8806</prop>
+                <prop key="7216">8806</prop>
+                
+                 <!-- Redeen void -->
+                <prop key="7808">8808</prop>
+                <prop key="7248">8808</prop>
+                <prop key="7218">8808</prop>
+                
+            </props>
+        </property>
+    </bean>
+
+    <bean id="RedeemPCodeTxCode" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="properties">
+            <props>
+                <!-- Sale -->
+                <prop key="7647">8207</prop>
+
+                <!-- Sale Void -->
+                <prop key="7648">8208</prop>
+
+                <!-- Sale Refund -->
+                <prop key="7646">8206</prop>
+
+                <!-- Sale Refund Void -->
+                <prop key="7609">8209</prop>
+                
+                <!-- 卡轉卡-扣點 -->
+                <prop key="7397">8207</prop>
+                
+                <!-- 卡轉卡-扣點 void -->
+                <prop key="7398">8208</prop>
+                
+                <!-- 卡轉卡-扣點 Refund -->
+                <prop key="7396">8206</prop>
+
+                <!-- Redeem -->
+                <prop key="7207">8207</prop>
+                <prop key="7217">8207</prop>
+
+                <!-- Redeem Refund-->
+                <prop key="7206">8206</prop>
+                <prop key="7216">8206</prop>
+                <prop key="7646">8206</prop>
+
+                <!-- Redeem Void-->
+                <prop key="7208">8208</prop>
+                <prop key="7218">8208</prop>
+                <prop key="7648">8208</prop>
+                
+                <prop key="7547">8207</prop>
+                
+                <prop key="7557">8207</prop>
+                
+                <prop key="7657">8207</prop>
+                
+                <!-- Refund Card -->
+                <prop key="7527">8577</prop> <!-- 資料放在redeem -->
+                
+                <!-- Refund Card Void -->
+                <prop key="7528">8578</prop><!-- 資料放在redeem -->
+                
+                <!-- C2C Balance Transfer -->
+                <prop key="7347">8527</prop><!-- 資料放在redeem -->
+
+            </props>
+        </property>
+    </bean>
+
+    <bean id="RepairPCodeTxCode" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="properties">
+            <props>
+                <!-- 正補登 -->
+                <prop key="7707">8507</prop>
+                <prop key="7747">8507</prop>
+                <prop key="7307">8507</prop>
+                <prop key="7507">8507</prop>
+                <prop key="7537">8537</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="MainPCodeTxCode" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="properties">
+            <props>
+                <!-- Perload -->
+                <prop key="7117">8597</prop>
+
+                <!-- Reload -->
+                <prop key="7707">8707</prop>
+                <prop key="7747">8707</prop>
+                <prop key="7757">8707</prop>
+                
+                <!-- Reload Void -->
+                <prop key="7708">8708</prop>
+                <prop key="7748">8708</prop>
+                <prop key="7758">8708</prop>
+                
+				<!-- Auto Reload -->
+                <prop key="7717">8717</prop>
+                
+                 <!-- appoint reload -->
+                <prop key="7307">8817</prop>
+            </props>
+        </property>
+    </bean>
+
+ 	<bean id="TagFF21Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF21Action"/>    
+    <bean id="TagFF22Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF22Action"/>
+    <bean id="TagFF2AAction" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF2AAction"/>
+	<bean id="TagFF2BAction" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF2BAction"/>
+    <bean id="TagFF2CAction" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF2CAction"/>
+    <bean id="TagFF32Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF32Action"/>
+    <bean id="TagFF35Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF35Action"/> <!-- 記名註記生日後四碼 -->
+    <bean id="TagFF38Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF38Action"/>
+    <bean id="TagFF39Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF39Action"/>
+
+    <bean id="TagFF3AAction" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF3AAction">
+        <property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean>
+
+    <bean id="TagFF3BAction" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF3BAction">
+        <property name="rewardTxCode">
+            <ref bean="RewardPCodeTxCode"></ref>
+        </property>
+        <property name="redeemTxCode">
+            <ref bean="RedeemPCodeTxCode"></ref>
+        </property>
+        <property name="repairTxCode">
+            <ref bean="RepairPCodeTxCode"></ref>
+        </property>
+        <property name="mainTxCode">
+            <ref bean="MainPCodeTxCode"></ref>
+        </property>
+    </bean>
+     
+    <bean id="TagFF3DAction" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF3DAction"/> <!-- chip status -->
+    <bean id="TagFF3EAction" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF3EAction"/> <!-- 保固期 -->   
+    <bean id="TagF44Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF44Action"/>
+    <bean id="TagFF51Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF51Action"> <!-- 現金點Command -->
+        <property name="macKeyID"><value>NIccLK</value></property>
+    </bean>
+    
+    <bean id="TagFF52Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF52Action"> <!-- 紅利點Command -->
+        <property name="macKeyID"><value>NPDWK</value></property>
+    </bean>
+    
+    <bean id="TagFF55Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF55Action"/> <!--  -->
+    <bean id="TagFF62Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF62Action"/> <!-- ff52 adata位置 -->
+       
+    <bean id="TagChipTcAction" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagChipTcAction"/>
+    <bean id="TagFF63Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF63Action"/>
+    <bean id="TagFF64Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF64Action"/>
+    <bean id="TagFF42Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF42Action"/>
+    <bean id="TagFF43Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF43Action"/>
+    <bean id="TagFF44Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF44Action"/>
+    <bean id="TagFF6BAction" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF6BAction"/>
+    <bean id="TagFF6CAction" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF6CAction"/>
+    
+    <!-- sam logon  -->
+    <bean id="TagFF48Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF48Action"/>
+    <bean id="TagFF56Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagFF56Action"/>
+    <bean id="TagDF65Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagDF65Action"/>
+    <bean id="TagDF66Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.TagDF66Action"/>
+
+</beans>

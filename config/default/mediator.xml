@@ -1,0 +1,92 @@
+<?xml version="1.0" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+ Version: 1.0.0
+ Date: 2007-01-03
+-->
+<beans>
+    <import resource="controller.xml"/>
+    <import resource="filter.xml"/>
+    <import resource="listener.xml"/>
+    <import resource="packager.xml"/>
+    <import resource="validator.xml"/>
+    <bean id="Router" class="tw.com.hyweb.online.Router">
+        <property name="channelList">
+            <list>
+                <ref bean="Client"/>
+                <ref bean="Server"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="Mediator" class="tw.com.hyweb.online.Mediator">
+        <property name="ctxSender" ref="Router"/>
+        <property name="ctrlerList">
+            <list>
+                <ref bean="MCtrler"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="Server" class="tw.com.hyweb.online.channel.TCPServerChannel">
+        <constructor-arg index="0" value="Server"/>
+        <constructor-arg index="1" value="127.0.0.1"/>
+        <constructor-arg index="2" value="6615"/>
+        <property name="header" ref="HeaderServer"/>
+        <property name="channelListener" ref="ChannelListener"/>
+        <property name="ctxListener" ref="Mediator"/>
+        <property name="pkger" ref="TCPPackager"/>
+        <property name="jobExecutor" ref="JobExecutorServer"/>
+        <property name="ioLogger" ref="IOLogger"/>
+        <property name="validatorList">
+            <list>
+                <ref bean="MFieldsValidator"/>
+            </list>
+        </property>
+        <property name="filterList">
+            <list>
+                <ref bean="NFieldsFilter"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="HeaderServer" class="tw.com.hyweb.online.channel.Header">
+        <property name="headerLength" value="2"/>
+        <property name="withHeaderByteLength" value="false"/>
+    </bean>
+    
+    <bean id="JobExecutorServer" class="tw.com.hyweb.online.channel.JobExecutor">
+        <constructor-arg index="0" value="JobExecutorServer"/>
+    </bean>
+    
+    <bean id="Client" class="tw.com.hyweb.online.channel.TCPClientChannel">
+        <constructor-arg index="0" value="Client"/>
+        <constructor-arg index="1" value="127.0.0.1"/>
+        <constructor-arg index="2" value="6615"/>
+        <property name="header" ref="HeaderClient"/>
+        <property name="channelListener" ref="ChannelListener"/>
+        <property name="ctxListener" ref="Mediator"/>
+        <property name="pkger" ref="TCPPackager"/>
+        <property name="jobExecutor" ref="JobExecutorClient"/>
+        <property name="ioLogger" ref="IOLogger"/>
+        <property name="validatorList">
+            <list>
+                <ref bean="MFieldsValidator"/>
+            </list>
+        </property>
+        <property name="filterList">
+            <list>
+                <ref bean="NFieldsFilter"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="HeaderClient" class="tw.com.hyweb.online.channel.Header">
+        <property name="headerLength" value="2"/>
+        <property name="withHeaderByteLength" value="false"/>
+    </bean>
+    
+    <bean id="JobExecutorClient" class="tw.com.hyweb.online.channel.JobExecutor">
+        <constructor-arg index="0" value="JobExecutorClient"/>
+    </bean>
+</beans>

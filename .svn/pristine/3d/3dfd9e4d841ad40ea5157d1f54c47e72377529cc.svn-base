@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+	
+	<import resource="../datasource.xml" />
+
+	<bean id="ftpIn" class="tw.com.hyweb.core.ftp.batch.framework.ftp.FileTransferProcessor">
+		<constructor-arg>
+			<ref bean="preValidator" />
+		</constructor-arg>
+		<property name="dataSource" ref="dataSource" />
+		<property name="programName"><value>FtpIn</value></property>
+	</bean>
+
+	<bean id="preValidator" class="tw.com.hyweb.core.ftp.batch.framework.ftp.validation.LocalPathValidator">
+		<constructor-arg>
+			<bean class="tw.com.hyweb.core.ftp.batch.framework.ftp.validation.LocalFileNotExistValidator">
+				<constructor-arg>
+					<bean class="tw.com.hyweb.core.ftp.batch.framework.ftp.validation.BinaryFileTypeValidator">
+						<constructor-arg>
+							<ref bean="postValidator" />
+						</constructor-arg>
+					</bean>
+				</constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="postValidator" class="tw.com.hyweb.core.ftp.batch.framework.ftp.validation.LocalFileSizeValidator">
+		<constructor-arg>
+			<ref bean="preProcessor" />
+		</constructor-arg>
+	</bean>
+
+	<bean id="preProcessor" class="tw.com.hyweb.core.ftp.batch.framework.ftp.strategy.TransferFileFilter">
+		<constructor-arg>
+			<ref bean="postProcessor" />
+		</constructor-arg>
+	</bean>
+
+	<bean id="postProcessor" class="tw.com.hyweb.core.ftp.batch.framework.ftp.strategy.DownloadedOKFileDeleter">
+		<constructor-arg>
+			<bean class="tw.com.hyweb.core.ftp.batch.framework.ftp.strategy.DownloadedFileDeleter">
+				<constructor-arg>
+					<bean class="tw.com.hyweb.core.ftp.batch.framework.ftp.strategy.OKFileTransport">
+						<constructor-arg>
+							<bean class="tw.com.hyweb.core.ftp.batch.framework.ftp.strategy.DownloadStrategy" >
+								<property name="downloadDirection"><value>I</value></property>
+								<property name="downloadPathMatcheList">
+						   			<list>
+						       			<bean class="tw.com.hyweb.svc.yhdp.batch.framework.pathMatche.PersoFactoryDownPath" />
+						       			<!-- <bean class="tw.com.hyweb.svc.yhdp.batch.framework.pathMatche.TrnAliasDownPath" /> -->
+						   			</list>
+								</property>
+							</bean>
+						</constructor-arg>
+					</bean>
+				</constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+</beans>

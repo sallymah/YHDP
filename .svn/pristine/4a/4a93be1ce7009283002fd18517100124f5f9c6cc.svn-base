@@ -1,0 +1,12 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+Version: 2.0.0
+Date: 2007-01-10
+-->
+<beans>
+<bean id="ProcSettle" class="tw.com.hyweb.svc.yhdp.batch.settle.ProcSettle" init-method="">
+    <property name="commitCount"><value>10000</value></property>
+    <property name="sleepTime"><value>100</value></property>
+    <property name="isCheckSponsorSum"><value>true</value></property> <!-- check if sum of sponsor rate =100% true:check,  false:no check-->
+</bean>
+</beans>

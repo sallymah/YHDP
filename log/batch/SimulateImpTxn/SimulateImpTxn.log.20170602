@@ -1,0 +1,101 @@
+[main] 20170602 18:00:03 INFO  AbstractBatchBasic   L:109  - begin running
+[main] 20170602 18:00:10 WARN  DBService            L:794  - DBCP borrow connection time: 6616 ms. batch
+[main] 20170602 18:00:11 DEBUG TbBatchResultMgr     L:60   - sql: INSERT INTO TB_BATCH_RESULT(PROGRAM_NAME, START_DATE, START_TIME, END_DATE, END_TIME, WORK_FLAG, RCODE, ERROR_DESC, PAR_MON, PAR_DAY, LINK_CONTROL, JOB_ID, JOB_TIME, MEM_ID, RECOVER_VALUE) VALUES ('SimulateImpTxnData', '20170602', '180004', '', '', '0', '0000', '', '06', '02', 'N', '001', '0200', '', '')
+[main] 20170602 18:00:11 DEBUG TbBatchResultMgr     L:64   - TB_BATCH_RESULT: 1 record inserted
+[main] 20170602 18:00:11 DEBUG TbBatchResultMgr     L:65   - [TbBatchResultInfo  sProgramName:SimulateImpTxnData sStartDate:20170602 sStartTime:180004 sEndDate: sEndTime: sWorkFlag:0 sRcode:0000 sErrorDesc: sParMon:06 sParDay:02 sLinkControl:N sJobId:001 sJobTime:0200 sMemId: sRecoverValue:]
+[main] 20170602 18:00:12 WARN  SecureDataSource     L:135  - DBCP borrow connection time: 629 ms. YHDP_BATCH
+[main] 20170602 18:00:12 DEBUG CursorBatchJobFactory L:47   - execute sql:SELECT MERCH_ID, TERM_ID, BATCH_NO, TERM_SETTLE_DATE, TERM_SETTLE_TIME  FROM TB_TERM_BATCH WHERE (TERM_SETTLE_DATE<>'00000000' OR TERM_SETTLE_DATE IS NOT NULL) AND (CUT_DATE ='00000000' OR CUT_DATE IS  NULL) AND IMP_FILE_NAME IS NULL  AND EXISTS (SELECT * FROM TB_MERCH WHERE MEM_ID in (SELECT MEM_ID FROM TB_MEMBER WHERE TXN_LOG_FLAG='0') AND JOB_ID='001' AND JOB_TIME='0200' AND TB_MERCH.MERCH_ID = TB_TERM_BATCH.MERCH_ID)
+[main] 20170602 18:00:12 WARN  SimpleBatchProcessor L:122  - error when process batch
+java.sql.SQLException: ORA-00904: "JOB_TIME": 無效的 ID
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:396)
+	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:951)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:513)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:227)
+	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:531)
+	at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:195)
+	at oracle.jdbc.driver.T4CStatement.executeForDescribe(T4CStatement.java:869)
+	at oracle.jdbc.driver.OracleStatement.executeMaybeDescribe(OracleStatement.java:1175)
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1296)
+	at oracle.jdbc.driver.OracleStatement.executeQuery(OracleStatement.java:1498)
+	at oracle.jdbc.driver.OracleStatementWrapper.executeQuery(OracleStatementWrapper.java:406)
+	at org.apache.commons.dbcp.DelegatingStatement.executeQuery(DelegatingStatement.java:205)
+	at tw.com.hyweb.core.cp.batch.framework.generic.CursorBatchJobFactory.init(CursorBatchJobFactory.java:50)
+	at tw.com.hyweb.core.cp.batch.framework.generic.BatchJobHandler.handle(BatchJobHandler.java:54)
+	at tw.com.hyweb.core.cp.batch.framework.generic.SimpleBatchProcessor.process(SimpleBatchProcessor.java:136)
+	at tw.com.hyweb.core.cp.batch.framework.generic.SimpleBatchProcessor.process(SimpleBatchProcessor.java:87)
+	at tw.com.hyweb.core.cp.batch.framework.AbstractBatchBasic.run(AbstractBatchBasic.java:114)
+	at tw.com.hyweb.core.cp.batch.framework.generic.BatchExecutor.main(BatchExecutor.java:36)
+[main] 20170602 18:00:12 ERROR AbstractBatchBasic   L:118  - run batch fail:java.sql.SQLException: ORA-00904: "JOB_TIME": 無效的 ID
+
+java.lang.Exception: java.sql.SQLException: ORA-00904: "JOB_TIME": 無效的 ID
+
+	at tw.com.hyweb.core.cp.batch.framework.generic.SimpleBatchProcessor.process(SimpleBatchProcessor.java:106)
+	at tw.com.hyweb.core.cp.batch.framework.AbstractBatchBasic.run(AbstractBatchBasic.java:114)
+	at tw.com.hyweb.core.cp.batch.framework.generic.BatchExecutor.main(BatchExecutor.java:36)
+Caused by: java.sql.SQLException: ORA-00904: "JOB_TIME": 無效的 ID
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:396)
+	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:951)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:513)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:227)
+	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:531)
+	at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:195)
+	at oracle.jdbc.driver.T4CStatement.executeForDescribe(T4CStatement.java:869)
+	at oracle.jdbc.driver.OracleStatement.executeMaybeDescribe(OracleStatement.java:1175)
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1296)
+	at oracle.jdbc.driver.OracleStatement.executeQuery(OracleStatement.java:1498)
+	at oracle.jdbc.driver.OracleStatementWrapper.executeQuery(OracleStatementWrapper.java:406)
+	at org.apache.commons.dbcp.DelegatingStatement.executeQuery(DelegatingStatement.java:205)
+	at tw.com.hyweb.core.cp.batch.framework.generic.CursorBatchJobFactory.init(CursorBatchJobFactory.java:50)
+	at tw.com.hyweb.core.cp.batch.framework.generic.BatchJobHandler.handle(BatchJobHandler.java:54)
+	at tw.com.hyweb.core.cp.batch.framework.generic.SimpleBatchProcessor.process(SimpleBatchProcessor.java:136)
+	at tw.com.hyweb.core.cp.batch.framework.generic.SimpleBatchProcessor.process(SimpleBatchProcessor.java:87)
+	... 2 more
+[main] 20170602 18:00:12 ERROR AbstractBatchBasic   L:275  - [programName:SimulateImpTxnData, rcode:2999, errorDesc:java.lang.Exception: java.sql.SQLException: ORA-00904: "JOB_TIME": 無效的 ID
+]
+[main] 20170602 18:00:12 DEBUG TbBatchResultMgr     L:147  - sql: UPDATE TB_BATCH_RESULT SET END_DATE = '20170602', END_TIME = '180012', WORK_FLAG = '9', RCODE = '2999', ERROR_DESC = 'java.lang.Exception: java.sql.SQLException: ORA-00904: "JOB_TIME": 無效的 ID
+', PAR_MON = '06', PAR_DAY = '02', LINK_CONTROL = 'N', MEM_ID = '', RECOVER_VALUE = '' WHERE PROGRAM_NAME = 'SimulateImpTxnData' AND START_DATE = '20170602' AND START_TIME = '180004' AND JOB_ID = '001' AND JOB_TIME = '0200'
+[main] 20170602 18:00:12 DEBUG TbBatchResultMgr     L:151  - TB_BATCH_RESULT: 1 record updated
+[main] 20170602 18:00:12 DEBUG TbBatchResultMgr     L:152  - [TbBatchResultInfo  sProgramName:SimulateImpTxnData sStartDate:20170602 sStartTime:180004 sEndDate:20170602 sEndTime:180012 sWorkFlag:9 sRcode:2999 sErrorDesc:java.lang.Exception: java.sql.SQLException: ORA-00904: "JOB_TIME": 無效的 ID
+ sParMon:06 sParDay:02 sLinkControl:N sJobId:001 sJobTime:0200 sMemId: sRecoverValue:]
+[main] 20170602 18:00:12 INFO  AbstractBatchBasic   L:150  - end running
+
+[main] 20170602 18:04:06 INFO  AbstractBatchBasic   L:109  - begin running
+[main] 20170602 18:04:12 WARN  DBService            L:794  - DBCP borrow connection time: 6007 ms. batch
+[main] 20170602 18:04:12 DEBUG TbBatchResultMgr     L:60   - sql: INSERT INTO TB_BATCH_RESULT(PROGRAM_NAME, START_DATE, START_TIME, END_DATE, END_TIME, WORK_FLAG, RCODE, ERROR_DESC, PAR_MON, PAR_DAY, LINK_CONTROL, JOB_ID, JOB_TIME, MEM_ID, RECOVER_VALUE) VALUES ('SimulateImpTxnData', '20170602', '180406', '', '', '0', '0000', '', '06', '02', 'N', '001', '0200', '', '')
+[main] 20170602 18:04:12 DEBUG TbBatchResultMgr     L:64   - TB_BATCH_RESULT: 1 record inserted
+[main] 20170602 18:04:12 DEBUG TbBatchResultMgr     L:65   - [TbBatchResultInfo  sProgramName:SimulateImpTxnData sStartDate:20170602 sStartTime:180406 sEndDate: sEndTime: sWorkFlag:0 sRcode:0000 sErrorDesc: sParMon:06 sParDay:02 sLinkControl:N sJobId:001 sJobTime:0200 sMemId: sRecoverValue:]
+[main] 20170602 18:04:13 WARN  SecureDataSource     L:135  - DBCP borrow connection time: 595 ms. YHDP_BATCH
+[main] 20170602 18:04:13 DEBUG CursorBatchJobFactory L:47   - execute sql:SELECT MERCH_ID, TERM_ID, BATCH_NO, TERM_SETTLE_DATE, TERM_SETTLE_TIME  FROM TB_TERM_BATCH WHERE (TERM_SETTLE_DATE<>'00000000' OR TERM_SETTLE_DATE IS NOT NULL) AND (CUT_DATE ='00000000' OR CUT_DATE IS  NULL) AND IMP_FILE_NAME IS NULL  AND EXISTS (SELECT * FROM TB_MERCH WHERE MEM_ID in (SELECT MEM_ID FROM TB_MEMBER WHERE TXN_LOG_FLAG='0' AND JOB_ID='001' AND JOB_TIME='0200') AND TB_MERCH.MERCH_ID = TB_TERM_BATCH.MERCH_ID)
+[main] 20170602 18:04:13 DEBUG TbBatchResultMgr     L:147  - sql: UPDATE TB_BATCH_RESULT SET END_DATE = '20170602', END_TIME = '180413', WORK_FLAG = '1', RCODE = '0000', ERROR_DESC = 'success:0, failure:0', PAR_MON = '06', PAR_DAY = '02', LINK_CONTROL = 'N', MEM_ID = '', RECOVER_VALUE = '' WHERE PROGRAM_NAME = 'SimulateImpTxnData' AND START_DATE = '20170602' AND START_TIME = '180406' AND JOB_ID = '001' AND JOB_TIME = '0200'
+[main] 20170602 18:04:13 DEBUG TbBatchResultMgr     L:151  - TB_BATCH_RESULT: 1 record updated
+[main] 20170602 18:04:13 DEBUG TbBatchResultMgr     L:152  - [TbBatchResultInfo  sProgramName:SimulateImpTxnData sStartDate:20170602 sStartTime:180406 sEndDate:20170602 sEndTime:180413 sWorkFlag:1 sRcode:0000 sErrorDesc:success:0, failure:0 sParMon:06 sParDay:02 sLinkControl:N sJobId:001 sJobTime:0200 sMemId: sRecoverValue:]
+[main] 20170602 18:04:13 INFO  AbstractBatchBasic   L:150  - end running
+
+[main] 20170602 18:04:39 INFO  AbstractBatchBasic   L:109  - begin running
+[main] 20170602 18:04:45 WARN  DBService            L:794  - DBCP borrow connection time: 5988 ms. batch
+[main] 20170602 18:04:45 DEBUG TbBatchResultMgr     L:60   - sql: INSERT INTO TB_BATCH_RESULT(PROGRAM_NAME, START_DATE, START_TIME, END_DATE, END_TIME, WORK_FLAG, RCODE, ERROR_DESC, PAR_MON, PAR_DAY, LINK_CONTROL, JOB_ID, JOB_TIME, MEM_ID, RECOVER_VALUE) VALUES ('SimulateImpTxnData', '20170602', '180439', '', '', '0', '0000', '', '06', '02', 'N', '001', '0200', '00078067', '')
+[main] 20170602 18:04:45 DEBUG TbBatchResultMgr     L:64   - TB_BATCH_RESULT: 1 record inserted
+[main] 20170602 18:04:45 DEBUG TbBatchResultMgr     L:65   - [TbBatchResultInfo  sProgramName:SimulateImpTxnData sStartDate:20170602 sStartTime:180439 sEndDate: sEndTime: sWorkFlag:0 sRcode:0000 sErrorDesc: sParMon:06 sParDay:02 sLinkControl:N sJobId:001 sJobTime:0200 sMemId:00078067 sRecoverValue:]
+[main] 20170602 18:04:46 WARN  SecureDataSource     L:135  - DBCP borrow connection time: 590 ms. YHDP_BATCH
+[main] 20170602 18:04:46 DEBUG CursorBatchJobFactory L:47   - execute sql:SELECT MERCH_ID, TERM_ID, BATCH_NO, TERM_SETTLE_DATE, TERM_SETTLE_TIME  FROM TB_TERM_BATCH WHERE (TERM_SETTLE_DATE<>'00000000' OR TERM_SETTLE_DATE IS NOT NULL) AND (CUT_DATE ='00000000' OR CUT_DATE IS  NULL) AND IMP_FILE_NAME IS NULL  AND EXISTS (SELECT * FROM TB_MERCH WHERE MEM_ID in (SELECT MEM_ID FROM TB_MEMBER WHERE TXN_LOG_FLAG='0' AND JOB_ID='001' AND JOB_TIME='0200' AND MEM_ID='00078067') AND TB_MERCH.MERCH_ID = TB_TERM_BATCH.MERCH_ID)
+[main] 20170602 18:04:46 DEBUG TbBatchResultMgr     L:147  - sql: UPDATE TB_BATCH_RESULT SET END_DATE = '20170602', END_TIME = '180446', WORK_FLAG = '1', RCODE = '0000', ERROR_DESC = 'success:0, failure:0', PAR_MON = '06', PAR_DAY = '02', LINK_CONTROL = 'N', MEM_ID = '00078067', RECOVER_VALUE = '' WHERE PROGRAM_NAME = 'SimulateImpTxnData' AND START_DATE = '20170602' AND START_TIME = '180439' AND JOB_ID = '001' AND JOB_TIME = '0200'
+[main] 20170602 18:04:46 DEBUG TbBatchResultMgr     L:151  - TB_BATCH_RESULT: 1 record updated
+[main] 20170602 18:04:46 DEBUG TbBatchResultMgr     L:152  - [TbBatchResultInfo  sProgramName:SimulateImpTxnData sStartDate:20170602 sStartTime:180439 sEndDate:20170602 sEndTime:180446 sWorkFlag:1 sRcode:0000 sErrorDesc:success:0, failure:0 sParMon:06 sParDay:02 sLinkControl:N sJobId:001 sJobTime:0200 sMemId:00078067 sRecoverValue:]
+[main] 20170602 18:04:46 INFO  AbstractBatchBasic   L:150  - end running
+
+[main] 20170602 18:06:05 INFO  AbstractBatchBasic   L:109  - begin running
+[main] 20170602 18:06:12 WARN  DBService            L:794  - DBCP borrow connection time: 6008 ms. batch
+[main] 20170602 18:06:12 DEBUG TbBatchResultMgr     L:60   - sql: INSERT INTO TB_BATCH_RESULT(PROGRAM_NAME, START_DATE, START_TIME, END_DATE, END_TIME, WORK_FLAG, RCODE, ERROR_DESC, PAR_MON, PAR_DAY, LINK_CONTROL, JOB_ID, JOB_TIME, MEM_ID, RECOVER_VALUE) VALUES ('SimulateImpTxnData', '20170602', '180605', '', '', '0', '0000', '', '06', '02', 'N', '000', '000000', '', '')
+[main] 20170602 18:06:12 DEBUG TbBatchResultMgr     L:64   - TB_BATCH_RESULT: 1 record inserted
+[main] 20170602 18:06:12 DEBUG TbBatchResultMgr     L:65   - [TbBatchResultInfo  sProgramName:SimulateImpTxnData sStartDate:20170602 sStartTime:180605 sEndDate: sEndTime: sWorkFlag:0 sRcode:0000 sErrorDesc: sParMon:06 sParDay:02 sLinkControl:N sJobId:000 sJobTime:000000 sMemId: sRecoverValue:]
+[main] 20170602 18:06:12 WARN  SecureDataSource     L:135  - DBCP borrow connection time: 620 ms. YHDP_BATCH
+[main] 20170602 18:06:12 DEBUG CursorBatchJobFactory L:47   - execute sql:SELECT MERCH_ID, TERM_ID, BATCH_NO, TERM_SETTLE_DATE, TERM_SETTLE_TIME  FROM TB_TERM_BATCH WHERE (TERM_SETTLE_DATE<>'00000000' OR TERM_SETTLE_DATE IS NOT NULL) AND (CUT_DATE ='00000000' OR CUT_DATE IS  NULL) AND IMP_FILE_NAME IS NULL  AND EXISTS (SELECT * FROM TB_MERCH WHERE MEM_ID in (SELECT MEM_ID FROM TB_MEMBER WHERE TXN_LOG_FLAG='0') AND TB_MERCH.MERCH_ID = TB_TERM_BATCH.MERCH_ID)
+[main] 20170602 18:06:13 DEBUG TbBatchResultMgr     L:147  - sql: UPDATE TB_BATCH_RESULT SET END_DATE = '20170602', END_TIME = '180613', WORK_FLAG = '1', RCODE = '0000', ERROR_DESC = 'success:0, failure:0', PAR_MON = '06', PAR_DAY = '02', LINK_CONTROL = 'N', MEM_ID = '', RECOVER_VALUE = '' WHERE PROGRAM_NAME = 'SimulateImpTxnData' AND START_DATE = '20170602' AND START_TIME = '180605' AND JOB_ID = '000' AND JOB_TIME = '000000'
+[main] 20170602 18:06:13 DEBUG TbBatchResultMgr     L:151  - TB_BATCH_RESULT: 1 record updated
+[main] 20170602 18:06:13 DEBUG TbBatchResultMgr     L:152  - [TbBatchResultInfo  sProgramName:SimulateImpTxnData sStartDate:20170602 sStartTime:180605 sEndDate:20170602 sEndTime:180613 sWorkFlag:1 sRcode:0000 sErrorDesc:success:0, failure:0 sParMon:06 sParDay:02 sLinkControl:N sJobId:000 sJobTime:000000 sMemId: sRecoverValue:]
+[main] 20170602 18:06:13 INFO  AbstractBatchBasic   L:150  - end running
+

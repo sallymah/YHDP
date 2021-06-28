@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="dbDelete" class="tw.com.hyweb.core.cp.batch.housekeep.DbDelete" init-method="">
+    <property name="usingRowid"><value>true</value></property>
+    <property name="recordsPerCommit"><value>1000</value></property>
+    <property name="conditionMappings">
+      <props>
+        <prop key="##REF_DATE##">$refDate</prop>
+        <prop key="##REF_DATE.YYYY##">$refDate.YYYY</prop>
+        <prop key="##REF_DATE.YYYYMM##">$refDate.YYYYMM</prop>
+        <prop key="##REF_DATE.MMDD##">$refDate.MMDD</prop>
+        <prop key="##REF_DATE.MM##">$refDate.MM</prop>
+        <prop key="##REF_DATE.DD##">$refDate.DD</prop>
+      </props>
+    </property>
+	</bean>
+</beans>

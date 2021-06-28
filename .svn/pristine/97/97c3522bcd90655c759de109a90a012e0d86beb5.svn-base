@@ -1,0 +1,104 @@
+main|0|4|5|批次作業處理|
+main|11|6|0|日結批次作業|menu batch 0 Tashin_SVC_日結批次作業選單 1
+main|12|7|0|檔案交換作業|menu file 0 Tashin_SVC_檔案交換作業選單 1
+main|13|8|0|資料回復批次作業|menu rerun 0 Tashin_SVC_資料回復批次作業 1
+main|14|9|0|交易備份及調閱作業|menu backup 0 Tashin_SVC_交易備份及調閱作業 1
+main|15|10|0|查詢批次執行狀態|./run_check.sh 0 1 0 ./op_menu/ShowBatchResult.sh ShowBatchResult.sh
+
+main|0|15|32|報表作業處理|
+main|51|17|28|報表補跑作業|./run_check.sh 1 1 1 ./report/RunReport.sh RunReport.sh
+
+main|0|4|32|儲值系統連線作業處理|
+main|21|6|28|啟動系統線上程式|./run_check.sh 1 0 0 ./online/startOnline.sh startOnline.sh
+main|22|7|28|檢查系統線上程式狀態|./run_check.sh 0 0 0 ./online/onlineStatus.sh onlineStatus.sh
+main|23|8|28|停止系統線上程式|./run_check.sh 1 0 0 ./online/stopOnline.sh stopOnline.sh
+
+main|0|4|62|資料庫狀態監控|
+main|31|6|58|檢查資料庫執行狀態|./run_check.sh 0 0 0 ./op_menu/DbConnTest.sh DbConnTest.sh
+
+main|0|15|5|系統狀態管理|
+main|41|17|0|顯示目前系統空間|./run_check.sh 0 0 0 ./op_menu/ChkHDSpace1.sh ChkHDSpace1.sh
+
+batch|0|4|5|前置作業|
+batch|11|6|0|自動結帳|./run_check.sh 1 1 1 ./batch/AutoSettleAccount.sh AutoSettleAccount.sh
+batch|12|7|0|主機紅利指定加值|./run_check.sh 1 1 1 ./batch/SimulateAppointReloadDownload.sh SimulateAppointReloadDownload.sh
+batch|13|8|0|主機紅利餘額轉置|./run_check.sh 1 1 1 ./batch/SimulateBalTransferDownload.sh SimulateBalTransferDownload.sh
+batch|14|9|0|錯誤交易及不平帳處理|./run_check.sh 1 1 1 ./batch/ErrHandle.sh ErrHandle.sh
+batch|15|10|0|模擬退卡交易|./run_check.sh 1 1 1 ./batch/SimulateCardReturn.sh SimulateCardReturn.sh
+batch|16|11|0|退卡餘額歸零作業|./run_check.sh 1 1 1 ./batch/CleanCardBalance.sh CleanCardBalance.sh
+batch|17|12|0|過期餘額為負處理|./run_check.sh 1 1 1 ./batch/BalUpdateBadBonus.sh BalUpdateBadBonus.sh
+batch|18|13|0|卡片用途|./run_check.sh 1 1 1 ./batch/ImpCardUse.sh ImpCardUse.sh
+batch|19|14|0|批量定期回饋|./run_check.sh 1 1 1 ./batch/runRegularAward.sh runRegularAward.sh
+
+batch|0|4|32|批次作業|
+batch|21|6|28|端末交易資料過檔|./run_check.sh 1 1 1 ./batch/CutOnlTxnStandard.sh CutOnlTxnStandard.sh
+batch|22|7|28|不平帳交過檔|./run_check.sh 1 1 1 ./batch/CutCheckTxn.sh CutCheckTxn.sh
+batch|23|8|28|人工簽單過檔|./run_check.sh 1 1 1 ./batch/CutCapturedTxn.sh CutCapturedTxn.sh
+batch|24|9|28|調帳資料過檔|./run_check.sh 1 1 1 ./batch/CutAdjustTxn.sh CutAdjustTxn.sh
+batch|25|10|28|交易合法性驗證|./run_check.sh 1 1 1 ./batch/CheckOfflineTxn.sh CheckOfflineTxn.sh
+batch|26|11|28|已餘轉後才結帳上傳的交易|./run_check.sh 1 1 1 ./batch/CheckLateUploadTxn.sh CheckLateUploadTxn.sh
+batch|27|12|28|彙整餘額|./run_check.sh 1 1 1 ./batch/ProcBalance.sh ProcBalance.sh
+batch|28|13|28|交易資料清算|./run_check.sh 1 1 1 ./batch/ProcSettle.sh ProcSettle.sh
+batch|29|14|28|計算手續費|./run_check.sh 1 1 1 ./batch/ProcFee.sh ProcFee.sh
+batch|30|15|28|參數下載|./run_check.sh 1 1 1 ./batch/ProcParm.sh ProcParm.sh
+
+batch|0|4|62|報表匯總作業|
+batch|31|6|58|紅利匯總|./run_check.sh 1 1 1 ./batch/SumBonus.sh SumBonus.sh
+batch|32|7|58|卡種匯總|./run_check.sh 1 1 1 ./batch/SumCardProduct.sh SumCardProduct.sh
+batch|33|8|58|特店匯總|./run_check.sh 1 1 1 ./batch/SumMerch.sh SumMerch.sh
+batch|34|9|58|忠誠方案匯總|./run_check.sh 1 1 1 ./batch/SumPbnld.sh SumPbnld.sh
+batch|35|10|58|卡片狀態匯總|./run_check.sh 1 1 1 ./batch/SumCardStatus.sh SumCardStatus.sh
+batch|36|11|58|每日交易量匯總|./run_check.sh 1 1 1 ./batch/SumTxnCnt.sh SumTxnCnt.sh
+batch|37|12|58|庫存匯總|./run_check.sh 1 1 1 ./batch/SumStock.sh SumStock.sh
+
+batch|0|18|62|制卡管理|
+batch|51|20|58|產生制卡檔|./run_check.sh 1 1 1 ./batch/procPerso.sh procPerso.sh
+
+file|0|4|5|匯入作業|
+file|11|6|0|FTP取檔|./run_check.sh 1 1 1 ./batch/FtpIn.sh FtpIn.sh
+file|12|7|0|檔案整理|./run_check.sh 1 1 1 ./batch/CangeLocalPath.sh CangeLocalPath.sh
+file|13|8|0|解壓縮|./run_check.sh 1 1 1 ./batch/batch_unzip.sh batch_unzip.sh
+file|14|9|0|批量交易切檔|./run_check.sh 1 1 1 ./batch/SplitImpTrans.sh SplitImpTrans.sh
+file|15|10|0|匯入檔案|./run_check.sh 1 1 1 ./batch/FilesIn.sh FilesIn.sh
+file|16|11|0|批量交易檔|./run_check.sh 1 1 1 ./batch/ImpTrans.sh ImpTrans.sh
+file|17|12|0|批量指定紅利匯入|./run_check.sh 1 1 1 ./batch/ImpAppload.sh ImpAppload.sh
+file|18|13|0|批量調整交易匯入|./run_check.sh 1 1 1 ./batch/ImpAdjustTxn.sh ImpAdjustTxn.sh
+
+file|0|4|52|匯出作業|
+file|21|6|32|交易回饋檔|./run_check.sh 1 1 1 ./batch/ExpTxn.sh ExpTxn.sh
+file|22|7|32|交易回饋積分明細檔|./run_check.sh 1 1 1 ./batch/ExpSumTransDetail.sh ExpSumTransDetail.sh
+file|23|8|32|會員資料異動檔|./run_check.sh 1 1 1 ./batch/ExpAmendMemberData.sh  ExpAmendMemberData.sh
+file|24|9|32|會員資料異動檔(全檔)|./run_check.sh 1 1 1 ./batch/ExpAmendMemberData_all.sh  ExpAmendMemberData_all.sh
+file|25|10|32|卡片資料異動檔|./run_check.sh 1 1 1 ./batch/ExpAmendCardData.sh ExpAmendCardData.sh
+file|26|11|32|卡片資料異動檔(全檔)|./run_check.sh 1 1 1 ./batch/ExpAmendCardData_all.sh ExpAmendCardData_all.sh
+file|27|12|32|交易資料異動檔|./run_check.sh 1 1 1 ./batch/ExpAmendTrans.sh ExpAmendTrans.sh  
+file|28|13|32|交易資料異動檔(全檔)|./run_check.sh 1 1 1 ./batch/ExpAmendTrans_all.sh ExpAmendTrans_all.sh 
+file|29|14|32|紅利餘額|./run_check.sh 1 1 1 ./batch/ExpCardBal.sh ExpCardBal.sh 
+file|30|15|32|紅利餘額(全檔)|./run_check.sh 1 1 1 ./batch/ExpCardBal_all.sh  ExpCardBal_all.sh 
+file|31|16|32|商戶檔|./run_check.sh 1 1 1 ./batch/ExpMemberData.sh ExpMemberData.sh 
+file|32|17|32|門店檔|./run_check.sh 1 1 1 ./batch/ExpMerchData.sh ExpMerchData.sh 
+file|33|18|32|門店群組檔|./run_check.sh 1 1 1 ./batch/ExpMerchGroup.sh ExpMerchGroup.sh 
+file|34|19|32|活動訊息檔|./run_check.sh 1 1 1 ./batch/ExpAwardProg.sh ExpAwardProg.sh 
+file|35|20|32|紅利主檔|./run_check.sh 1 1 1 ./batch/ExpBonus.sh ExpBonus.sh    
+file|36|6|65|匯出檔案|./run_check.sh 1 1 1 ./batch/FilesOut.sh FilesOut.sh
+file|37|7|65|FTP放檔|./run_check.sh 1 1 1 ./batch/FtpOut.sh FtpOut.sh
+
+rerun|0|4|5|資料回復批次作業|
+rerun|11|6|0|端末交易資料過檔|./run_check.sh 1 1 1 ./batch/recoverCutOnlTxnStandard.sh recoverCutOnlTxnStandard.sh go7 2
+rerun|12|7|0|人工簽單過檔|./run_check.sh 1 1 1 ./batch/recoverCutCapturedTxn.sh recoverCutCapturedTxn.sh go7 2
+rerun|13|8|0|調帳資料過檔|./run_check.sh 1 1 1 ./batch/recoverCutAdjustTxn.sh recoverCutAdjustTxn.sh go7 2
+rerun|14|9|0|交易資料清算|./run_check.sh 1 1 1 ./batch/recoverProcSettle.sh recoverProcSettle.sh go7 1
+rerun|15|10|0|不平帳處理|./run_check.sh 1 1 1 ./batch/recoverErrHandle.sh recoverErrHandle.sh go7 2
+
+rerun|0|4|62|資料回復報表作業|
+rerun|21|6|58|紅利匯總|./run_check.sh 1 1 1 ./batch/recoverSumBonus.sh recoverSumBonus.sh go7 3
+rerun|22|7|58|卡種匯種|./run_check.sh 1 1 1 ./batch/recoverSumCardProduct.sh recoverSumCardProduct.sh go7 3
+rerun|23|8|58|特店匯總|./run_check.sh 1 1 1 ./batch/recoverSumMerch.sh recoverSumMerch.sh go7 3
+rerun|24|9|58|忠誠方案匯總|./run_check.sh 1 1 1 ./batch/recoverSumPbnld.sh SumPbnld.sh go7 3
+rerun|25|10|58|卡片狀態匯總|./run_check.sh 1 1 1 ./batch/recoverSumCardStatus.sh SumCardStatus.sh go7 3
+rerun|26|11|58|庫存匯總|./run_check.sh 1 1 1 ./batch/recoverSumStock.sh SumStock.sh go7 3
+
+backup|0|4|5|調閱作業|
+backup|11|6|0|備份調閱|./run_check.sh 1 1 1 ./batch/DbImport.sh DbImport.sh
+backup|12|7|0|調閱後清除|./run_check.sh 1 1 1 ./batch/DbOffTruncate.sh DbOffTruncate.sh
+

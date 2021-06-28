@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<bean id="decrypt" class="tw.com.hyweb.svc.yhdp.batch.cipher.Decrypt">
+		<property name="namePattern" value="CIPHER" />
+		<property name="split" value="_" />
+		<property name="iv" value="0000000000000000" />
+		<property name="pinKeyId" value="P3EncKey" />
+		<property name="in_out" value="I" />
+		<property name="cipher_flag" value="1" />
+		<property name="servletUrl" value="http://YhdpSS:36888/YHDP_SSServlet/SS" />
+		<property name="slot" value="0" />
+		<property name="pin" value = "BAA6B7BBAFCECDCCCBF7F7F7F7F7F7F7F7" />
+	</bean>
+</beans>

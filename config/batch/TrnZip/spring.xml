@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <import resource="../datasource.xml" />
+  <import resource="../traffics.xml" />
+  
+  <bean id="trnZip" class="tw.com.hyweb.svc.yhdp.batch.trnZip.TrnZip">
+    <!-- okFilePending: 決定 OK file 檔名要如何 pending -->
+    <!-- <property name="okFilePending"><value>.OK</value></property> -->
+    <!-- renameAfterCopy: 檔案從 temp 目錄 copy 到 work 目錄成功後, temp 目錄中的檔案是否要做 rename 的動作 -->
+    <!-- ex: NEWCARD.2007030601 -> NEWCARD.2007030601.MOVED -->
+    <property name="fileInfoInOut"><value>O</value></property>
+
+    <property name="filenameBeans">
+      <list>
+     	<!-- 消費 -->
+        <ref bean="TXN_BUS"/>
+		<ref bean="TXNS_TRA"/>
+		<ref bean="TXNS_TRTC"/>
+		<ref bean="TXNS_TYRTC"/>
+		<ref bean="TXNS_KRTC"/>
+		<ref bean="TXNS_CARPARK"/>
+		<ref bean="TXNS_KLRT"/>
+		<ref bean="TXNS_NMNS"/>
+		<ref bean="TXNS_TMRT"/>
+		<ref bean="TXNS_DHLRT"/>
+		<ref bean="TXNS_CBike"/>
+		<ref bean="TXNS_TPZOO"/>
+		<ref bean="TXNS_HCZOO"/>
+		<ref bean="TXNS_SYMRT"/>
+      </list>
+    </property>
+    
+	<constructor-arg>
+		<ref bean="members" />
+	</constructor-arg>
+    
+  </bean>
+  
+  <bean id="members" class="tw.com.hyweb.svc.yhdp.batch.framework.traffics.Members"/>
+  
+</beans>

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+
+    <bean id="TransTypePcode" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="properties">
+            <props>
+                <prop key="00">7401</prop>
+                <prop key="01">7402</prop>
+                <prop key="02">7403</prop>
+                <prop key="03">7404</prop>
+                <prop key="08">7405</prop>
+                <prop key="0A">7407</prop>
+                <prop key="0B">7424</prop>
+                <prop key="10">7409</prop>
+                <prop key="11">7410</prop>
+                <prop key="14">7617</prop>
+                <prop key="1A">7411</prop>
+                <prop key="1B">7412</prop>
+                <prop key="21">7422</prop>
+                <prop key="30">7423</prop>
+                <prop key="32">7737</prop>
+                <prop key="36">7425</prop>
+                <prop key="38">7427</prop>
+                <prop key="50">7413</prop>
+                <prop key="54">7517</prop>
+                <prop key="55">7637</prop>
+                <prop key="61">7408</prop>
+                <prop key="64">7406</prop>
+                <prop key="65">7488</prop>
+                <prop key="70">7418</prop>
+                <prop key="72">7438</prop>
+                <prop key="73">7428</prop>
+                <prop key="76">7468</prop>
+                <prop key="78">7478</prop>
+                <prop key="79">7448</prop>
+                <prop key="86">7431</prop>
+                <prop key="A0">7429</prop>
+                <prop key="A1">7430</prop>
+                <prop key="A8">7432</prop>
+                <prop key="A9">7433</prop>
+                <prop key="AA">7434</prop>
+                <prop key="AB">7435</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="SpecialTransTypePcode" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="properties">
+            <props>
+                <prop key="01">7415</prop>
+                <prop key="02">7417</prop>
+                <prop key="08">7419</prop>
+                <prop key="11">7420</prop>
+                <prop key="1B">7421</prop>
+                <prop key="14">7627</prop>
+                <prop key="AB">7627</prop>
+                <prop key="A8">7627</prop>
+                <prop key="AA">7627</prop>
+            </props>
+        </property>
+    </bean>
+    
+	<bean id="Field04Action" class="tw.com.hyweb.svc.yhdp.online.util.tag.Field04Action"/>
+    
+    <!--use one data define to class is good style. samson-->
+    <bean id="RewardPCodeTxCode" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="properties">
+            <props>
+                <!-- Activation -->
+                <prop key="7117">8807</prop>
+
+                <!-- Reload -->
+                <prop key="7707">8807</prop>
+                <prop key="7437">8807</prop>
+                <prop key="7708">8808</prop>
+
+                <!-- Sale -->
+                <prop key="7647">8807</prop>
+                <prop key="7617">8807</prop>
+                <prop key="7627">8807</prop>
+                <prop key="7447">8807</prop>
+
+                <!-- Sale Void -->
+                <prop key="7648">8808</prop>
+
+                <!-- Sale Refund -->
+                <prop key="7646">8806</prop>
+                
+                <!-- 卡轉卡-扣點 -->
+                <prop key="7397">8807</prop>
+
+                <!-- 卡轉卡-扣點 Void -->
+                <prop key="7398">8808</prop>
+
+                <!-- 卡轉卡-扣點 Refund -->
+                <prop key="7396">8806</prop>
+                
+                <!-- 卡轉卡-加點 -->
+                <prop key="7347">8527</prop><!-- 資料放在redeem -->
+                
+                <!-- 回饋 or 回饋取消 or 回饋退貨 -->
+                <prop key="7807">8807</prop>
+                <prop key="7207">8807</prop>
+                <prop key="7217">8807</prop>
+                <prop key="7247">8807</prop>
+                
+                <!-- Redeen refund -->
+                <prop key="7206">8806</prop>
+                <prop key="7246">8806</prop>
+                <prop key="7216">8806</prop>
+                
+                 <!-- Redeen void -->
+                <prop key="7808">8808</prop>
+                <prop key="7248">8808</prop>
+                <prop key="7218">8808</prop>
+                
+            </props>
+        </property>
+    </bean>
+
+    <bean id="RedeemPCodeTxCode" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="properties">
+            <props>
+                <!-- Sale -->
+                <prop key="7647">8207</prop>
+                <prop key="7617">8207</prop>
+                <prop key="7627">8207</prop>
+                <prop key="7401">8207</prop>
+                <prop key="7402">8207</prop>
+                <prop key="7403">8207</prop>
+                <prop key="7404">8207</prop>
+                <prop key="7405">8207</prop>
+                <prop key="7407">8207</prop>
+                <prop key="7409">8207</prop>
+                <prop key="7410">8207</prop>
+                <prop key="7411">8207</prop>
+                <prop key="7412">8207</prop>
+                <prop key="7413">8207</prop>
+                <prop key="7415">8207</prop>
+                <prop key="7417">8207</prop>
+                <prop key="7419">8207</prop>
+                <prop key="7420">8207</prop>
+                <prop key="7421">8207</prop>
+                <prop key="7422">8207</prop>
+                <prop key="7424">8207</prop>
+                <prop key="7430">8207</prop>
+                <prop key="7458">8207</prop>
+                <prop key="7431">8207</prop>
+                <prop key="7432">8207</prop>
+                <prop key="7433">8207</prop>
+                <prop key="7434">8207</prop>
+                <prop key="7435">8207</prop>
+                <prop key="7447">8207</prop>
+
+                <!-- Sale Void -->
+                <prop key="7648">8208</prop>
+                <prop key="7808">8208</prop>
+
+                <!-- Sale Refund -->
+                <prop key="7646">8206</prop>
+                <prop key="7806">8206</prop>
+
+                <!-- Sale Refund Void -->
+                <prop key="7609">8209</prop>
+                
+                <!-- 卡轉卡-扣點 -->
+                <prop key="7397">8207</prop>
+                
+                <!-- 卡轉卡-扣點 void -->
+                <prop key="7398">8208</prop>
+                
+                <!-- 卡轉卡-扣點 Refund -->
+                <prop key="7396">8206</prop>
+
+                <!-- Redeem -->
+                <prop key="7207">8207</prop>
+                <prop key="7217">8207</prop>
+
+                <!-- Redeem Refund-->
+                <prop key="7206">8206</prop>
+                <prop key="7216">8206</prop>
+                <prop key="7646">8206</prop>
+                <prop key="7406">8206</prop>
+
+                <!-- Redeem Void-->
+                <prop key="7208">8208</prop>
+                <prop key="7218">8208</prop>
+                <prop key="7648">8208</prop>
+                <prop key="7408">8208</prop>
+                <prop key="7414">8208</prop>
+                <prop key="7488">8208</prop>
+                
+                <prop key="7547">8207</prop>
+                
+                <prop key="7557">8207</prop>
+                
+                <prop key="7657">8207</prop>
+                
+                <!-- Refund Card -->
+                <prop key="7637">8577</prop> <!-- 資料放在redeem -->
+                
+                <!-- Refund Card Void -->
+                <prop key="7528">8578</prop><!-- 資料放在redeem -->
+                
+                <!-- C2C Balance Transfer -->
+                <prop key="7347">8527</prop><!-- 資料放在redeem -->
+
+            </props>
+        </property>
+    </bean>
+
+    <bean id="RepairPCodeTxCode" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="properties">
+            <props>
+                <!-- 正補登 -->
+                <prop key="7707">8507</prop>
+                <prop key="7307">8507</prop>
+                <prop key="7507">8507</prop>
+                <prop key="7537">8537</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="MainPCodeTxCode" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="properties">
+            <props>
+                <!-- Perload -->
+                <prop key="7117">8597</prop>
+
+                <!-- Reload -->
+                <prop key="7707">8707</prop>
+                <prop key="7425">8707</prop>
+                <prop key="7423">8707</prop>
+                <prop key="7429">8707</prop>
+                <prop key="7437">8707</prop>
+
+				<!-- Auto Reload -->
+                <prop key="7717">8717</prop>
+                <prop key="7737">8717</prop>
+                <prop key="7427">8717</prop>
+                
+                <!-- Reload Void -->
+                <prop key="7708">8708</prop>
+                <prop key="7428">8708</prop>
+                <prop key="7448">8708</prop>
+                <prop key="7418">8708</prop>
+                <prop key="7468">8708</prop>
+                <prop key="7828">8708</prop>
+                
+                <!-- Auto Reload Void -->
+                <prop key="7438">8718</prop>
+                <prop key="7478">8718</prop>
+                
+                 <!-- appoint reload -->
+                <prop key="7307">8817</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>

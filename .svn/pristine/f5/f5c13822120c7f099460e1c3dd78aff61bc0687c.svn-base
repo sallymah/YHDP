@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+   xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+   <import resource="classpath:META-INF/cxf/cxf.xml" />
+   <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+   <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+   <import resource="custfields.xml" /> 
+   <import resource="txnfields.xml" /> 
+   <import resource="balancefields.xml" />
+   
+   <bean id="AppointReloadService" class="tw.com.hyweb.cp.ws.appointreload.AppointReloadServiceImp">
+       <constructor-arg>
+           <bean class="tw.com.hyweb.core.cp.common.appointreload.SimulateAppointReloadFactory"/>
+      </constructor-arg>
+      <constructor-arg ref="dataSource" />
+   </bean>
+   <jaxws:endpoint implementor="#AppointReloadService" address="/AppointReloadService" /> 
+   
+   <bean id="runProgram" class="tw.com.hyweb.cp.ws.runbatfile.RunProgramServiceImpl">
+      <property name="filePathName" value="E:/SYSTEX_SIT/execsh/batch"/>
+   </bean>
+   <jaxws:endpoint implementor="#runProgram" address="/RunProgram" />      
+   
+   <bean id="runShellProgram" class="tw.com.hyweb.yhdp.ws.runshellfile.RunShellProgramServiceImpl">
+      <property name="filePathName" value="./home/svcadmin/execsh/batch"/>
+      <!-- <property name="fileName" value="ImpPersoFeeback"/> -->
+   </bean>
+   <jaxws:endpoint implementor="#runShellProgram" address="/RunShellProgram" />      
+   
+   <bean id="RegisterCustService" class="tw.com.hyweb.cp.ws.enduser.RegisterCustServiceImpl">
+      <constructor-arg>
+	    <ref bean="custFieldsMap"/>
+	  </constructor-arg>
+	  <constructor-arg>
+	    <ref bean="assFieldsMap"/>
+      </constructor-arg>
+      <constructor-arg ref="dataSource" />
+   </bean>
+   <jaxws:endpoint implementor="#RegisterCustService" address="/RegisterCustService" />      
+   
+   
+   <bean id="TxnService" class="tw.com.hyweb.cp.ws.enduser.TxnServiceImpl">
+      <constructor-arg>
+	    <ref bean="txnFieldsMap"/>
+      </constructor-arg>
+      <constructor-arg>
+	    <ref bean="txnDtlFieldsMap"/>
+      </constructor-arg>
+      <constructor-arg ref="dataSource" />
+   </bean>
+   <jaxws:endpoint implementor="#TxnService" address="/TxnService" />  
+          
+   <bean id="BalanceService" class="tw.com.hyweb.cp.ws.enduser.BalanceServiceImpl">
+      <constructor-arg>
+	    <ref bean="cardBalanceFieldsMap"/>
+      </constructor-arg>
+      <constructor-arg ref="dataSource" />
+   </bean>
+   <jaxws:endpoint implementor="#BalanceService" address="/BalanceService" />  
+   
+   <bean id="ImpFilesService" class="tw.com.hyweb.yhdp.ws.impfiles.ImpFilesServiceImpl">
+      <constructor-arg>
+           <bean class="tw.com.hyweb.core.cp.common.impfiles.ImpPersoFeedbackFactory">
+				<!-- <property name="descryptFlag" value="false" /> -->
+				<!-- <property name="iv" value="0000000000000000" /> -->
+				<!-- <property name="pinKeyId" value="P3EncKey" />  -->
+				<property name="absolutePath" value="/home/svcadmin/HOST_BATCH/batch_file/work_file" />
+           </bean>
+      </constructor-arg>
+      <constructor-arg ref="dataSource" />
+   </bean>
+   <jaxws:endpoint implementor="#ImpFilesService" address="/ImpFilesService" />  
+   
+   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+      <property name="locations">
+         <list>
+            <value>classpath:config/dbservice.properties</value>
+         </list>
+      </property>
+   </bean>		  
+
+   <bean id="dataSource" class="tw.com.hyweb.service.db.SecureDataSource" destroy-method="close">
+      <property name="driverClassName" value="${dbservice.connection.driverClass}" />
+      <property name="url" value="${dbservice.connection.url}" />
+      <property name="username" value="${dbservice.connection.username.common}" />
+      <property name="password" value="${dbservice.connection.password.common}" />
+      <property name="defaultAutoCommit" value="false" />
+   </bean>			  
+</beans>

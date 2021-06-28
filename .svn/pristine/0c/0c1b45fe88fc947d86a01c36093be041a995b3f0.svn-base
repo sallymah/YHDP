@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <import resource="validator.xml"/>
+    <import resource="logger.xml"/>
+    <import resource="filler.xml"/>
+    <import resource="filter.xml"/>
+    <import resource="bizAction.xml"/>
+    <import resource="action.xml"/>
+    <import resource="offlineAdviceController.xml"/>
+    
+    <bean id="ImpTrafficTxn" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTrafficTxn.ImpTrafficTxn">
+        <property name="isHeader"><value>false</value></property>
+        <property name="threadPoolJobExecutor"><ref bean="ThreadPoolJob"></ref></property>
+        <property name="waitThreadSecLimit"><value>0</value></property>      <!--  等待每個tread工作完的的總秒數,0代表沒限制thread跑多久 -->
+        <property name="waitThreadSleep"><value>10000</value></property>     <!--  每一次檢查各tread狀態的秒數    -->
+        <!-- 匯入多少筆 commit 一次, default 1000, impfiles setting -->
+        <property name="recordsPerCommit"><value>1</value></property>
+        <property name="ctxListener"><ref bean="Mediator"></ref></property>
+        <property name="cacheTbList">
+            <list>
+                <ref bean="CacheTbRcode"/>
+                <ref bean="CacheTbSysConfig"/>
+            </list>
+        </property>
+        <property name="fileNameList">
+            <list>
+                <value>TXN</value>
+                <value>TXNS_TRTC</value>                
+                <value>TXNS_TYRTC</value>
+                <value>TXNS_KRTC</value>
+                <value>TXNS_TRA</value>
+                <value>TXNS_CARPARK</value>
+                <value>TXNS_DHLRT</value>
+                <value>R_TRN_TXN</value>
+            </list>
+	    </property>
+    </bean>
+  
+    <!--  調整THEREAD時,需同步異動dbservice.properties 最大CONNECT個數 -->
+    <bean id="ThreadPoolJob" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.ThreadPoolJobExecutor">
+        <constructor-arg index="0" type="int"><value>0</value></constructor-arg>    <!--  0為LinkedBlockingQueue/其他ArrayBlockingQueue -->
+        <constructor-arg index="1" type="int"><value>20</value></constructor-arg>    <!--  corePoolSize -->
+        <constructor-arg index="2" type="int"><value>20</value></constructor-arg>    <!--  maximumPoolSize -->
+        <constructor-arg index="3" type="long"><value>60</value></constructor-arg>  <!--  keepAliveTime -->
+    </bean>
+  
+    <bean id="CacheTbRcode" class="tw.com.hyweb.svc.yhdp.online.CacheTbRcode" factory-method="getInstance"/>
+    <bean id="CacheTbSysConfig" class="tw.com.hyweb.svc.yhdp.online.CacheTbSysConfig" factory-method="getInstance"/>
+    
+    <bean id="Mediator" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.Mediator">
+        <property name="ctxSender" ref="EmptyContextSender"/>
+        <property name="ctrlerList">
+            <list>
+                <ref bean="Header"/>
+                <ref bean="TrafficDispatcher"/>
+                <ref bean="Redeem"/>
+                <ref bean="AuthReload"/>
+                <ref bean="RedeemVoidRefund"/>
+                <ref bean="AuthReloadVoid"/>
+                <ref bean="Reload"/>
+                <ref bean="ReloadVoid"/>
+                <ref bean="LockCard"/>
+                <ref bean="RefundCard"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="EmptyContextSender" class="tw.com.hyweb.online.EmptyContextSender">
+    </bean>
+</beans>

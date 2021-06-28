@@ -1,0 +1,7 @@
+# Version: 2.0.0
+# Date: 2007-01-10
+directory.temp=batch_file\\temp_file\\
+directory.work=batch_file\\work_file\\
+directory.report=out\\Report\\Output\\BatchRpt\\
+impfiles.percommit.records=1000
+impfiles.percommit.sleep=500

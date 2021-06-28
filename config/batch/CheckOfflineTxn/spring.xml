@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+Version: 1.0.0
+Date: 2007-01-03
+-->
+<beans>
+  <bean id="checkOfflineTxn" class="tw.com.hyweb.core.cp.batch.daycut.CheckOfflineTxn">
+    <!-- 每次取n筆TB_TRANS出來處理 -->
+    <property name="fetchRecord"><value>10</value></property>
+    <!-- recordsPerCommit / fetchRecord 必須要整除, 否則會跟 fetchRecord 用一樣的值 -->
+    <property name="recordsPerCommit"><value>5</value></property>
+
+    <!-- 依"交易來源"定義須檢查哪幾個條件 -->
+    <property name="checkConditionInfos">
+      <list>
+        <ref bean="E"/><!-- EDC -->
+        <!--<ref bean="C"/>--><!-- Captured transaction -->
+      </list>
+    </property>
+  </bean>
+  <bean id="E" class="tw.com.hyweb.core.cp.batch.daycut.CheckConditionInfo">
+    <property name="txnSrc"><value>E</value></property>
+    <property name="checkCardNo"><value>1</value></property>
+    <property name="checkCardStatus"><value>1</value></property>
+    <property name="checkMerch"><value>1</value></property>
+    <property name="checkTerm"><value>1</value></property>
+    <property name="checkOrigTxn"><value>1</value></property>
+    <property name="checkBlacklist"><value>1</value></property>
+  </bean>
+  <!--<bean id="C" class="tw.com.hyweb.core.cp.batch.daycut.CheckConditionInfo">
+    <property name="txnSrc"><value>C</value></property>
+    <property name="checkCardNo"><value>1</value></property>
+	<property name="checkCardStatusT"><value>1</value></property>
+    <property name="checkCardStatus"><value>1</value></property>
+    <property name="checkMerch"><value>1</value></property>
+    <property name="checkTerm"><value>1</value></property>
+    <property name="checkOrigTxn"><value>1</value></property>
+    <property name="checkBlacklist"><value>1</value></property>
+  </bean>-->
+</beans>

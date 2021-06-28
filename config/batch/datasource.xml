@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+      <property name="locations">
+         <list>
+            <value>config/dbservice.properties</value>
+         </list>
+      </property>
+   </bean>
+
+   <bean id="dataSource" class="tw.com.hyweb.service.db.SecureDataSource" destroy-method="close">
+      <property name="driverClassName" value="${dbservice.connection.driverClass}" />
+      <property name="url" value="${dbservice.connection.url}" />
+      <property name="username" value="${dbservice.connection.username.batch}" />
+      <property name="password" value="${dbservice.connection.password.batch}" />
+      <property name="initialSize" value="${dbservice.dbcp.initialSize.batch}" />
+      <property name="maxIdle" value="${dbservice.dbcp.maxIdle.batch}" />
+      <property name="minIdle" value="${dbservice.dbcp.minIdle.batch}" />
+      <property name="maxActive" value="${dbservice.dbcp.ps.maxActive.batch}" />
+      <property name="testWhileIdle" value="${dbservice.dbcp.testWhileIdle.batch}" />
+      <property name="testOnBorrow" value="${dbservice.dbcp.testOnBorrow.batch}" />
+      <property name="testOnReturn" value="${dbservice.dbcp.testOnReturn.batch}" />
+      <property name="maxWait" value="${dbservice.dbcp.maxWait.batch}" />
+      <property name="defaultAutoCommit" value="false" />
+   </bean>
+
+</beans>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+   <import resource="classpath:org/codehaus/xfire/spring/xfire.xml" />
+
+   <bean name="cardNoGeneratorService" class="org.codehaus.xfire.spring.ServiceBean">
+      <property name="serviceBean" ref="cardNoGenerator" />
+      <property name="serviceClass" value="tw.com.hyweb.cp.ws.cardnogenerator.CardNoGenerationService" />
+   </bean>
+
+   <bean name="bonusService" class="org.codehaus.xfire.spring.ServiceBean">
+      <property name="serviceBean" ref="bonus" />
+      <property name="serviceClass" value="tw.com.hyweb.cp.ws.bonus.BonusService" />
+   </bean>
+
+   <bean id="cardNoGenerator" class="tw.com.hyweb.cp.ws.cardnogenerator.CardNoGenerationServiceImpl">
+      <property name="dataSource" ref="dataSource" />
+   </bean>
+
+   <bean id="bonus" class="tw.com.hyweb.cp.ws.bonus.BonusServiceImpl">
+      <property name="dataSource" ref="dataSource" />
+   </bean>
+	
+   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+      <property name="locations">
+         <list>
+            <value>classpath:config/dbservice.properties</value>
+         </list>
+      </property>
+   </bean>
+
+   <bean id="dataSource" class="tw.com.hyweb.service.db.SecureDataSource" destroy-method="close">
+      <property name="driverClassName" value="${dbservice.connection.driverClass}" />
+      <property name="url" value="${dbservice.connection.url}" />
+      <property name="username" value="${dbservice.connection.username.common}" />
+      <property name="password" value="${dbservice.connection.password.common}" />
+      <property name="defaultAutoCommit" value="false" />
+   </bean>
+</beans>

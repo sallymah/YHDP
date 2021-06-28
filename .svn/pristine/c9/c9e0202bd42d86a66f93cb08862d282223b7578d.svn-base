@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="checkTxnUtility" class="tw.com.hyweb.core.cp.batch.errhandle.CheckTxnUtility">
+		<property name="termBatchConditionMaker">
+			<bean class="tw.com.hyweb.core.cp.batch.errhandle.TermBatchConditionMakerImpl" />
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+   <import resource="../datasource.xml" />
+   <import resource="check.xml" />
+   <import resource="function.xml" />
+
+   <bean id="processor" class="tw.com.hyweb.core.cp.batch.parmdown.ParameterDownloadProcessor">
+      <property name="dataSource" ref="dataSource" />
+      <property name="parameterHandler" ref="fullHandler" />
+   </bean>
+
+   <bean id="terminalAccessor" class="tw.com.hyweb.core.cp.batch.parmdown.TerminalAccessorImpl" />
+
+   <bean id="generator" class="tw.com.hyweb.core.cp.batch.parmdown.ParameterGenerator">
+      <property name="functionMap" ref="functionMap" />
+      <property name="inserter">
+         <bean class="tw.com.hyweb.core.cp.batch.parmdown.ParameterInserterImpl" />
+      </property>
+   </bean>
+
+   <bean id="updater" class="tw.com.hyweb.core.cp.batch.parmdown.ParameterGenerateUpdater" />
+
+   <bean id="partialHandler" class="tw.com.hyweb.core.cp.batch.parmdown.PartialAcquirerHandler">
+      <constructor-arg>
+         <ref bean="generator" />
+      </constructor-arg>
+      <constructor-arg>
+         <ref bean="updater" />
+      </constructor-arg>
+      <constructor-arg>
+         <ref bean="terminalAccessor" />
+      </constructor-arg>
+      <property name="tableConditionMap" ref="partialCheckTableConditionMap" />
+      <property name="tableAcquirerFieldMap" ref="partialCheckTableAcquirerFieldMap" />
+   </bean>
+
+   <bean id="fullHandler" class="tw.com.hyweb.core.cp.batch.parmdown.FullAcquirerHandler">
+      <constructor-arg>
+         <ref bean="partialHandler" />
+      </constructor-arg>
+      <constructor-arg>
+         <ref bean="generator" />
+      </constructor-arg>
+      <constructor-arg>
+         <ref bean="updater" />
+      </constructor-arg>
+      <constructor-arg>
+         <ref bean="terminalAccessor" />
+      </constructor-arg>
+      <property name="tableConditionMap" ref="fullCheckTableConditionMap" />
+   </bean>
+</beans>

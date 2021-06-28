@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+  <bean id="expEPAGP" class="tw.com.hyweb.svc.yhdp.batch.expfiles.ExpEPAGP">
+    <property name="encoding"><value>BIG5</value></property>
+    <property name="memId"><value>00001001</value></property>
+    <property name="expTxnDtlFlag"><value>false</value></property>
+    <property name="memIds">
+      <util:list>
+      </util:list>
+    </property>
+    <property name="pCodes">
+      <util:list>
+		<value>7402</value> <!--電子票值扣款進站/ 進場--> 
+		<value>7410</value> <!--電子票值扣款出站/ 出場-->
+		<value>7412</value> <!--電子票值扣款出站/ 出場 補登-->
+		<value>7432</value> <!--電子票值特許上車-->
+		<value>7433</value> <!--電子票值特許下車-->
+		<value>7414</value> <!--同站加值補回-->
+		<value>7488</value> <!--同站加值補回-消費取消-->
+      </util:list>
+    </property>
+  </bean>
+</beans>

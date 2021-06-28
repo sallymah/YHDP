@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<import resource="../../traffics.xml" />
+
+  <bean id="expTrnTefr" class="tw.com.hyweb.svc.yhdp.batch.expfiles.ExpTrnTefr.ExpTrnTefr">
+    <property name="encoding"><value>UTF-8</value></property>
+    <property name="expTxnDtlFlag"><value>false</value></property>
+    
+    <property name="filenameBeans">
+      <list>
+        <ref bean="TEFD_BUS"/>
+        <!-- <ref bean="TEFD_TRA"/>
+        <ref bean="TEFD_TRTC"/>
+        <ref bean="TEFD_TYRTC"/>
+        <ref bean="TEFD_KRTC"/> 
+        <ref bean="TEFD_CARPARK"/> 
+        <ref bean="TEFD_KLRT"/> 
+        <ref bean="TEFD_NMNS"/>
+		<ref bean="TEFD_TMRT"/>-->
+      </list>
+    </property>
+    
+	<constructor-arg>
+		<ref bean="trnRcodes" />
+	</constructor-arg>
+	<constructor-arg>
+		<ref bean="members" />
+	</constructor-arg>
+  </bean>
+  
+  <bean id="trnRcodes" class="tw.com.hyweb.svc.yhdp.batch.framework.traffics.TrnRcodes"/>
+  <bean id="members" class="tw.com.hyweb.svc.yhdp.batch.framework.traffics.Members"/>
+  
+</beans>

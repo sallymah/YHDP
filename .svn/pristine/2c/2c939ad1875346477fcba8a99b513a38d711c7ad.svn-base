@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+
+    <bean id="ReloadReversal" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.BatchBaseController">
+        <property name="acceptMti"><value>0400</value></property>
+        <property name="acceptProcCode"><value>888888</value></property>
+        <property name="acceptLmsProcCode"><value>7707 7747 7757</value></property>
+        <property name="txLogger">
+            <ref bean="TxLoggerEmpty" />
+        </property>
+        <property name="validatorList">
+            <list>
+                <ref bean="MerchantValidator" />
+                <ref bean="CpcTerminalValidator" />
+                <ref bean="AcquireValidator" />
+                <ref bean="SamDeviceValidator" />
+                <ref bean="MacValidator" />
+            </list>
+        </property>
+        <property name="generalFiller">
+            <list>
+             	<ref bean="CardInfoFiller" />
+                <ref bean="BonusBaseFiller" />
+                <ref bean="IssuerFiller" />
+                <ref bean="AcquirerFiller" />
+            </list>
+        </property>
+        <property name="bizAction">
+            <list>
+                <ref bean="CheckDueDay"/>
+                <ref bean="ReloadLockValidator" />
+                <ref bean="OriginalTxnDataFiller"/>
+                <ref bean="InsertTermBatch"/>
+				<ref bean="UpdateTxnSettleDateTime"/>
+                <ref bean="UpdateOnlTxnImpInfo"/>
+                <ref bean="ReversalOnlTxn"/>
+                <bean id="RedoUpdateAccu" class="tw.com.hyweb.svc.yhdp.online.controller.reload.RedoUpdateAccu">
+                    <constructor-arg index="0" type="boolean"><value>false</value></constructor-arg>
+                    <constructor-arg index="1" type="boolean"><value>true</value></constructor-arg>
+    		    </bean>
+                <ref bean="ReversalChipBalAction"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="ReloadVoidReversal" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpTxnDtl.BatchBaseController">
+        <property name="acceptMti"><value>0400</value></property>
+        <property name="acceptProcCode"><value>888888</value></property>
+        <property name="acceptLmsProcCode"><value>7708 7748 7758</value></property>
+        <property name="txLogger">
+            <ref bean="TxLoggerEmpty" />
+        </property>
+        <property name="validatorList">
+            <list>
+                <ref bean="MerchantValidator" />
+                <ref bean="CpcTerminalValidator" />
+                <ref bean="AcquireValidator" />
+                <ref bean="SamDeviceValidator" />
+                <ref bean="MacValidator" />
+            </list>
+        </property>
+        <property name="generalFiller">
+            <list>
+              	<ref bean="CardInfoFiller" />
+                <ref bean="BonusBaseFiller" />
+                <ref bean="IssuerFiller" />
+                <ref bean="AcquirerFiller" />
+            </list>
+        </property>
+        <property name="bizAction">
+            <list>
+                <ref bean="CheckDueDay"/>
+                <ref bean="ReloadLockValidator" />
+                <ref bean="OriginalTxnDataFiller"/>
+                <ref bean="InsertTermBatch"/>
+				<ref bean="UpdateTxnSettleDateTime"/>
+                <ref bean="UpdateOnlTxnImpInfo"/>
+                <ref bean="ReversalVoidOnlTxn"/>   
+                <ref bean="ReversalOnlTxn"/>
+                <bean id="RedoUpdateAccuReversal" class="tw.com.hyweb.svc.yhdp.online.controller.reload.RedoUpdateAccu">
+                    <constructor-arg index="0" type="boolean"><value>true</value></constructor-arg>
+                    <constructor-arg index="1" type="boolean"><value>true</value></constructor-arg>
+    		     </bean>
+                <ref bean="ReversalChipBalAction"/>
+            </list>
+        </property>
+    </bean>
+</beans>

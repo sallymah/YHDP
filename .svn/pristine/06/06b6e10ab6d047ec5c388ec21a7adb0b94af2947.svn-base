@@ -1,0 +1,24 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+<!--Resource Properties -->
+
+<bean id="BatchResultDecorator" class="tw.com.hyweb.batch.framework.BatchResultDecorator" init-method="init">
+	<property name="batchMediator"><ref bean="BatchFilesOutDecorator" /></property>
+	<property name="procName"><value>FilesOutDemo</value></property>
+</bean>
+
+<bean id="BatchFilesOutDecorator" class="tw.com.hyweb.batch.framework.BatchFilesOutDecorator" init-method="init">
+	<property name="batchMediator"><ref bean="FilesCopyDirector" /></property>
+	<property name="moveFileTypes"><value>F</value></property>
+</bean>
+
+<bean id="FilesCopyDirector" class="tw.com.hyweb.batch.framework.FilesCopyDirector" init-method="init">
+	<property name="fileSource"><ref bean="FilesOutDemo" /></property>
+	<property name="fileTarget"><ref bean="FilesOutDemo" /></property>
+</bean>
+
+<bean id="FilesOutDemo" class="tw.com.hyweb.batch.test.FilesOutDemo" init-method="init">
+</bean>
+
+</beans>

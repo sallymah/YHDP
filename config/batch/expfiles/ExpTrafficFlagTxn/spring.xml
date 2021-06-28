@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+  <bean id="ExpTrafficFlagTxn" class="tw.com.hyweb.svc.yhdp.batch.expfiles.ExpTrafficFlagTxn">
+    <property name="encoding"><value>UTF-8</value></property>
+    <property name="busMemId">
+      <util:list>
+	        <value>00114089</value>
+			<value>00153113</value>
+			<value>00143109</value>
+			<value>00118090</value>
+			<value>00121093</value>
+			<value>00113088</value>
+			<value>00119091</value>
+			<value>00107081</value>
+			<value>00157116</value>
+			<value>00122094</value>
+			<value>00155115</value>
+			<value>00120092</value>
+			<value>00154114</value>
+			<value>00112086</value>
+			<value>00150110</value>
+			<value>00152112</value>
+			<value>00151111</value>
+      </util:list>
+    </property>
+    <property name="metroMemId">
+      <util:list>
+	        <value>00100097</value>
+      </util:list>
+    </property>
+  </bean>
+</beans>

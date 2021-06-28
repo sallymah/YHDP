@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+    <bean id="processor" class="tw.com.hyweb.core.cp.batch.framework.generic.SimpleBatchProcessor">
+        <constructor-arg>
+            <bean class="tw.com.hyweb.core.cp.batch.framework.generic.BatchJobHandler">
+                <constructor-arg ref="factory" />
+            </bean>
+        </constructor-arg>
+        <property name="programName" value="CheckUnusualTXN" />
+    </bean>
+
+    <bean id="factory" class="tw.com.hyweb.core.cp.batch.framework.generic.CompositeBatchJobFactory">
+      <constructor-arg>
+         <list>
+            <bean class="tw.com.hyweb.svc.yhdp.batch.summary.checkUnusualTXN.TxnAmtJobFactory" /> <!-- 收單單位交易超過消費金額警示上限 (01) --> 
+            <bean class="tw.com.hyweb.svc.yhdp.batch.summary.checkUnusualTXN.MemPurchCntJobFactory" />  <!-- 消費筆數上限 (11) -->     
+            <bean class="tw.com.hyweb.svc.yhdp.batch.summary.checkUnusualTXN.MemPurchAmtJobFactory" />  <!-- 消費金額上限 (12)-->   
+            <bean class="tw.com.hyweb.svc.yhdp.batch.summary.checkUnusualTXN.MemReloadCntJobFactory" />  <!-- 加值筆數上限 (13)-->   
+            <bean class="tw.com.hyweb.svc.yhdp.batch.summary.checkUnusualTXN.MemReloadAmtJobFactory" />  <!-- 加值金額上限 (14)-->   
+            <bean class="tw.com.hyweb.svc.yhdp.batch.summary.checkUnusualTXN.MemRefundCntJobFactory" />  <!-- 退貨筆數上限 (15)-->   
+            <bean class="tw.com.hyweb.svc.yhdp.batch.summary.checkUnusualTXN.MemRefundAmtJobFactory" />  <!-- 退貨金額上限 (16)-->  
+            <bean class="tw.com.hyweb.svc.yhdp.batch.summary.checkUnusualTXN.CheckTxnJobFactory" />
+            <!-- 交易序號不連續(21)卡片餘額不連貫(22) 短時間內異地交易(23) -->
+            <bean class="tw.com.hyweb.svc.yhdp.batch.summary.checkUnusualTXN.TxnCardInBlacklistFactory"> <!--  卡片已入黑名單仍有交易(24)-->  
+            	<constructor-arg>
+					<util:list>
+						<value>7707</value> <!-- 現金加值 -->
+						<value>7708</value> <!-- 現金加值取消 -->
+						<value>7646</value> <!-- 消費退貨 -->
+						<value>7647</value> <!-- 消費 -->
+						<value>7648</value> <!-- 消費取消 -->
+					</util:list>
+			   </constructor-arg>
+            </bean>
+         </list>
+      </constructor-arg>
+   </bean>
+</beans>

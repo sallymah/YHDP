@@ -1,0 +1,10 @@
+﻿<?xml version="1.0"?>
+
+<batch>
+    <body id="0">
+      <field id="0" length="6" name="FIELD0"/>
+      <field id="1" length="20" name="FIELD1"/>
+      <field id="2" length="19" name="FIELD2"/>
+      <field id="3" length="9" name="FIELD3"/>
+    </body>
+</batch>

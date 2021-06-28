@@ -1,0 +1,806 @@
+[main] 20170524 09:52:08 ERROR DBService            L:807  - Get connection error:6814 ms.batch
+org.apache.commons.dbcp.SQLNestedException: Error preloading the connection pool
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:868)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.beforeHandling(ExpCDRP.java:140)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.main(ExpCDRP.java:991)
+Caused by: java.sql.SQLException: Listener refused the connection with the following error:
+ORA-12516, TNS:listener could not find available handler with matching protocol stack
+ 
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:489)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.pool.impl.GenericObjectPool.addObject(GenericObjectPool.java:1614)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:865)
+	... 5 more
+Caused by: oracle.net.ns.NetException: Listener refused the connection with the following error:
+ORA-12516, TNS:listener could not find available handler with matching protocol stack
+ 
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:399)
+	at oracle.jdbc.driver.T4CConnection.connect(T4CConnection.java:1140)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:340)
+	... 13 more
+[main] 20170524 09:52:09 WARN  ExpCDRP              L:994  - ExpCDRP run fail:Error preloading the connection pool
+org.apache.commons.dbcp.SQLNestedException: Error preloading the connection pool
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:868)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.beforeHandling(ExpCDRP.java:140)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.main(ExpCDRP.java:991)
+Caused by: java.sql.SQLException: Listener refused the connection with the following error:
+ORA-12516, TNS:listener could not find available handler with matching protocol stack
+ 
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:489)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.pool.impl.GenericObjectPool.addObject(GenericObjectPool.java:1614)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:865)
+	... 5 more
+Caused by: oracle.net.ns.NetException: Listener refused the connection with the following error:
+ORA-12516, TNS:listener could not find available handler with matching protocol stack
+ 
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:399)
+	at oracle.jdbc.driver.T4CConnection.connect(T4CConnection.java:1140)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:340)
+	... 13 more
+[main] 20170524 10:33:02 WARN  DBService            L:794  - DBCP borrow connection time: 7547 ms. batch
+[main] 20170524 10:33:02 WARN  DBService            L:902  - SQL stmt query time: 62 ms[select MEM_ID, BANK_ID, MEM_GROUP_ID from TB_MEMBER WHERE SUBSTR(MEM_TYPE,3,1)='1']
+[main] 20170524 10:33:02 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00001170' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 10:33:02 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '700'
+[main] 20170524 10:33:02 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00001172' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 10:33:02 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '016'
+[main] 20170524 10:33:02 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00041260' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 10:33:02 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '013'
+[main] 20170524 10:33:02 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00001168' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 10:33:02 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '052'
+[main] 20170524 10:33:02 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00103218' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 10:33:02 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '808'
+[main] 20170524 10:33:02 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00104219' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 10:33:03 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '008'
+[main] 20170524 10:33:03 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00100805' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 10:33:03 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '805'
+[main] 20170524 10:33:03 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00078067' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 10:33:03 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '806'
+[main] 20170524 10:33:03 INFO  ExpCDRP              L:177  - bankIds:[700, 016, 013, 052, 808, 008, 805, 806]
+[main] 20170524 10:33:03 INFO  ExpCDRP              L:178  - bankId2Seqno:{806=01, 805=01, 008=01, 700=01, 013=01, 808=01, 052=01, 016=01}
+[main] 20170524 10:33:03 INFO  ExpCDRP              L:179  - bankId2MemId:{806=00078067, 805=00100805, 008=00104219, 700=00001170, 013=00041260, 808=00103218, 052=00001168, 016=00001172}
+[main] 20170524 10:33:03 INFO  ExpCDRP              L:180  - memId2MemGroupId: {00001170=00001, 00001172=00001, 00100805=00001, 00024253=00024, 00104219=00104, 00001001=00001, 00026171=00026, 00043254=00043, 00125060=00125, 00026252=00026, 00103218=00103, 00078067=00078, 00078027=70000, 00041260=00041, 00169243=00169, 00001168=00001}
+[main] 20170524 10:33:03 INFO  ExpCDRP              L:181  - memId2BatchNo:{00103218=R01821, 00001170=R01817, 00001172=R01818, 00100805=R01823, 00078067=R01824, 00041260=R01819, 00104219=R01822, 00001168=R01820}
+[main] 20170524 10:33:03 INFO  ExpCDRP              L:182  - respDayMap: {00000008={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000808={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000805={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000806={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=10, STOP_CARD_RESP_DAY=1}, 00000013={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000016={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000052={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000700={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}}
+[main] 20170524 10:33:03 ERROR DBService            L:807  - Get connection error:125 ms.common
+org.apache.commons.dbcp.SQLNestedException: Cannot create PoolableConnectionFactory (ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:855)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.connectToDB(TbRcodeConfigCtr.java:49)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.queryAll(TbRcodeConfigCtr.java:747)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.loadRcodeConfigInfos(Layer2Util.java:111)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.<clinit>(Layer2Util.java:544)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.beforeHandling(ExpCDRP.java:184)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.main(ExpCDRP.java:991)
+Caused by: java.sql.SQLException: ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:389)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:382)
+	at oracle.jdbc.driver.T4CTTIfun.processError(T4CTTIfun.java:675)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.processError(T4CTTIoauthenticate.java:448)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:513)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:227)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:383)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:776)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:432)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.dbcp.BasicDataSource.validateConnectionFactory(BasicDataSource.java:877)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:851)
+	... 9 more
+[main] 20170524 10:33:04 ERROR DBService            L:807  - Get connection error:78 ms.common
+org.apache.commons.dbcp.SQLNestedException: Cannot create PoolableConnectionFactory (ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:855)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.connectToDB(TbRcodeConfigCtr.java:49)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.queryAll(TbRcodeConfigCtr.java:747)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.loadRcodeConfigInfos(Layer2Util.java:111)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.<clinit>(Layer2Util.java:544)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.beforeHandling(ExpCDRP.java:184)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.main(ExpCDRP.java:991)
+Caused by: java.sql.SQLException: ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:389)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:382)
+	at oracle.jdbc.driver.T4CTTIfun.processError(T4CTTIfun.java:675)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.processError(T4CTTIoauthenticate.java:448)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:513)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:227)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:383)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:776)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:432)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.dbcp.BasicDataSource.validateConnectionFactory(BasicDataSource.java:877)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:851)
+	... 10 more
+[main] 20170524 10:33:05 ERROR DBService            L:807  - Get connection error:94 ms.common
+org.apache.commons.dbcp.SQLNestedException: Cannot create PoolableConnectionFactory (ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:855)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.connectToDB(TbRcodeConfigCtr.java:49)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.queryAll(TbRcodeConfigCtr.java:747)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.loadRcodeConfigInfos(Layer2Util.java:111)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.<clinit>(Layer2Util.java:544)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.beforeHandling(ExpCDRP.java:184)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.main(ExpCDRP.java:991)
+Caused by: java.sql.SQLException: ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:389)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:382)
+	at oracle.jdbc.driver.T4CTTIfun.processError(T4CTTIfun.java:675)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.processError(T4CTTIoauthenticate.java:448)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:513)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:227)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:383)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:776)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:432)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.dbcp.BasicDataSource.validateConnectionFactory(BasicDataSource.java:877)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:851)
+	... 11 more
+[main] 20170524 10:33:06 ERROR DBService            L:807  - Get connection error:94 ms.common
+org.apache.commons.dbcp.SQLNestedException: Cannot create PoolableConnectionFactory (ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:855)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.connectToDB(TbRcodeConfigCtr.java:49)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.queryAll(TbRcodeConfigCtr.java:747)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.loadRcodeConfigInfos(Layer2Util.java:111)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.<clinit>(Layer2Util.java:544)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.beforeHandling(ExpCDRP.java:184)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.main(ExpCDRP.java:991)
+Caused by: java.sql.SQLException: ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:389)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:382)
+	at oracle.jdbc.driver.T4CTTIfun.processError(T4CTTIfun.java:675)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.processError(T4CTTIoauthenticate.java:448)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:513)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:227)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:383)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:776)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:432)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.dbcp.BasicDataSource.validateConnectionFactory(BasicDataSource.java:877)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:851)
+	... 12 more
+[main] 20170524 11:36:25 WARN  DBService            L:794  - DBCP borrow connection time: 7402 ms. batch
+[main] 20170524 11:36:25 WARN  DBService            L:902  - SQL stmt query time: 30 ms[select MEM_ID, BANK_ID, MEM_GROUP_ID from TB_MEMBER WHERE SUBSTR(MEM_TYPE,3,1)='1']
+[main] 20170524 11:36:25 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00001170' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 11:36:25 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '700'
+[main] 20170524 11:36:25 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00001172' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 11:36:25 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '016'
+[main] 20170524 11:36:25 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00041260' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 11:36:25 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '013'
+[main] 20170524 11:36:25 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00001168' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 11:36:25 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '052'
+[main] 20170524 11:36:25 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00103218' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 11:36:25 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '808'
+[main] 20170524 11:36:25 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00104219' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 11:36:25 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '008'
+[main] 20170524 11:36:25 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00100805' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 11:36:25 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '805'
+[main] 20170524 11:36:25 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00078067' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 11:36:25 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '806'
+[main] 20170524 11:36:25 INFO  ExpCDRP              L:177  - bankIds:[700, 016, 013, 052, 808, 008, 805, 806]
+[main] 20170524 11:36:25 INFO  ExpCDRP              L:178  - bankId2Seqno:{806=01, 805=01, 008=01, 700=01, 013=01, 808=01, 052=01, 016=01}
+[main] 20170524 11:36:25 INFO  ExpCDRP              L:179  - bankId2MemId:{806=00078067, 805=00100805, 008=00104219, 700=00001170, 013=00041260, 808=00103218, 052=00001168, 016=00001172}
+[main] 20170524 11:36:25 INFO  ExpCDRP              L:180  - memId2MemGroupId: {00001170=00001, 00001172=00001, 00100805=00001, 00024253=00024, 00104219=00104, 00001001=00001, 00026171=00026, 00043254=00043, 00125060=00125, 00026252=00026, 00103218=00103, 00078067=00078, 00078027=70000, 00041260=00041, 00169243=00169, 00001168=00001}
+[main] 20170524 11:36:25 INFO  ExpCDRP              L:181  - memId2BatchNo:{00103218=R01829, 00001170=R01825, 00001172=R01826, 00100805=R01831, 00078067=R01832, 00041260=R01827, 00104219=R01830, 00001168=R01828}
+[main] 20170524 11:36:25 INFO  ExpCDRP              L:182  - respDayMap: {00000008={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000808={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000805={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000806={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=10, STOP_CARD_RESP_DAY=1}, 00000013={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000016={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000052={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000700={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}}
+[main] 20170524 11:36:25 ERROR DBService            L:807  - Get connection error:96 ms.common
+org.apache.commons.dbcp.SQLNestedException: Cannot create PoolableConnectionFactory (ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:855)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.connectToDB(TbRcodeConfigCtr.java:49)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.queryAll(TbRcodeConfigCtr.java:747)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.loadRcodeConfigInfos(Layer2Util.java:111)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.<clinit>(Layer2Util.java:544)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.beforeHandling(ExpCDRP.java:184)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.main(ExpCDRP.java:991)
+Caused by: java.sql.SQLException: ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:389)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:382)
+	at oracle.jdbc.driver.T4CTTIfun.processError(T4CTTIfun.java:675)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.processError(T4CTTIoauthenticate.java:448)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:513)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:227)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:383)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:776)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:432)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.dbcp.BasicDataSource.validateConnectionFactory(BasicDataSource.java:877)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:851)
+	... 9 more
+[main] 20170524 11:36:26 ERROR DBService            L:807  - Get connection error:99 ms.common
+org.apache.commons.dbcp.SQLNestedException: Cannot create PoolableConnectionFactory (ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:855)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.connectToDB(TbRcodeConfigCtr.java:49)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.queryAll(TbRcodeConfigCtr.java:747)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.loadRcodeConfigInfos(Layer2Util.java:111)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.<clinit>(Layer2Util.java:544)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.beforeHandling(ExpCDRP.java:184)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.main(ExpCDRP.java:991)
+Caused by: java.sql.SQLException: ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:389)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:382)
+	at oracle.jdbc.driver.T4CTTIfun.processError(T4CTTIfun.java:675)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.processError(T4CTTIoauthenticate.java:448)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:513)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:227)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:383)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:776)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:432)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.dbcp.BasicDataSource.validateConnectionFactory(BasicDataSource.java:877)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:851)
+	... 10 more
+[main] 20170524 13:34:16 WARN  DBService            L:794  - DBCP borrow connection time: 7550 ms. batch
+[main] 20170524 13:34:16 WARN  DBService            L:902  - SQL stmt query time: 42 ms[select MEM_ID, BANK_ID, MEM_GROUP_ID from TB_MEMBER WHERE SUBSTR(MEM_TYPE,3,1)='1']
+[main] 20170524 13:34:16 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00001170' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 13:34:16 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '700'
+[main] 20170524 13:34:16 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00001172' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 13:34:16 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '016'
+[main] 20170524 13:34:16 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00041260' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 13:34:16 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '013'
+[main] 20170524 13:34:16 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00001168' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 13:34:16 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '052'
+[main] 20170524 13:34:16 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00103218' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 13:34:16 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '808'
+[main] 20170524 13:34:16 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00104219' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 13:34:16 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '008'
+[main] 20170524 13:34:16 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00100805' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 13:34:16 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '805'
+[main] 20170524 13:34:16 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00078067' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 13:34:16 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '806'
+[main] 20170524 13:34:16 INFO  ExpCDRP              L:177  - bankIds:[700, 016, 013, 052, 808, 008, 805, 806]
+[main] 20170524 13:34:16 INFO  ExpCDRP              L:178  - bankId2Seqno:{806=01, 805=01, 008=01, 700=01, 013=01, 808=01, 052=01, 016=01}
+[main] 20170524 13:34:16 INFO  ExpCDRP              L:179  - bankId2MemId:{806=00078067, 805=00100805, 008=00104219, 700=00001170, 013=00041260, 808=00103218, 052=00001168, 016=00001172}
+[main] 20170524 13:34:16 INFO  ExpCDRP              L:180  - memId2MemGroupId: {00001170=00001, 00001172=00001, 00100805=00001, 00024253=00024, 00104219=00104, 00001001=00001, 00026171=00026, 00043254=00043, 00125060=00125, 00026252=00026, 00103218=00103, 00078067=00078, 00078027=70000, 00041260=00041, 00169243=00169, 00001168=00001}
+[main] 20170524 13:34:16 INFO  ExpCDRP              L:181  - memId2BatchNo:{00103218=R01837, 00001170=R01833, 00001172=R01834, 00100805=R01839, 00078067=R01840, 00041260=R01835, 00104219=R01838, 00001168=R01836}
+[main] 20170524 13:34:16 INFO  ExpCDRP              L:182  - respDayMap: {00000008={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000808={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000805={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000806={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=10, STOP_CARD_RESP_DAY=1}, 00000013={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000016={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000052={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000700={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}}
+[main] 20170524 13:34:16 ERROR DBService            L:807  - Get connection error:105 ms.common
+org.apache.commons.dbcp.SQLNestedException: Cannot create PoolableConnectionFactory (ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:855)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.connectToDB(TbRcodeConfigCtr.java:49)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.queryAll(TbRcodeConfigCtr.java:747)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.loadRcodeConfigInfos(Layer2Util.java:111)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.<clinit>(Layer2Util.java:544)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.beforeHandling(ExpCDRP.java:184)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.main(ExpCDRP.java:991)
+Caused by: java.sql.SQLException: ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:389)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:382)
+	at oracle.jdbc.driver.T4CTTIfun.processError(T4CTTIfun.java:675)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.processError(T4CTTIoauthenticate.java:448)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:513)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:227)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:383)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:776)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:432)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.dbcp.BasicDataSource.validateConnectionFactory(BasicDataSource.java:877)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:851)
+	... 9 more
+[main] 20170524 13:34:17 ERROR DBService            L:807  - Get connection error:105 ms.common
+org.apache.commons.dbcp.SQLNestedException: Cannot create PoolableConnectionFactory (ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:855)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.connectToDB(TbRcodeConfigCtr.java:49)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.queryAll(TbRcodeConfigCtr.java:747)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.loadRcodeConfigInfos(Layer2Util.java:111)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.<clinit>(Layer2Util.java:544)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.beforeHandling(ExpCDRP.java:184)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.main(ExpCDRP.java:991)
+Caused by: java.sql.SQLException: ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:389)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:382)
+	at oracle.jdbc.driver.T4CTTIfun.processError(T4CTTIfun.java:675)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.processError(T4CTTIoauthenticate.java:448)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:513)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:227)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:383)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:776)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:432)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.dbcp.BasicDataSource.validateConnectionFactory(BasicDataSource.java:877)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:851)
+	... 10 more
+[main] 20170524 13:34:18 ERROR DBService            L:807  - Get connection error:92 ms.common
+org.apache.commons.dbcp.SQLNestedException: Cannot create PoolableConnectionFactory (ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:855)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.connectToDB(TbRcodeConfigCtr.java:49)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.queryAll(TbRcodeConfigCtr.java:747)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.loadRcodeConfigInfos(Layer2Util.java:111)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.<clinit>(Layer2Util.java:544)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.beforeHandling(ExpCDRP.java:184)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.main(ExpCDRP.java:991)
+Caused by: java.sql.SQLException: ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:389)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:382)
+	at oracle.jdbc.driver.T4CTTIfun.processError(T4CTTIfun.java:675)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.processError(T4CTTIoauthenticate.java:448)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:513)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:227)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:383)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:776)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:432)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.dbcp.BasicDataSource.validateConnectionFactory(BasicDataSource.java:877)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:851)
+	... 11 more
+[main] 20170524 13:34:19 ERROR DBService            L:807  - Get connection error:110 ms.common
+org.apache.commons.dbcp.SQLNestedException: Cannot create PoolableConnectionFactory (ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:855)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.connectToDB(TbRcodeConfigCtr.java:49)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.queryAll(TbRcodeConfigCtr.java:747)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.loadRcodeConfigInfos(Layer2Util.java:111)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.<clinit>(Layer2Util.java:544)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.beforeHandling(ExpCDRP.java:184)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.main(ExpCDRP.java:991)
+Caused by: java.sql.SQLException: ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:389)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:382)
+	at oracle.jdbc.driver.T4CTTIfun.processError(T4CTTIfun.java:675)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.processError(T4CTTIoauthenticate.java:448)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:513)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:227)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:383)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:776)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:432)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.dbcp.BasicDataSource.validateConnectionFactory(BasicDataSource.java:877)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:851)
+	... 12 more
+[main] 20170524 13:34:20 ERROR DBService            L:807  - Get connection error:101 ms.common
+org.apache.commons.dbcp.SQLNestedException: Cannot create PoolableConnectionFactory (ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:855)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.connectToDB(TbRcodeConfigCtr.java:49)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.queryAll(TbRcodeConfigCtr.java:747)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.loadRcodeConfigInfos(Layer2Util.java:111)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.<clinit>(Layer2Util.java:544)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.beforeHandling(ExpCDRP.java:184)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.main(ExpCDRP.java:991)
+Caused by: java.sql.SQLException: ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:389)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:382)
+	at oracle.jdbc.driver.T4CTTIfun.processError(T4CTTIfun.java:675)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.processError(T4CTTIoauthenticate.java:448)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:513)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:227)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:383)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:776)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:432)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.dbcp.BasicDataSource.validateConnectionFactory(BasicDataSource.java:877)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:851)
+	... 13 more
+[main] 20170524 13:34:20 WARN  Layer2Util           L:120  - loadRcodeConfigInfos fail:Cannot create PoolableConnectionFactory (ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+)
+java.sql.SQLException: Cannot create PoolableConnectionFactory (ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+)
+	at tw.com.hyweb.service.db.sess.TbRcodeConfigCtr.queryAll(TbRcodeConfigCtr.java:753)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.loadRcodeConfigInfos(Layer2Util.java:111)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.<clinit>(Layer2Util.java:544)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.beforeHandling(ExpCDRP.java:184)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.main(ExpCDRP.java:991)
+[main] 20170524 13:34:20 ERROR DBService            L:807  - Get connection error:97 ms.common
+org.apache.commons.dbcp.SQLNestedException: Cannot create PoolableConnectionFactory (ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:855)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.service.db.sess.TbSysConfigCtr.connectToDB(TbSysConfigCtr.java:49)
+	at tw.com.hyweb.service.db.sess.TbSysConfigCtr.queryAll(TbSysConfigCtr.java:747)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.loadBatchConfigInfos(Layer2Util.java:261)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.<clinit>(Layer2Util.java:545)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.beforeHandling(ExpCDRP.java:184)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.main(ExpCDRP.java:991)
+Caused by: java.sql.SQLException: ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:389)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:382)
+	at oracle.jdbc.driver.T4CTTIfun.processError(T4CTTIfun.java:675)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.processError(T4CTTIoauthenticate.java:448)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:513)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:227)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:383)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:776)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:432)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.dbcp.BasicDataSource.validateConnectionFactory(BasicDataSource.java:877)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:851)
+	... 9 more
+[main] 20170524 13:34:21 ERROR DBService            L:807  - Get connection error:112 ms.common
+org.apache.commons.dbcp.SQLNestedException: Cannot create PoolableConnectionFactory (ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:855)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.service.db.sess.TbSysConfigCtr.connectToDB(TbSysConfigCtr.java:49)
+	at tw.com.hyweb.service.db.sess.TbSysConfigCtr.queryAll(TbSysConfigCtr.java:747)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.loadBatchConfigInfos(Layer2Util.java:261)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.<clinit>(Layer2Util.java:545)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.beforeHandling(ExpCDRP.java:184)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.main(ExpCDRP.java:991)
+Caused by: java.sql.SQLException: ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:389)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:382)
+	at oracle.jdbc.driver.T4CTTIfun.processError(T4CTTIfun.java:675)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.processError(T4CTTIoauthenticate.java:448)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:513)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:227)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:383)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:776)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:432)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.dbcp.BasicDataSource.validateConnectionFactory(BasicDataSource.java:877)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:851)
+	... 10 more
+[main] 20170524 13:34:22 ERROR DBService            L:807  - Get connection error:99 ms.common
+org.apache.commons.dbcp.SQLNestedException: Cannot create PoolableConnectionFactory (ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:855)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.service.db.sess.TbSysConfigCtr.connectToDB(TbSysConfigCtr.java:49)
+	at tw.com.hyweb.service.db.sess.TbSysConfigCtr.queryAll(TbSysConfigCtr.java:747)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.loadBatchConfigInfos(Layer2Util.java:261)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.<clinit>(Layer2Util.java:545)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.beforeHandling(ExpCDRP.java:184)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.main(ExpCDRP.java:991)
+Caused by: java.sql.SQLException: ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:389)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:382)
+	at oracle.jdbc.driver.T4CTTIfun.processError(T4CTTIfun.java:675)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.processError(T4CTTIoauthenticate.java:448)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:513)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:227)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:383)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:776)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:432)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.dbcp.BasicDataSource.validateConnectionFactory(BasicDataSource.java:877)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:851)
+	... 11 more
+[main] 20170524 13:34:23 ERROR DBService            L:807  - Get connection error:116 ms.common
+org.apache.commons.dbcp.SQLNestedException: Cannot create PoolableConnectionFactory (ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:855)
+	at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:540)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:788)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:817)
+	at tw.com.hyweb.service.db.DBService.getConnection(DBService.java:758)
+	at tw.com.hyweb.service.db.sess.TbSysConfigCtr.connectToDB(TbSysConfigCtr.java:49)
+	at tw.com.hyweb.service.db.sess.TbSysConfigCtr.queryAll(TbSysConfigCtr.java:747)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.loadBatchConfigInfos(Layer2Util.java:261)
+	at tw.com.hyweb.core.cp.common.misc.Layer2Util.<clinit>(Layer2Util.java:545)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.beforeHandling(ExpCDRP.java:184)
+	at tw.com.hyweb.svc.yhdp.batch.expfiles.ExpCDRP.ExpCDRP.main(ExpCDRP.java:991)
+Caused by: java.sql.SQLException: ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:389)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:382)
+	at oracle.jdbc.driver.T4CTTIfun.processError(T4CTTIfun.java:675)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.processError(T4CTTIoauthenticate.java:448)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:513)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:227)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:383)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:776)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:432)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:553)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:254)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:528)
+	at org.apache.commons.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:37)
+	at org.apache.commons.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:290)
+	at org.apache.commons.dbcp.BasicDataSource.validateConnectionFactory(BasicDataSource.java:877)
+	at org.apache.commons.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:851)
+	... 12 more
+[main] 20170524 14:06:56 WARN  DBService            L:794  - DBCP borrow connection time: 6009 ms. batch
+[main] 20170524 14:06:56 WARN  DBService            L:902  - SQL stmt query time: 45 ms[select MEM_ID, BANK_ID, MEM_GROUP_ID from TB_MEMBER WHERE SUBSTR(MEM_TYPE,3,1)='1']
+[main] 20170524 14:06:56 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00001170' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 14:06:56 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '700'
+[main] 20170524 14:06:56 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00001172' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 14:06:56 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '016'
+[main] 20170524 14:06:56 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00041260' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 14:06:56 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '013'
+[main] 20170524 14:06:56 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00001168' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 14:06:56 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '052'
+[main] 20170524 14:06:56 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00103218' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 14:06:56 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '808'
+[main] 20170524 14:06:56 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00104219' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 14:06:56 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '008'
+[main] 20170524 14:06:56 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00100805' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 14:06:56 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '805'
+[main] 20170524 14:06:56 WARN  ExpCDRP              L:204  - seqnoSql: SELECT LPAD(NVL(TO_CHAR(TO_NUMBER(MAX(SEQNO)) + 1), '01'), 2, '0') FROM TB_OUTCTL WHERE MEM_ID = '00078067' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524'
+[main] 20170524 14:06:56 DEBUG ExpCDRP              L:586  - SELECT LOST_CARD_RESP_DAY, STOP_CARD_RESP_DAY, EXPIRY_CARD_RESP_DAY, GEN_RDCL_DAY FROM TB_MEMBER WHERE BANK_ID = '806'
+[main] 20170524 14:06:56 INFO  ExpCDRP              L:177  - bankIds:[700, 016, 013, 052, 808, 008, 805, 806]
+[main] 20170524 14:06:56 INFO  ExpCDRP              L:178  - bankId2Seqno:{806=01, 805=01, 008=01, 700=01, 013=01, 808=01, 052=01, 016=01}
+[main] 20170524 14:06:56 INFO  ExpCDRP              L:179  - bankId2MemId:{806=00078067, 805=00100805, 008=00104219, 700=00001170, 013=00041260, 808=00103218, 052=00001168, 016=00001172}
+[main] 20170524 14:06:56 INFO  ExpCDRP              L:180  - memId2MemGroupId: {00001170=00001, 00001172=00001, 00100805=00001, 00024253=00024, 00104219=00104, 00001001=00001, 00026171=00026, 00043254=00043, 00125060=00125, 00026252=00026, 00103218=00103, 00078067=00078, 00078027=70000, 00041260=00041, 00169243=00169, 00001168=00001}
+[main] 20170524 14:06:56 INFO  ExpCDRP              L:181  - memId2BatchNo:{00103218=R01845, 00001170=R01841, 00001172=R01842, 00100805=R01847, 00078067=R01848, 00041260=R01843, 00104219=R01846, 00001168=R01844}
+[main] 20170524 14:06:56 INFO  ExpCDRP              L:182  - respDayMap: {00000008={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000808={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000805={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000806={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=10, STOP_CARD_RESP_DAY=1}, 00000013={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000016={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000052={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}, 00000700={LOST_CARD_RESP_DAY=0, EXPIRY_CARD_RESP_DAY=0, GEN_RDCL_DAY=0, STOP_CARD_RESP_DAY=0}}
+[main] 20170524 14:06:57 WARN  DBService            L:794  - DBCP borrow connection time: 605 ms. common
+[main] 20170524 14:06:57 DEBUG TbRcodeConfigMgr     L:1007 - sql: SELECT ROWID, RCODE, RCODE_DESC, BALANCE_FLAG, SUMMARY_FLAG, SETTLEMENT_FLAG, UPT_USERID, UPT_DATE, UPT_TIME, APRV_USERID, APRV_DATE, APRV_TIME FROM TB_RCODE_CONFIG ORDER BY RCODE
+[main] 20170524 14:06:57 DEBUG TbRcodeConfigMgr     L:1015 - TB_RCODE_CONFIG: 5 records exist
+[main] 20170524 14:06:57 DEBUG TbRcodeConfigMgr     L:1016 - [[TbRcodeConfigInfo  sRcode:2191 sRcodeDesc:卡號不存在 sBalanceFlag:0 sSummaryFlag:0 sSettlementFlag:0 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime:], [TbRcodeConfigInfo  sRcode:2192 sRcodeDesc:卡片狀態不合法 sBalanceFlag:0 sSummaryFlag:0 sSettlementFlag:0 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime:], [TbRcodeConfigInfo  sRcode:2193 sRcodeDesc:特店不存在 sBalanceFlag:0 sSummaryFlag:0 sSettlementFlag:0 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime:], [TbRcodeConfigInfo  sRcode:2194 sRcodeDesc:端末機不存在 sBalanceFlag:0 sSummaryFlag:0 sSettlementFlag:0 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime:], [TbRcodeConfigInfo  sRcode:2195 sRcodeDesc:取消交易查無原始交易 sBalanceFlag:0 sSummaryFlag:0 sSettlementFlag:0 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime:]]
+[main] 20170524 14:06:57 DEBUG TbSysConfigMgr       L:963  - sql: SELECT ROWID, PARM, VALUE, UPT_USERID, UPT_DATE, UPT_TIME, APRV_USERID, APRV_DATE, APRV_TIME, PURPOSE_DESC FROM TB_SYS_CONFIG ORDER BY PARM
+[main] 20170524 14:06:57 DEBUG TbSysConfigMgr       L:971  - TB_SYS_CONFIG: 79 records exist
+[main] 20170524 14:06:57 DEBUG TbSysConfigMgr       L:972  - [[TbSysConfigInfo  sParm:ALL_MEMBER sValue:99999999 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<OBUR> 主檔設定時, 以一個特殊值代表所有參加單位], [TbSysConfigInfo  sParm:APPLET_VERSION sValue:000 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:卡片格式版本預設值], [TbSysConfigInfo  sParm:APPOINT_LIST_CANCEL_AUTO_BAL_UPDATE sValue:0 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 指定回饋名單取消, 若回饋已被下載, 系統不會自動負補登; 0表不會自動負補登, 1表會自動負補登], [TbSysConfigInfo  sParm:APPOINT_RELOAD_IMPORT sValue:~/UPLOAD/APPOINTRELOAD/ sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:指定加值匯入, 上傳檔案用的根目錄], [TbSysConfigInfo  sParm:AUTO_SETTLE_DAY_E sValue:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 自動結帳往前推天數。], [TbSysConfigInfo  sParm:AWARD_BONUS_AMT_CAN_EXCEED_MAX_LIMIT sValue:Y sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<C> 若之前的回饋加上本次回饋的點數或COUPON數量超過活動規定的上限時，回饋數量是否能超過上限, Y表可以超過, N表不能超過], [TbSysConfigInfo  sParm:BAD_BONUS_DAY sValue:7 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B>點數失效多久後,要處理餘額為負的資料], [TbSysConfigInfo  sParm:BAL_TRANSFER_ALLOWDAY sValue:999 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 餘額轉置有效結束日為永久有效(99991231); 或者, 以有效起始日之後N天為結束日], [TbSysConfigInfo  sParm:BAL_TRANSFER_DAY sValue:0 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<BU> 餘額轉置設定後N天可以到EDC進行餘額轉置], [TbSysConfigInfo  sParm:BATCH_RPT_PATH sValue:/home/svcadmin/REPORT/Output/BATCH_DATE/EXTERNAL/YHDP/ sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<R> 報表產生的路徑], [TbSysConfigInfo  sParm:BATCH_RPT_PATH2 sValue:/home/svcadmin/REPORT/Output/BATCH_DATE/INTERNAL/YHDP_INTERNAL/ sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<R> 報表產生的路徑(第二路徑)], [TbSysConfigInfo  sParm:BLACKLIST_IMPORT sValue:~/Upload/Blacklist/ sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:黑名單匯入, 上傳檔案用的根目錄], [TbSysConfigInfo  sParm:BLACKLIST_LIMIT_DAY sValue:  sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<O> ONLINE檢查黑名單版本，設定黑名單版本日期N天內有效(空值為不檢核)], [TbSysConfigInfo  sParm:BONUS_EXTEND_CHANNEL sValue:B sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 晶片紅利時, Coupon延展效期透過何種方式下載, B表補登, A表指定加值], [TbSysConfigInfo  sParm:BONUS_EXTEND_DAY sValue:35 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B>點數失效多久後, 要開始延展點數效期的, 設定一個時間避免有些離線交易未結帳上來], [TbSysConfigInfo  sParm:CANCEL_FLAG sValue:0 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 原交易取消後，原交易與取消交易是否清算及計算手續費, 0表不清算, 1表要清算], [TbSysConfigInfo  sParm:CAP_TXN_IMPORT sValue:~/UPLOAD/CapTxn/ sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:人工簽單匯入, 上傳檔案用的根目錄], [TbSysConfigInfo  sParm:CARD_FEE_BONUS_ID sValue:0000000000 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<OUB> 同步新增到TB_BONUS], [TbSysConfigInfo  sParm:CARD_RETURN_BONUS_ID sValue:0000000001 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<OUB> 同步新增到TB_BONUS], [TbSysConfigInfo  sParm:CHK_FIRMWARE_VER sValue:  sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<O> 檢查FIRMWARE可連線的版本(不得<此版本)], [TbSysConfigInfo  sParm:CHK_POSAPI_VER sValue:  sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<O> 檢查POS API可連線的版本(不得<此版本)], [TbSysConfigInfo  sParm:CLEAN_AFTER_DAY sValue:0 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> inactive客戶終止日期後N天清除所屬的點數/點券], [TbSysConfigInfo  sParm:COUPON_BAL_UPDATE_FLAG sValue:4 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<O>晶片紅利: 點券不夠扣處理原則,1: 正的足以抵掉此筆負補登才帶下去,2: 正的有多少扣多少, 其餘INSERT負補登(狀態為0),3: 主機餘額有多少扣多少, 其餘INSERT負補登(狀態為0),4: 永遠不帶下去(狀態為F)], [TbSysConfigInfo  sParm:CUSTOMER_REPROT_URL sValue:http:// sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:客製化報表下載功能的URL], [TbSysConfigInfo  sParm:CUST_IV sValue:0106050401030303 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:TB_CUST加解密IV], [TbSysConfigInfo  sParm:CUST_KEY sValue:0DA96BB119FA1ED8DD933DEB sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:TB_CUST加解密KEY], [TbSysConfigInfo  sParm:CUT_TIME_A sValue:000000 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 調帳交易在程式執行時，從現在往前找這個時間點(含)，之前未過檔的交易才過檔, 設成000000表未過檔的資料都過檔], [TbSysConfigInfo  sParm:CUT_TIME_C sValue:000000 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 人工簽單交易在程式執行時，從現在往前找這個時間點(含)，之前未過檔的交易才過檔, 設成000000表未過檔的資料都過檔], [TbSysConfigInfo  sParm:CUT_TIME_E sValue:000000 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> EDC交易在程式執行時，從現在往前找這個時間點(含)，之前未過檔的交易才過檔, 設成000000表未過檔的資料都過檔], [TbSysConfigInfo  sParm:CUT_TIME_I sValue:235959 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> Web Service在程式執行時，從現在往前找這個時間點(含)，之前未過檔的交易才過檔, 設成000000表未過檔的資料都過檔], [TbSysConfigInfo  sParm:CUT_UNBALANCED sValue:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 不平帳交易的交易是否過檔, 0表不過檔, 1表要過檔], [TbSysConfigInfo  sParm:END_DATE sValue:99991231 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:永久有效結束日期], [TbSysConfigInfo  sParm:EXTRA_PERCENTAGE sValue:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:每張額外製卡百分比], [TbSysConfigInfo  sParm:EX_MEM_ID sValue:00001001 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 紅利交換單位], [TbSysConfigInfo  sParm:FTP_REFILE_DEL_DAYS sValue:3 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> Ftp重複上傳檔案刪除幾天前重復檔案], [TbSysConfigInfo  sParm:FTP_RETRY_COUNT sValue:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> Ftp Retry 次數], [TbSysConfigInfo  sParm:FTP_RETRY_SLEEP sValue:3000 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> Ftp Retry sleep 時間(ms)], [TbSysConfigInfo  sParm:FUNC sValue:0000110001111111111111111111111111100000 sUptUserid: sUptDate: sUptTime: sAprvUserid:20150528 sAprvDate: sAprvTime: sPurposeDesc:Online Default TERM.FUNC], [TbSysConfigInfo  sParm:GEN_EXP_RPT_DAY sValue:30 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<R> 到期卡差異匯出N日前], [TbSysConfigInfo  sParm:HOLIDAY sValue:06 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<U>設定星期六為放假日], [TbSysConfigInfo  sParm:INIT_CARD_STATUS sValue:3 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 匯入「新卡通知檔」時, 卡片狀態預設為已開卡; 1表未遞交, 2表未開卡, 3表已開卡(若是儲值卡, 才建議設成2)], [TbSysConfigInfo  sParm:INIT_MERCH_STATUS sValue:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 匯入「特店通知檔」時，特店狀態預設為生效; 0表未生效, 1表生效], [TbSysConfigInfo  sParm:IS_CUST_ENCRIPT sValue:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:TB_CUST是否要作加解密 1:是 / 0:否], [TbSysConfigInfo  sParm:KEY_GROUP_ID sValue:00000000 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:], [TbSysConfigInfo  sParm:LOSTCARDBALDAY sValue:4 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 掛失與損毀回饋檔往前推算天數], [TbSysConfigInfo  sParm:LPTSAM_CHECK_FLAG sValue:0 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<O>關企版是否檢核LPTSAM總公司代碼,  0不檢核/1與未設定此PARM則需檢核], [TbSysConfigInfo  sParm:MAC_FALG sValue:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<O> MAC驗證測試], [TbSysConfigInfo  sParm:MASK sValue:A0B1C2D3E4F50A1B2C3D sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<O>亂碼化遮罩字串(文數字20碼 每一組hexString中必須有1個為字母A~F)], [TbSysConfigInfo  sParm:MAX_DW_COUPON sValue:5 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:最大可下載COUPON個數], [TbSysConfigInfo  sParm:MAX_DW_POINT sValue:2 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:最大可下載COUPON個數], [TbSysConfigInfo  sParm:ONLY_ALL_FLAG sValue:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 清算/手續費只處理當天或全部已過檔的交易, 0表當天, 1表全部], [TbSysConfigInfo  sParm:ONL_TXN_ENT_FILTER sValue:'50000', '77000' sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<OU>巨城及大食代的總公司代碼。當巨城及大食代在查詢TB_ONL_TXN資料時，要過濾部份交易資料。], [TbSysConfigInfo  sParm:POINT_BAL_UPDATE_FLAG sValue:3 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<O>晶片紅利: 點數不夠扣處理原則,1: 記錄負補登,2: 有多少扣多少(0),3: 有多少扣多少(F),4: 拒絕交易], [TbSysConfigInfo  sParm:REGEN_RCODE sValue:1007 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<U>踢退交易重匯-要重匯的錯誤代碼。], [TbSysConfigInfo  sParm:ROLLBACK_AFTER_REACH_QTY_LIMIT sValue:Y sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<Campaign>Y當負向交易時會重新計算設定REACH_MAX_FLAG], [TbSysConfigInfo  sParm:RPT_BATCH_DATE sValue:3 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<R>Report執行批次報表的日期設定:1:當天交易,當天清算處理,當天產生報表(O),2:當天交易,當天清算處理,隔天產生報表(1),3:當天交易,隔天清算處理,隔天產生報表(2)], [TbSysConfigInfo  sParm:RPT_DATEFORMAT sValue:YMD sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<R> 報表日期格式, 年月日的顯示順序], [TbSysConfigInfo  sParm:SCHEMA_VERSION sValue:2.2.7 sUptUserid: sUptDate:20170213 sUptTime:133920 sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:], [TbSysConfigInfo  sParm:SETTLE_EXPIRY_DATE sValue:45 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 批量匯入檔案判斷同一批交易結帳時間, 推算N天前已結帳但無交易檔], [TbSysConfigInfo  sParm:SETTLE_PARTITION sValue:2 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 清算程式處理全部已過檔的交易時, 因為效能考量, 只處理N個Partition內的資料(N=2~12)], [TbSysConfigInfo  sParm:START_DATE sValue:00010101 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:永久有效開始日期], [TbSysConfigInfo  sParm:SVC_INIT_CARD_STATUS sValue:2 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> SVC系統, 匯入「會員卡檔」時, 卡片狀態預設為已開卡; 1表未遞交, 2表未開卡, 3表已開卡(若是儲值卡, 才建議設成2)], [TbSysConfigInfo  sParm:SYS_START_DATE sValue:20141001 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:系統上線日], [TbSysConfigInfo  sParm:SYS_TYPE sValue:SVC sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B>判斷本系統是LMS or SVC], [TbSysConfigInfo  sParm:TERMINAL_IMPORT sValue:~/Upload/Terminal/ sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:端末機整批維護, 上傳端末機檔案用的根目錄], [TbSysConfigInfo  sParm:TOBE_STALL_MONTHS sValue:3 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:], [TbSysConfigInfo  sParm:TXN_SRC_A sValue:Adjustment sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<R> 此交易來源顯示在報表上的名稱,調整交易], [TbSysConfigInfo  sParm:TXN_SRC_C sValue:Captured sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<R> 此交易來源顯示在報表上的名稱,人工簽單], [TbSysConfigInfo  sParm:TXN_SRC_E sValue:EDC sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<R> 顯示在報表上的名稱,EDC交易], [TbSysConfigInfo  sParm:TXN_SRC_L sValue:Batch sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<R> 此交易來源顯示在報表上的名稱,指定回饋名單], [TbSysConfigInfo  sParm:TXN_SRC_P sValue:Batch sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<R> 此交易來源顯示在報表上的名稱,指定加值], [TbSysConfigInfo  sParm:TXN_SRC_T sValue:Batch sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<R> 此交易來源顯示在報表上的名稱,餘額轉置], [TbSysConfigInfo  sParm:UNBAL_HANDLE_TYPE sValue:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 不平帳的後續處理方式; 1:以HOST為主, 2:以EDC為主, 3:人工決定], [TbSysConfigInfo  sParm:UNKNOWN_CARD_NO sValue:0000000000000000 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 匯入檔案/前置作業新增的交易, 因為無法得知卡號資訊, 統一填固定值], [TbSysConfigInfo  sParm:UNKNOWN_EXPIRY_DATE sValue:00000000 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 匯入檔案/前置作業新增的交易, 因為無法得知卡片效期資訊, 統一填固定值], [TbSysConfigInfo  sParm:UNKNOWN_MEMBER sValue:00000000 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 匯入檔案/前置作業新增的交易, 因為無法得知參加單位資訊, 統一填固定值], [TbSysConfigInfo  sParm:UNKNOWN_MERCH sValue:000000000000000 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 匯入檔案/前置作業新增的交易, 因為無法得知特店資訊, 統一填固定值], [TbSysConfigInfo  sParm:UNKNOWN_TERM sValue:00000000 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<B> 匯入檔案/前置作業新增的交易, 因為無法得知端末機資訊, 統一填固定值], [TbSysConfigInfo  sParm:WARRANTY sValue:24 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sPurposeDesc:<O> 保固期]]
+[main] 20170524 14:06:57 DEBUG TbTxnDefMgr          L:1007 - sql: SELECT ROWID, TXN_CODE, TXN_CODE_DESC, SIGN, BAL_FLAG, UPT_USERID, UPT_DATE, UPT_TIME, APRV_USERID, APRV_DATE, APRV_TIME, SUM_TYPE FROM TB_TXN_DEF ORDER BY TXN_CODE
+[main] 20170524 14:06:57 DEBUG TbTxnDefMgr          L:1015 - TB_TXN_DEF: 25 records exist
+[main] 20170524 14:06:57 DEBUG TbTxnDefMgr          L:1016 - [[TbTxnDefInfo  sTxnCode:8206 sTxnCodeDesc:紅利抵扣退貨 sSign:P sBalFlag:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:C], [TbTxnDefInfo  sTxnCode:8207 sTxnCodeDesc:紅利抵扣 sSign:M sBalFlag:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:D], [TbTxnDefInfo  sTxnCode:8208 sTxnCodeDesc:紅利抵扣取消 sSign:P sBalFlag:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:C], [TbTxnDefInfo  sTxnCode:8507 sTxnCodeDesc:補登加點 sSign:N sBalFlag:0 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:N], [TbTxnDefInfo  sTxnCode:8517 sTxnCodeDesc:補登扣點 sSign:N sBalFlag:0 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:N], [TbTxnDefInfo  sTxnCode:8527 sTxnCodeDesc:餘額轉置 sSign:N sBalFlag:0 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:N], [TbTxnDefInfo  sTxnCode:8537 sTxnCodeDesc:積點補登 sSign:P sBalFlag:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:C], [TbTxnDefInfo  sTxnCode:8577 sTxnCodeDesc:退卡 sSign:M sBalFlag:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:D], [TbTxnDefInfo  sTxnCode:8578 sTxnCodeDesc:退卡取消 sSign:P sBalFlag:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:C], [TbTxnDefInfo  sTxnCode:8597 sTxnCodeDesc:預儲金 sSign:P sBalFlag:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:C], [TbTxnDefInfo  sTxnCode:8706 sTxnCodeDesc:加值扣點 sSign:M sBalFlag:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:D], [TbTxnDefInfo  sTxnCode:8707 sTxnCodeDesc:加值 sSign:P sBalFlag:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:C], [TbTxnDefInfo  sTxnCode:8708 sTxnCodeDesc:加值取消 sSign:M sBalFlag:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:D], [TbTxnDefInfo  sTxnCode:8716 sTxnCodeDesc:自動加值退貨 sSign:M sBalFlag:1 sUptUserid: sUptDate:20150520 sUptTime: sAprvUserid: sAprvDate:20150520 sAprvTime: sSumType:C], [TbTxnDefInfo  sTxnCode:8717 sTxnCodeDesc:自動加值 sSign:P sBalFlag:1 sUptUserid: sUptDate:20150520 sUptTime: sAprvUserid: sAprvDate:20150520 sAprvTime: sSumType:C], [TbTxnDefInfo  sTxnCode:8718 sTxnCodeDesc:自動加值取消 sSign:M sBalFlag:1 sUptUserid: sUptDate:20150520 sUptTime: sAprvUserid: sAprvDate:20150520 sAprvTime: sSumType:D], [TbTxnDefInfo  sTxnCode:8727 sTxnCodeDesc:自動加值功能開啟 sSign:N sBalFlag:0 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:N], [TbTxnDefInfo  sTxnCode:8806 sTxnCodeDesc:紅利回饋退貨 sSign:M sBalFlag:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:D], [TbTxnDefInfo  sTxnCode:8807 sTxnCodeDesc:紅利回饋 sSign:P sBalFlag:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:C], [TbTxnDefInfo  sTxnCode:8808 sTxnCodeDesc:紅利回饋取消 sSign:M sBalFlag:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:D], [TbTxnDefInfo  sTxnCode:8817 sTxnCodeDesc:指定紅利 sSign:P sBalFlag:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:OF], [TbTxnDefInfo  sTxnCode:8907 sTxnCodeDesc:須列帳UI調整交易加點 sSign:P sBalFlag:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:AF], [TbTxnDefInfo  sTxnCode:8917 sTxnCodeDesc:須列帳UI調整交易扣點 sSign:M sBalFlag:1 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:AF], [TbTxnDefInfo  sTxnCode:8927 sTxnCodeDesc:不列帳UI調整交易加點 sSign:P sBalFlag:0 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:N], [TbTxnDefInfo  sTxnCode:8937 sTxnCodeDesc:不列帳UI調整交易扣點 sSign:M sBalFlag:0 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sSumType:N]]
+[main] 20170524 14:06:57 DEBUG TbCenterMgr          L:963  - sql: SELECT ROWID, CENTER_ID, CENTER_NAME, UPT_USERID, UPT_DATE, UPT_TIME, APRV_USERID, APRV_DATE, APRV_TIME, LANGUAGE FROM TB_CENTER ORDER BY CENTER_ID
+[main] 20170524 14:06:57 DEBUG TbCenterMgr          L:971  - TB_CENTER: 1 records exist
+[main] 20170524 14:06:57 DEBUG TbCenterMgr          L:972  - [[TbCenterInfo  sCenterId:28472923 sCenterName:遠鑫營運中心 sUptUserid: sUptDate: sUptTime: sAprvUserid: sAprvDate: sAprvTime: sLanguage:TWN]]
+[main] 20170524 14:06:57 INFO  AbstractBatchBasic   L:109  - begin running
+[main] 20170524 14:06:57 DEBUG TbBatchResultMgr     L:60   - sql: INSERT INTO TB_BATCH_RESULT(PROGRAM_NAME, START_DATE, START_TIME, END_DATE, END_TIME, WORK_FLAG, RCODE, ERROR_DESC, PAR_MON, PAR_DAY, LINK_CONTROL, JOB_ID, JOB_TIME, MEM_ID, RECOVER_VALUE) VALUES ('ExpCDRP', '20170524', '140657', '', '', '0', '0000', '', '05', '24', 'N', '000', '000000', '', '')
+[main] 20170524 14:06:57 DEBUG TbBatchResultMgr     L:64   - TB_BATCH_RESULT: 1 record inserted
+[main] 20170524 14:06:57 DEBUG TbBatchResultMgr     L:65   - [TbBatchResultInfo  sProgramName:ExpCDRP sStartDate:20170524 sStartTime:140657 sEndDate: sEndTime: sWorkFlag:0 sRcode:0000 sErrorDesc: sParMon:05 sParDay:24 sLinkControl:N sJobId:000 sJobTime:000000 sMemId: sRecoverValue:]
+[main] 20170524 14:06:57 DEBUG ExpCDRP              L:423  - sqlCmd: SELECT BANK_ID FROM TB_MEMBER WHERE BANK_ID IS NOT NULL 
+[main] 20170524 14:06:57 INFO  ExpCDRP              L:294  - SELECT REQ.REQ_TYPE, REQ.CARD_NO, REQ.EXPIRY_DATE, REQ.IMP_DATE, REQ.RCODE, CP.ECASH_BONUS_ID, BONUS_SDATE, BONUS_EDATE, QTY, CD.MEM_ID FROM TB_MB_CARD_BAL_REQ REQ, (SELECT TB_CARD.MEM_ID, TB_CARD.CARD_NO, TB_CARD.EXPIRY_DATE, TB_CARD.CARD_PRODUCT, TB_CARD_BAL.BONUS_ID, TB_CARD_BAL.BONUS_SDATE, TB_CARD_BAL.BONUS_EDATE, (CR_BONUS_QTY - DB_BONUS_QTY + BAL_BONUS_QTY) AS QTY FROM TB_CARD , TB_CARD_BAL WHERE TB_CARD.CARD_NO = TB_CARD_BAL.CARD_NO AND TB_CARD.EXPIRY_DATE = TB_CARD_BAL.EXPIRY_DATE AND BANK_ID = '700') CD, TB_CARD_PRODUCT CP WHERE REQ.CARD_NO = CD.CARD_NO AND CP.ECASH_BONUS_ID = CD.BONUS_ID AND REQ.EXPIRY_DATE = CD.EXPIRY_DATE AND CD.CARD_PRODUCT = CP.CARD_PRODUCT AND REQ.EXP_DATE = '00000000' 
+[main] 20170524 14:06:57 INFO  ExpCDRP              L:294  - SELECT REQ.REQ_TYPE, REQ.CARD_NO, REQ.EXPIRY_DATE, REQ.IMP_DATE, REQ.RCODE, CP.ECASH_BONUS_ID, BONUS_SDATE, BONUS_EDATE, QTY, CD.MEM_ID FROM TB_MB_CARD_BAL_REQ REQ, (SELECT TB_CARD.MEM_ID, TB_CARD.CARD_NO, TB_CARD.EXPIRY_DATE, TB_CARD.CARD_PRODUCT, TB_CARD_BAL.BONUS_ID, TB_CARD_BAL.BONUS_SDATE, TB_CARD_BAL.BONUS_EDATE, (CR_BONUS_QTY - DB_BONUS_QTY + BAL_BONUS_QTY) AS QTY FROM TB_CARD , TB_CARD_BAL WHERE TB_CARD.CARD_NO = TB_CARD_BAL.CARD_NO AND TB_CARD.EXPIRY_DATE = TB_CARD_BAL.EXPIRY_DATE AND BANK_ID = '016') CD, TB_CARD_PRODUCT CP WHERE REQ.CARD_NO = CD.CARD_NO AND CP.ECASH_BONUS_ID = CD.BONUS_ID AND REQ.EXPIRY_DATE = CD.EXPIRY_DATE AND CD.CARD_PRODUCT = CP.CARD_PRODUCT AND REQ.EXP_DATE = '00000000' 
+[main] 20170524 14:06:57 INFO  ExpCDRP              L:294  - SELECT REQ.REQ_TYPE, REQ.CARD_NO, REQ.EXPIRY_DATE, REQ.IMP_DATE, REQ.RCODE, CP.ECASH_BONUS_ID, BONUS_SDATE, BONUS_EDATE, QTY, CD.MEM_ID FROM TB_MB_CARD_BAL_REQ REQ, (SELECT TB_CARD.MEM_ID, TB_CARD.CARD_NO, TB_CARD.EXPIRY_DATE, TB_CARD.CARD_PRODUCT, TB_CARD_BAL.BONUS_ID, TB_CARD_BAL.BONUS_SDATE, TB_CARD_BAL.BONUS_EDATE, (CR_BONUS_QTY - DB_BONUS_QTY + BAL_BONUS_QTY) AS QTY FROM TB_CARD , TB_CARD_BAL WHERE TB_CARD.CARD_NO = TB_CARD_BAL.CARD_NO AND TB_CARD.EXPIRY_DATE = TB_CARD_BAL.EXPIRY_DATE AND BANK_ID = '013') CD, TB_CARD_PRODUCT CP WHERE REQ.CARD_NO = CD.CARD_NO AND CP.ECASH_BONUS_ID = CD.BONUS_ID AND REQ.EXPIRY_DATE = CD.EXPIRY_DATE AND CD.CARD_PRODUCT = CP.CARD_PRODUCT AND REQ.EXP_DATE = '00000000' 
+[main] 20170524 14:06:57 INFO  ExpCDRP              L:294  - SELECT REQ.REQ_TYPE, REQ.CARD_NO, REQ.EXPIRY_DATE, REQ.IMP_DATE, REQ.RCODE, CP.ECASH_BONUS_ID, BONUS_SDATE, BONUS_EDATE, QTY, CD.MEM_ID FROM TB_MB_CARD_BAL_REQ REQ, (SELECT TB_CARD.MEM_ID, TB_CARD.CARD_NO, TB_CARD.EXPIRY_DATE, TB_CARD.CARD_PRODUCT, TB_CARD_BAL.BONUS_ID, TB_CARD_BAL.BONUS_SDATE, TB_CARD_BAL.BONUS_EDATE, (CR_BONUS_QTY - DB_BONUS_QTY + BAL_BONUS_QTY) AS QTY FROM TB_CARD , TB_CARD_BAL WHERE TB_CARD.CARD_NO = TB_CARD_BAL.CARD_NO AND TB_CARD.EXPIRY_DATE = TB_CARD_BAL.EXPIRY_DATE AND BANK_ID = '052') CD, TB_CARD_PRODUCT CP WHERE REQ.CARD_NO = CD.CARD_NO AND CP.ECASH_BONUS_ID = CD.BONUS_ID AND REQ.EXPIRY_DATE = CD.EXPIRY_DATE AND CD.CARD_PRODUCT = CP.CARD_PRODUCT AND REQ.EXP_DATE = '00000000' 
+[main] 20170524 14:06:57 INFO  ExpCDRP              L:294  - SELECT REQ.REQ_TYPE, REQ.CARD_NO, REQ.EXPIRY_DATE, REQ.IMP_DATE, REQ.RCODE, CP.ECASH_BONUS_ID, BONUS_SDATE, BONUS_EDATE, QTY, CD.MEM_ID FROM TB_MB_CARD_BAL_REQ REQ, (SELECT TB_CARD.MEM_ID, TB_CARD.CARD_NO, TB_CARD.EXPIRY_DATE, TB_CARD.CARD_PRODUCT, TB_CARD_BAL.BONUS_ID, TB_CARD_BAL.BONUS_SDATE, TB_CARD_BAL.BONUS_EDATE, (CR_BONUS_QTY - DB_BONUS_QTY + BAL_BONUS_QTY) AS QTY FROM TB_CARD , TB_CARD_BAL WHERE TB_CARD.CARD_NO = TB_CARD_BAL.CARD_NO AND TB_CARD.EXPIRY_DATE = TB_CARD_BAL.EXPIRY_DATE AND BANK_ID = '808') CD, TB_CARD_PRODUCT CP WHERE REQ.CARD_NO = CD.CARD_NO AND CP.ECASH_BONUS_ID = CD.BONUS_ID AND REQ.EXPIRY_DATE = CD.EXPIRY_DATE AND CD.CARD_PRODUCT = CP.CARD_PRODUCT AND REQ.EXP_DATE = '00000000' 
+[main] 20170524 14:06:57 INFO  ExpCDRP              L:294  - SELECT REQ.REQ_TYPE, REQ.CARD_NO, REQ.EXPIRY_DATE, REQ.IMP_DATE, REQ.RCODE, CP.ECASH_BONUS_ID, BONUS_SDATE, BONUS_EDATE, QTY, CD.MEM_ID FROM TB_MB_CARD_BAL_REQ REQ, (SELECT TB_CARD.MEM_ID, TB_CARD.CARD_NO, TB_CARD.EXPIRY_DATE, TB_CARD.CARD_PRODUCT, TB_CARD_BAL.BONUS_ID, TB_CARD_BAL.BONUS_SDATE, TB_CARD_BAL.BONUS_EDATE, (CR_BONUS_QTY - DB_BONUS_QTY + BAL_BONUS_QTY) AS QTY FROM TB_CARD , TB_CARD_BAL WHERE TB_CARD.CARD_NO = TB_CARD_BAL.CARD_NO AND TB_CARD.EXPIRY_DATE = TB_CARD_BAL.EXPIRY_DATE AND BANK_ID = '008') CD, TB_CARD_PRODUCT CP WHERE REQ.CARD_NO = CD.CARD_NO AND CP.ECASH_BONUS_ID = CD.BONUS_ID AND REQ.EXPIRY_DATE = CD.EXPIRY_DATE AND CD.CARD_PRODUCT = CP.CARD_PRODUCT AND REQ.EXP_DATE = '00000000' 
+[main] 20170524 14:06:57 INFO  ExpCDRP              L:294  - SELECT REQ.REQ_TYPE, REQ.CARD_NO, REQ.EXPIRY_DATE, REQ.IMP_DATE, REQ.RCODE, CP.ECASH_BONUS_ID, BONUS_SDATE, BONUS_EDATE, QTY, CD.MEM_ID FROM TB_MB_CARD_BAL_REQ REQ, (SELECT TB_CARD.MEM_ID, TB_CARD.CARD_NO, TB_CARD.EXPIRY_DATE, TB_CARD.CARD_PRODUCT, TB_CARD_BAL.BONUS_ID, TB_CARD_BAL.BONUS_SDATE, TB_CARD_BAL.BONUS_EDATE, (CR_BONUS_QTY - DB_BONUS_QTY + BAL_BONUS_QTY) AS QTY FROM TB_CARD , TB_CARD_BAL WHERE TB_CARD.CARD_NO = TB_CARD_BAL.CARD_NO AND TB_CARD.EXPIRY_DATE = TB_CARD_BAL.EXPIRY_DATE AND BANK_ID = '805') CD, TB_CARD_PRODUCT CP WHERE REQ.CARD_NO = CD.CARD_NO AND CP.ECASH_BONUS_ID = CD.BONUS_ID AND REQ.EXPIRY_DATE = CD.EXPIRY_DATE AND CD.CARD_PRODUCT = CP.CARD_PRODUCT AND REQ.EXP_DATE = '00000000' 
+[main] 20170524 14:06:57 INFO  ExpCDRP              L:294  - SELECT REQ.REQ_TYPE, REQ.CARD_NO, REQ.EXPIRY_DATE, REQ.IMP_DATE, REQ.RCODE, CP.ECASH_BONUS_ID, BONUS_SDATE, BONUS_EDATE, QTY, CD.MEM_ID FROM TB_MB_CARD_BAL_REQ REQ, (SELECT TB_CARD.MEM_ID, TB_CARD.CARD_NO, TB_CARD.EXPIRY_DATE, TB_CARD.CARD_PRODUCT, TB_CARD_BAL.BONUS_ID, TB_CARD_BAL.BONUS_SDATE, TB_CARD_BAL.BONUS_EDATE, (CR_BONUS_QTY - DB_BONUS_QTY + BAL_BONUS_QTY) AS QTY FROM TB_CARD , TB_CARD_BAL WHERE TB_CARD.CARD_NO = TB_CARD_BAL.CARD_NO AND TB_CARD.EXPIRY_DATE = TB_CARD_BAL.EXPIRY_DATE AND BANK_ID = '806') CD, TB_CARD_PRODUCT CP WHERE REQ.CARD_NO = CD.CARD_NO AND CP.ECASH_BONUS_ID = CD.BONUS_ID AND REQ.EXPIRY_DATE = CD.EXPIRY_DATE AND CD.CARD_PRODUCT = CP.CARD_PRODUCT AND REQ.EXP_DATE = '00000000' 
+[main] 20170524 14:06:57 DEBUG ExpCDRP              L:423  - sqlCmd: SELECT BANK_ID FROM TB_MEMBER WHERE BANK_ID IS NOT NULL 
+[main] 20170524 14:06:57 INFO  ExpCDRP              L:294  - SELECT REQ.REQ_TYPE, REQ.CARD_NO, REQ.EXPIRY_DATE, REQ.IMP_DATE, REQ.RCODE, CP.ECASH_BONUS_ID, BONUS_SDATE, BONUS_EDATE, QTY, CD.MEM_ID FROM TB_MB_CARD_BAL_REQ REQ, (SELECT TB_CARD.MEM_ID, TB_CARD.CARD_NO, TB_CARD.EXPIRY_DATE, TB_CARD.CARD_PRODUCT, TB_CARD_BAL.BONUS_ID, TB_CARD_BAL.BONUS_SDATE, TB_CARD_BAL.BONUS_EDATE, (CR_BONUS_QTY - DB_BONUS_QTY + BAL_BONUS_QTY) AS QTY FROM TB_CARD , TB_CARD_BAL WHERE TB_CARD.CARD_NO = TB_CARD_BAL.CARD_NO AND TB_CARD.EXPIRY_DATE = TB_CARD_BAL.EXPIRY_DATE AND BANK_ID = '700') CD, TB_CARD_PRODUCT CP WHERE REQ.CARD_NO = CD.CARD_NO AND CP.ECASH_BONUS_ID = CD.BONUS_ID AND REQ.EXPIRY_DATE = CD.EXPIRY_DATE AND CD.CARD_PRODUCT = CP.CARD_PRODUCT AND REQ.EXP_DATE = '00000000' 
+[main] 20170524 14:06:57 INFO  ExpCDRP              L:294  - SELECT REQ.REQ_TYPE, REQ.CARD_NO, REQ.EXPIRY_DATE, REQ.IMP_DATE, REQ.RCODE, CP.ECASH_BONUS_ID, BONUS_SDATE, BONUS_EDATE, QTY, CD.MEM_ID FROM TB_MB_CARD_BAL_REQ REQ, (SELECT TB_CARD.MEM_ID, TB_CARD.CARD_NO, TB_CARD.EXPIRY_DATE, TB_CARD.CARD_PRODUCT, TB_CARD_BAL.BONUS_ID, TB_CARD_BAL.BONUS_SDATE, TB_CARD_BAL.BONUS_EDATE, (CR_BONUS_QTY - DB_BONUS_QTY + BAL_BONUS_QTY) AS QTY FROM TB_CARD , TB_CARD_BAL WHERE TB_CARD.CARD_NO = TB_CARD_BAL.CARD_NO AND TB_CARD.EXPIRY_DATE = TB_CARD_BAL.EXPIRY_DATE AND BANK_ID = '016') CD, TB_CARD_PRODUCT CP WHERE REQ.CARD_NO = CD.CARD_NO AND CP.ECASH_BONUS_ID = CD.BONUS_ID AND REQ.EXPIRY_DATE = CD.EXPIRY_DATE AND CD.CARD_PRODUCT = CP.CARD_PRODUCT AND REQ.EXP_DATE = '00000000' 
+[main] 20170524 14:06:57 INFO  ExpCDRP              L:294  - SELECT REQ.REQ_TYPE, REQ.CARD_NO, REQ.EXPIRY_DATE, REQ.IMP_DATE, REQ.RCODE, CP.ECASH_BONUS_ID, BONUS_SDATE, BONUS_EDATE, QTY, CD.MEM_ID FROM TB_MB_CARD_BAL_REQ REQ, (SELECT TB_CARD.MEM_ID, TB_CARD.CARD_NO, TB_CARD.EXPIRY_DATE, TB_CARD.CARD_PRODUCT, TB_CARD_BAL.BONUS_ID, TB_CARD_BAL.BONUS_SDATE, TB_CARD_BAL.BONUS_EDATE, (CR_BONUS_QTY - DB_BONUS_QTY + BAL_BONUS_QTY) AS QTY FROM TB_CARD , TB_CARD_BAL WHERE TB_CARD.CARD_NO = TB_CARD_BAL.CARD_NO AND TB_CARD.EXPIRY_DATE = TB_CARD_BAL.EXPIRY_DATE AND BANK_ID = '013') CD, TB_CARD_PRODUCT CP WHERE REQ.CARD_NO = CD.CARD_NO AND CP.ECASH_BONUS_ID = CD.BONUS_ID AND REQ.EXPIRY_DATE = CD.EXPIRY_DATE AND CD.CARD_PRODUCT = CP.CARD_PRODUCT AND REQ.EXP_DATE = '00000000' 
+[main] 20170524 14:06:57 INFO  ExpCDRP              L:294  - SELECT REQ.REQ_TYPE, REQ.CARD_NO, REQ.EXPIRY_DATE, REQ.IMP_DATE, REQ.RCODE, CP.ECASH_BONUS_ID, BONUS_SDATE, BONUS_EDATE, QTY, CD.MEM_ID FROM TB_MB_CARD_BAL_REQ REQ, (SELECT TB_CARD.MEM_ID, TB_CARD.CARD_NO, TB_CARD.EXPIRY_DATE, TB_CARD.CARD_PRODUCT, TB_CARD_BAL.BONUS_ID, TB_CARD_BAL.BONUS_SDATE, TB_CARD_BAL.BONUS_EDATE, (CR_BONUS_QTY - DB_BONUS_QTY + BAL_BONUS_QTY) AS QTY FROM TB_CARD , TB_CARD_BAL WHERE TB_CARD.CARD_NO = TB_CARD_BAL.CARD_NO AND TB_CARD.EXPIRY_DATE = TB_CARD_BAL.EXPIRY_DATE AND BANK_ID = '052') CD, TB_CARD_PRODUCT CP WHERE REQ.CARD_NO = CD.CARD_NO AND CP.ECASH_BONUS_ID = CD.BONUS_ID AND REQ.EXPIRY_DATE = CD.EXPIRY_DATE AND CD.CARD_PRODUCT = CP.CARD_PRODUCT AND REQ.EXP_DATE = '00000000' 
+[main] 20170524 14:06:57 INFO  ExpCDRP              L:294  - SELECT REQ.REQ_TYPE, REQ.CARD_NO, REQ.EXPIRY_DATE, REQ.IMP_DATE, REQ.RCODE, CP.ECASH_BONUS_ID, BONUS_SDATE, BONUS_EDATE, QTY, CD.MEM_ID FROM TB_MB_CARD_BAL_REQ REQ, (SELECT TB_CARD.MEM_ID, TB_CARD.CARD_NO, TB_CARD.EXPIRY_DATE, TB_CARD.CARD_PRODUCT, TB_CARD_BAL.BONUS_ID, TB_CARD_BAL.BONUS_SDATE, TB_CARD_BAL.BONUS_EDATE, (CR_BONUS_QTY - DB_BONUS_QTY + BAL_BONUS_QTY) AS QTY FROM TB_CARD , TB_CARD_BAL WHERE TB_CARD.CARD_NO = TB_CARD_BAL.CARD_NO AND TB_CARD.EXPIRY_DATE = TB_CARD_BAL.EXPIRY_DATE AND BANK_ID = '808') CD, TB_CARD_PRODUCT CP WHERE REQ.CARD_NO = CD.CARD_NO AND CP.ECASH_BONUS_ID = CD.BONUS_ID AND REQ.EXPIRY_DATE = CD.EXPIRY_DATE AND CD.CARD_PRODUCT = CP.CARD_PRODUCT AND REQ.EXP_DATE = '00000000' 
+[main] 20170524 14:06:57 INFO  ExpCDRP              L:294  - SELECT REQ.REQ_TYPE, REQ.CARD_NO, REQ.EXPIRY_DATE, REQ.IMP_DATE, REQ.RCODE, CP.ECASH_BONUS_ID, BONUS_SDATE, BONUS_EDATE, QTY, CD.MEM_ID FROM TB_MB_CARD_BAL_REQ REQ, (SELECT TB_CARD.MEM_ID, TB_CARD.CARD_NO, TB_CARD.EXPIRY_DATE, TB_CARD.CARD_PRODUCT, TB_CARD_BAL.BONUS_ID, TB_CARD_BAL.BONUS_SDATE, TB_CARD_BAL.BONUS_EDATE, (CR_BONUS_QTY - DB_BONUS_QTY + BAL_BONUS_QTY) AS QTY FROM TB_CARD , TB_CARD_BAL WHERE TB_CARD.CARD_NO = TB_CARD_BAL.CARD_NO AND TB_CARD.EXPIRY_DATE = TB_CARD_BAL.EXPIRY_DATE AND BANK_ID = '008') CD, TB_CARD_PRODUCT CP WHERE REQ.CARD_NO = CD.CARD_NO AND CP.ECASH_BONUS_ID = CD.BONUS_ID AND REQ.EXPIRY_DATE = CD.EXPIRY_DATE AND CD.CARD_PRODUCT = CP.CARD_PRODUCT AND REQ.EXP_DATE = '00000000' 
+[main] 20170524 14:06:57 INFO  ExpCDRP              L:294  - SELECT REQ.REQ_TYPE, REQ.CARD_NO, REQ.EXPIRY_DATE, REQ.IMP_DATE, REQ.RCODE, CP.ECASH_BONUS_ID, BONUS_SDATE, BONUS_EDATE, QTY, CD.MEM_ID FROM TB_MB_CARD_BAL_REQ REQ, (SELECT TB_CARD.MEM_ID, TB_CARD.CARD_NO, TB_CARD.EXPIRY_DATE, TB_CARD.CARD_PRODUCT, TB_CARD_BAL.BONUS_ID, TB_CARD_BAL.BONUS_SDATE, TB_CARD_BAL.BONUS_EDATE, (CR_BONUS_QTY - DB_BONUS_QTY + BAL_BONUS_QTY) AS QTY FROM TB_CARD , TB_CARD_BAL WHERE TB_CARD.CARD_NO = TB_CARD_BAL.CARD_NO AND TB_CARD.EXPIRY_DATE = TB_CARD_BAL.EXPIRY_DATE AND BANK_ID = '805') CD, TB_CARD_PRODUCT CP WHERE REQ.CARD_NO = CD.CARD_NO AND CP.ECASH_BONUS_ID = CD.BONUS_ID AND REQ.EXPIRY_DATE = CD.EXPIRY_DATE AND CD.CARD_PRODUCT = CP.CARD_PRODUCT AND REQ.EXP_DATE = '00000000' 
+[main] 20170524 14:06:57 INFO  ExpCDRP              L:294  - SELECT REQ.REQ_TYPE, REQ.CARD_NO, REQ.EXPIRY_DATE, REQ.IMP_DATE, REQ.RCODE, CP.ECASH_BONUS_ID, BONUS_SDATE, BONUS_EDATE, QTY, CD.MEM_ID FROM TB_MB_CARD_BAL_REQ REQ, (SELECT TB_CARD.MEM_ID, TB_CARD.CARD_NO, TB_CARD.EXPIRY_DATE, TB_CARD.CARD_PRODUCT, TB_CARD_BAL.BONUS_ID, TB_CARD_BAL.BONUS_SDATE, TB_CARD_BAL.BONUS_EDATE, (CR_BONUS_QTY - DB_BONUS_QTY + BAL_BONUS_QTY) AS QTY FROM TB_CARD , TB_CARD_BAL WHERE TB_CARD.CARD_NO = TB_CARD_BAL.CARD_NO AND TB_CARD.EXPIRY_DATE = TB_CARD_BAL.EXPIRY_DATE AND BANK_ID = '806') CD, TB_CARD_PRODUCT CP WHERE REQ.CARD_NO = CD.CARD_NO AND CP.ECASH_BONUS_ID = CD.BONUS_ID AND REQ.EXPIRY_DATE = CD.EXPIRY_DATE AND CD.CARD_PRODUCT = CP.CARD_PRODUCT AND REQ.EXP_DATE = '00000000' 
+[main] 20170524 14:06:57 DEBUG TbFileInfoMgr        L:253  - sql: SELECT ROWID, FILE_NAME, IN_OUT, FILE_TYPE, DATA_LEN, FILE_NAME_PATTERN, LOCAL_PATH, UPT_USERID, UPT_DATE, UPT_TIME, APRV_USERID, APRV_DATE, APRV_TIME, OK_FLAG, SUB_FILE_NAME, RETURN_FILE_NAME, CIPHER_FLAG, KEY_WORD FROM TB_FILE_INFO WHERE FILE_NAME = 'CDRP' AND IN_OUT = 'O'
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:266  - TB_FILE_INFO: 1 records exist
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:267  - [TbFileInfoPK  sFileName:CDRP sInOut:O]
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:253  - sql: SELECT ROWID, FILE_NAME, IN_OUT, FILE_TYPE, DATA_LEN, FILE_NAME_PATTERN, LOCAL_PATH, UPT_USERID, UPT_DATE, UPT_TIME, APRV_USERID, APRV_DATE, APRV_TIME, OK_FLAG, SUB_FILE_NAME, RETURN_FILE_NAME, CIPHER_FLAG, KEY_WORD FROM TB_FILE_INFO WHERE FILE_NAME = 'CDRP' AND IN_OUT = 'O'
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:266  - TB_FILE_INFO: 1 records exist
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:267  - [TbFileInfoPK  sFileName:CDRP sInOut:O]
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:253  - sql: SELECT ROWID, FILE_NAME, IN_OUT, FILE_TYPE, DATA_LEN, FILE_NAME_PATTERN, LOCAL_PATH, UPT_USERID, UPT_DATE, UPT_TIME, APRV_USERID, APRV_DATE, APRV_TIME, OK_FLAG, SUB_FILE_NAME, RETURN_FILE_NAME, CIPHER_FLAG, KEY_WORD FROM TB_FILE_INFO WHERE FILE_NAME = 'CDRP' AND IN_OUT = 'O'
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:266  - TB_FILE_INFO: 1 records exist
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:267  - [TbFileInfoPK  sFileName:CDRP sInOut:O]
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:253  - sql: SELECT ROWID, FILE_NAME, IN_OUT, FILE_TYPE, DATA_LEN, FILE_NAME_PATTERN, LOCAL_PATH, UPT_USERID, UPT_DATE, UPT_TIME, APRV_USERID, APRV_DATE, APRV_TIME, OK_FLAG, SUB_FILE_NAME, RETURN_FILE_NAME, CIPHER_FLAG, KEY_WORD FROM TB_FILE_INFO WHERE FILE_NAME = 'CDRP' AND IN_OUT = 'O'
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:266  - TB_FILE_INFO: 1 records exist
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:267  - [TbFileInfoPK  sFileName:CDRP sInOut:O]
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:253  - sql: SELECT ROWID, FILE_NAME, IN_OUT, FILE_TYPE, DATA_LEN, FILE_NAME_PATTERN, LOCAL_PATH, UPT_USERID, UPT_DATE, UPT_TIME, APRV_USERID, APRV_DATE, APRV_TIME, OK_FLAG, SUB_FILE_NAME, RETURN_FILE_NAME, CIPHER_FLAG, KEY_WORD FROM TB_FILE_INFO WHERE FILE_NAME = 'CDRP' AND IN_OUT = 'O'
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:266  - TB_FILE_INFO: 1 records exist
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:267  - [TbFileInfoPK  sFileName:CDRP sInOut:O]
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:253  - sql: SELECT ROWID, FILE_NAME, IN_OUT, FILE_TYPE, DATA_LEN, FILE_NAME_PATTERN, LOCAL_PATH, UPT_USERID, UPT_DATE, UPT_TIME, APRV_USERID, APRV_DATE, APRV_TIME, OK_FLAG, SUB_FILE_NAME, RETURN_FILE_NAME, CIPHER_FLAG, KEY_WORD FROM TB_FILE_INFO WHERE FILE_NAME = 'CDRP' AND IN_OUT = 'O'
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:266  - TB_FILE_INFO: 1 records exist
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:267  - [TbFileInfoPK  sFileName:CDRP sInOut:O]
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:253  - sql: SELECT ROWID, FILE_NAME, IN_OUT, FILE_TYPE, DATA_LEN, FILE_NAME_PATTERN, LOCAL_PATH, UPT_USERID, UPT_DATE, UPT_TIME, APRV_USERID, APRV_DATE, APRV_TIME, OK_FLAG, SUB_FILE_NAME, RETURN_FILE_NAME, CIPHER_FLAG, KEY_WORD FROM TB_FILE_INFO WHERE FILE_NAME = 'CDRP' AND IN_OUT = 'O'
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:266  - TB_FILE_INFO: 1 records exist
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:267  - [TbFileInfoPK  sFileName:CDRP sInOut:O]
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:253  - sql: SELECT ROWID, FILE_NAME, IN_OUT, FILE_TYPE, DATA_LEN, FILE_NAME_PATTERN, LOCAL_PATH, UPT_USERID, UPT_DATE, UPT_TIME, APRV_USERID, APRV_DATE, APRV_TIME, OK_FLAG, SUB_FILE_NAME, RETURN_FILE_NAME, CIPHER_FLAG, KEY_WORD FROM TB_FILE_INFO WHERE FILE_NAME = 'CDRP' AND IN_OUT = 'O'
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:266  - TB_FILE_INFO: 1 records exist
+[main] 20170524 14:06:58 DEBUG TbFileInfoMgr        L:267  - [TbFileInfoPK  sFileName:CDRP sInOut:O]
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:272  - sql: SELECT ROWID, MEM_ID, FILE_NAME, FILE_DATE, SEQNO, FILE_TYPE, WORK_FLAG, TOT_REC, FILE_SIZE, FULL_FILE_NAME, PROGRAM_NAME, START_DATE, START_TIME, PAR_MON, PAR_DAY, SYS_DATE, SYS_TIME, MEM_GROUP_ID, MERCH_ID FROM TB_OUTCTL WHERE MEM_ID = '00001170' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524' AND SEQNO = '01'
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:285  - TB_OUTCTL: 0 records exist
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:286  - [TbOutctlPK  sMemId:00001170 sFileName:CDRP sFileDate:20170524 sSeqno:01]
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:272  - sql: SELECT ROWID, MEM_ID, FILE_NAME, FILE_DATE, SEQNO, FILE_TYPE, WORK_FLAG, TOT_REC, FILE_SIZE, FULL_FILE_NAME, PROGRAM_NAME, START_DATE, START_TIME, PAR_MON, PAR_DAY, SYS_DATE, SYS_TIME, MEM_GROUP_ID, MERCH_ID FROM TB_OUTCTL WHERE MEM_ID = '00001172' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524' AND SEQNO = '01'
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:285  - TB_OUTCTL: 0 records exist
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:286  - [TbOutctlPK  sMemId:00001172 sFileName:CDRP sFileDate:20170524 sSeqno:01]
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:272  - sql: SELECT ROWID, MEM_ID, FILE_NAME, FILE_DATE, SEQNO, FILE_TYPE, WORK_FLAG, TOT_REC, FILE_SIZE, FULL_FILE_NAME, PROGRAM_NAME, START_DATE, START_TIME, PAR_MON, PAR_DAY, SYS_DATE, SYS_TIME, MEM_GROUP_ID, MERCH_ID FROM TB_OUTCTL WHERE MEM_ID = '00041260' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524' AND SEQNO = '01'
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:285  - TB_OUTCTL: 0 records exist
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:286  - [TbOutctlPK  sMemId:00041260 sFileName:CDRP sFileDate:20170524 sSeqno:01]
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:272  - sql: SELECT ROWID, MEM_ID, FILE_NAME, FILE_DATE, SEQNO, FILE_TYPE, WORK_FLAG, TOT_REC, FILE_SIZE, FULL_FILE_NAME, PROGRAM_NAME, START_DATE, START_TIME, PAR_MON, PAR_DAY, SYS_DATE, SYS_TIME, MEM_GROUP_ID, MERCH_ID FROM TB_OUTCTL WHERE MEM_ID = '00001168' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524' AND SEQNO = '01'
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:285  - TB_OUTCTL: 0 records exist
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:286  - [TbOutctlPK  sMemId:00001168 sFileName:CDRP sFileDate:20170524 sSeqno:01]
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:272  - sql: SELECT ROWID, MEM_ID, FILE_NAME, FILE_DATE, SEQNO, FILE_TYPE, WORK_FLAG, TOT_REC, FILE_SIZE, FULL_FILE_NAME, PROGRAM_NAME, START_DATE, START_TIME, PAR_MON, PAR_DAY, SYS_DATE, SYS_TIME, MEM_GROUP_ID, MERCH_ID FROM TB_OUTCTL WHERE MEM_ID = '00103218' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524' AND SEQNO = '01'
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:285  - TB_OUTCTL: 0 records exist
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:286  - [TbOutctlPK  sMemId:00103218 sFileName:CDRP sFileDate:20170524 sSeqno:01]
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:272  - sql: SELECT ROWID, MEM_ID, FILE_NAME, FILE_DATE, SEQNO, FILE_TYPE, WORK_FLAG, TOT_REC, FILE_SIZE, FULL_FILE_NAME, PROGRAM_NAME, START_DATE, START_TIME, PAR_MON, PAR_DAY, SYS_DATE, SYS_TIME, MEM_GROUP_ID, MERCH_ID FROM TB_OUTCTL WHERE MEM_ID = '00104219' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524' AND SEQNO = '01'
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:285  - TB_OUTCTL: 0 records exist
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:286  - [TbOutctlPK  sMemId:00104219 sFileName:CDRP sFileDate:20170524 sSeqno:01]
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:272  - sql: SELECT ROWID, MEM_ID, FILE_NAME, FILE_DATE, SEQNO, FILE_TYPE, WORK_FLAG, TOT_REC, FILE_SIZE, FULL_FILE_NAME, PROGRAM_NAME, START_DATE, START_TIME, PAR_MON, PAR_DAY, SYS_DATE, SYS_TIME, MEM_GROUP_ID, MERCH_ID FROM TB_OUTCTL WHERE MEM_ID = '00100805' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524' AND SEQNO = '01'
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:285  - TB_OUTCTL: 0 records exist
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:286  - [TbOutctlPK  sMemId:00100805 sFileName:CDRP sFileDate:20170524 sSeqno:01]
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:272  - sql: SELECT ROWID, MEM_ID, FILE_NAME, FILE_DATE, SEQNO, FILE_TYPE, WORK_FLAG, TOT_REC, FILE_SIZE, FULL_FILE_NAME, PROGRAM_NAME, START_DATE, START_TIME, PAR_MON, PAR_DAY, SYS_DATE, SYS_TIME, MEM_GROUP_ID, MERCH_ID FROM TB_OUTCTL WHERE MEM_ID = '00078067' AND FILE_NAME = 'CDRP' AND FILE_DATE = '20170524' AND SEQNO = '01'
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:285  - TB_OUTCTL: 0 records exist
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:286  - [TbOutctlPK  sMemId:00078067 sFileName:CDRP sFileDate:20170524 sSeqno:01]
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:60   - sql: INSERT INTO TB_OUTCTL(MEM_ID, FILE_NAME, FILE_DATE, SEQNO, FILE_TYPE, WORK_FLAG, TOT_REC, FILE_SIZE, FULL_FILE_NAME, PROGRAM_NAME, START_DATE, START_TIME, PAR_MON, PAR_DAY, SYS_DATE, SYS_TIME, MEM_GROUP_ID, MERCH_ID) VALUES ('00001170', 'CDRP', '20170524', '01', 'B', '1', 0, 75, 'CDRP.00001170.2017052401', 'ExpCDRP', '20170524', '140657', '05', '24', '20170524', '140658', '00001', '')
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:64   - TB_OUTCTL: 1 record inserted
+[main] 20170524 14:06:58 DEBUG TbOutctlMgr          L:65   - [TbOutctlInfo  sMemId:00001170 sFileName:CDRP sFileDate:20170524 sSeqno:01 sFileType:B sWorkFlag:1 sTotRec:0 sFileSize:75 sFullFileName:CDRP.00001170.2017052401 sProgramName:ExpCDRP sStartDate:20170524 sStartTime:140657 sParMon:05 sParDay:24 sSysDate:20170524 sSysTime:140658 sMemGroupId:00001 sMerchId:]
+[main] 20170524 14:06:59 DEBUG TbOutctlMgr          L:60   - sql: INSERT INTO TB_OUTCTL(MEM_ID, FILE_NAME, FILE_DATE, SEQNO, FILE_TYPE, WORK_FLAG, TOT_REC, FILE_SIZE, FULL_FILE_NAME, PROGRAM_NAME, START_DATE, START_TIME, PAR_MON, PAR_DAY, SYS_DATE, SYS_TIME, MEM_GROUP_ID, MERCH_ID) VALUES ('00001172', 'CDRP', '20170524', '01', 'B', '1', 0, 75, 'CDRP.00001172.2017052401', 'ExpCDRP', '20170524', '140657', '05', '24', '20170524', '140659', '00001', '')
+[main] 20170524 14:06:59 DEBUG TbOutctlMgr          L:64   - TB_OUTCTL: 1 record inserted
+[main] 20170524 14:06:59 DEBUG TbOutctlMgr          L:65   - [TbOutctlInfo  sMemId:00001172 sFileName:CDRP sFileDate:20170524 sSeqno:01 sFileType:B sWorkFlag:1 sTotRec:0 sFileSize:75 sFullFileName:CDRP.00001172.2017052401 sProgramName:ExpCDRP sStartDate:20170524 sStartTime:140657 sParMon:05 sParDay:24 sSysDate:20170524 sSysTime:140659 sMemGroupId:00001 sMerchId:]
+[main] 20170524 14:07:00 DEBUG TbOutctlMgr          L:60   - sql: INSERT INTO TB_OUTCTL(MEM_ID, FILE_NAME, FILE_DATE, SEQNO, FILE_TYPE, WORK_FLAG, TOT_REC, FILE_SIZE, FULL_FILE_NAME, PROGRAM_NAME, START_DATE, START_TIME, PAR_MON, PAR_DAY, SYS_DATE, SYS_TIME, MEM_GROUP_ID, MERCH_ID) VALUES ('00041260', 'CDRP', '20170524', '01', 'B', '1', 0, 75, 'CDRP.00041260.2017052401', 'ExpCDRP', '20170524', '140657', '05', '24', '20170524', '140700', '00041', '')
+[main] 20170524 14:07:00 DEBUG TbOutctlMgr          L:64   - TB_OUTCTL: 1 record inserted
+[main] 20170524 14:07:00 DEBUG TbOutctlMgr          L:65   - [TbOutctlInfo  sMemId:00041260 sFileName:CDRP sFileDate:20170524 sSeqno:01 sFileType:B sWorkFlag:1 sTotRec:0 sFileSize:75 sFullFileName:CDRP.00041260.2017052401 sProgramName:ExpCDRP sStartDate:20170524 sStartTime:140657 sParMon:05 sParDay:24 sSysDate:20170524 sSysTime:140700 sMemGroupId:00041 sMerchId:]
+[main] 20170524 14:07:00 DEBUG TbOutctlMgr          L:60   - sql: INSERT INTO TB_OUTCTL(MEM_ID, FILE_NAME, FILE_DATE, SEQNO, FILE_TYPE, WORK_FLAG, TOT_REC, FILE_SIZE, FULL_FILE_NAME, PROGRAM_NAME, START_DATE, START_TIME, PAR_MON, PAR_DAY, SYS_DATE, SYS_TIME, MEM_GROUP_ID, MERCH_ID) VALUES ('00001168', 'CDRP', '20170524', '01', 'B', '1', 0, 75, 'CDRP.00001168.2017052401', 'ExpCDRP', '20170524', '140657', '05', '24', '20170524', '140700', '00001', '')
+[main] 20170524 14:07:00 DEBUG TbOutctlMgr          L:64   - TB_OUTCTL: 1 record inserted
+[main] 20170524 14:07:00 DEBUG TbOutctlMgr          L:65   - [TbOutctlInfo  sMemId:00001168 sFileName:CDRP sFileDate:20170524 sSeqno:01 sFileType:B sWorkFlag:1 sTotRec:0 sFileSize:75 sFullFileName:CDRP.00001168.2017052401 sProgramName:ExpCDRP sStartDate:20170524 sStartTime:140657 sParMon:05 sParDay:24 sSysDate:20170524 sSysTime:140700 sMemGroupId:00001 sMerchId:]
+[main] 20170524 14:07:01 DEBUG TbOutctlMgr          L:60   - sql: INSERT INTO TB_OUTCTL(MEM_ID, FILE_NAME, FILE_DATE, SEQNO, FILE_TYPE, WORK_FLAG, TOT_REC, FILE_SIZE, FULL_FILE_NAME, PROGRAM_NAME, START_DATE, START_TIME, PAR_MON, PAR_DAY, SYS_DATE, SYS_TIME, MEM_GROUP_ID, MERCH_ID) VALUES ('00103218', 'CDRP', '20170524', '01', 'B', '1', 0, 75, 'CDRP.00103218.2017052401', 'ExpCDRP', '20170524', '140657', '05', '24', '20170524', '140701', '00103', '')
+[main] 20170524 14:07:01 DEBUG TbOutctlMgr          L:64   - TB_OUTCTL: 1 record inserted
+[main] 20170524 14:07:01 DEBUG TbOutctlMgr          L:65   - [TbOutctlInfo  sMemId:00103218 sFileName:CDRP sFileDate:20170524 sSeqno:01 sFileType:B sWorkFlag:1 sTotRec:0 sFileSize:75 sFullFileName:CDRP.00103218.2017052401 sProgramName:ExpCDRP sStartDate:20170524 sStartTime:140657 sParMon:05 sParDay:24 sSysDate:20170524 sSysTime:140701 sMemGroupId:00103 sMerchId:]
+[main] 20170524 14:07:01 DEBUG TbOutctlMgr          L:60   - sql: INSERT INTO TB_OUTCTL(MEM_ID, FILE_NAME, FILE_DATE, SEQNO, FILE_TYPE, WORK_FLAG, TOT_REC, FILE_SIZE, FULL_FILE_NAME, PROGRAM_NAME, START_DATE, START_TIME, PAR_MON, PAR_DAY, SYS_DATE, SYS_TIME, MEM_GROUP_ID, MERCH_ID) VALUES ('00104219', 'CDRP', '20170524', '01', 'B', '1', 0, 75, 'CDRP.00104219.2017052401', 'ExpCDRP', '20170524', '140657', '05', '24', '20170524', '140701', '00104', '')
+[main] 20170524 14:07:01 DEBUG TbOutctlMgr          L:64   - TB_OUTCTL: 1 record inserted
+[main] 20170524 14:07:01 DEBUG TbOutctlMgr          L:65   - [TbOutctlInfo  sMemId:00104219 sFileName:CDRP sFileDate:20170524 sSeqno:01 sFileType:B sWorkFlag:1 sTotRec:0 sFileSize:75 sFullFileName:CDRP.00104219.2017052401 sProgramName:ExpCDRP sStartDate:20170524 sStartTime:140657 sParMon:05 sParDay:24 sSysDate:20170524 sSysTime:140701 sMemGroupId:00104 sMerchId:]
+[main] 20170524 14:07:02 DEBUG TbOutctlMgr          L:60   - sql: INSERT INTO TB_OUTCTL(MEM_ID, FILE_NAME, FILE_DATE, SEQNO, FILE_TYPE, WORK_FLAG, TOT_REC, FILE_SIZE, FULL_FILE_NAME, PROGRAM_NAME, START_DATE, START_TIME, PAR_MON, PAR_DAY, SYS_DATE, SYS_TIME, MEM_GROUP_ID, MERCH_ID) VALUES ('00100805', 'CDRP', '20170524', '01', 'B', '1', 0, 75, 'CDRP.00100805.2017052401', 'ExpCDRP', '20170524', '140657', '05', '24', '20170524', '140702', '00001', '')
+[main] 20170524 14:07:02 DEBUG TbOutctlMgr          L:64   - TB_OUTCTL: 1 record inserted
+[main] 20170524 14:07:02 DEBUG TbOutctlMgr          L:65   - [TbOutctlInfo  sMemId:00100805 sFileName:CDRP sFileDate:20170524 sSeqno:01 sFileType:B sWorkFlag:1 sTotRec:0 sFileSize:75 sFullFileName:CDRP.00100805.2017052401 sProgramName:ExpCDRP sStartDate:20170524 sStartTime:140657 sParMon:05 sParDay:24 sSysDate:20170524 sSysTime:140702 sMemGroupId:00001 sMerchId:]
+[main] 20170524 14:07:02 DEBUG TbOutctlMgr          L:60   - sql: INSERT INTO TB_OUTCTL(MEM_ID, FILE_NAME, FILE_DATE, SEQNO, FILE_TYPE, WORK_FLAG, TOT_REC, FILE_SIZE, FULL_FILE_NAME, PROGRAM_NAME, START_DATE, START_TIME, PAR_MON, PAR_DAY, SYS_DATE, SYS_TIME, MEM_GROUP_ID, MERCH_ID) VALUES ('00078067', 'CDRP', '20170524', '01', 'B', '1', 0, 75, 'CDRP.00078067.2017052401', 'ExpCDRP', '20170524', '140657', '05', '24', '20170524', '140702', '00078', '')
+[main] 20170524 14:07:02 DEBUG TbOutctlMgr          L:64   - TB_OUTCTL: 1 record inserted
+[main] 20170524 14:07:02 DEBUG TbOutctlMgr          L:65   - [TbOutctlInfo  sMemId:00078067 sFileName:CDRP sFileDate:20170524 sSeqno:01 sFileType:B sWorkFlag:1 sTotRec:0 sFileSize:75 sFullFileName:CDRP.00078067.2017052401 sProgramName:ExpCDRP sStartDate:20170524 sStartTime:140657 sParMon:05 sParDay:24 sSysDate:20170524 sSysTime:140702 sMemGroupId:00078 sMerchId:]
+[main] 20170524 14:07:03 DEBUG TbBatchResultMgr     L:147  - sql: UPDATE TB_BATCH_RESULT SET END_DATE = '20170524', END_TIME = '140703', WORK_FLAG = '1', RCODE = '0000', ERROR_DESC = '', PAR_MON = '05', PAR_DAY = '24', LINK_CONTROL = 'O', MEM_ID = '', RECOVER_VALUE = '' WHERE PROGRAM_NAME = 'ExpCDRP' AND START_DATE = '20170524' AND START_TIME = '140657' AND JOB_ID = '000' AND JOB_TIME = '000000'
+[main] 20170524 14:07:03 DEBUG TbBatchResultMgr     L:151  - TB_BATCH_RESULT: 1 record updated
+[main] 20170524 14:07:03 DEBUG TbBatchResultMgr     L:152  - [TbBatchResultInfo  sProgramName:ExpCDRP sStartDate:20170524 sStartTime:140657 sEndDate:20170524 sEndTime:140703 sWorkFlag:1 sRcode:0000 sErrorDesc: sParMon:05 sParDay:24 sLinkControl:O sJobId:000 sJobTime:000000 sMemId: sRecoverValue:]
+[main] 20170524 14:07:03 INFO  AbstractBatchBasic   L:150  - end running
+

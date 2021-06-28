@@ -1,0 +1,11 @@
+package tw.com.hyweb.svc.yhdp.batch.framework.cursorThread;
+
+import java.util.HashMap;
+
+import tw.com.hyweb.core.cp.batch.framework.generic.BatchJob;
+
+
+public interface JobRunnerFactory 
+{
+	public Runnable create(BatchJob job, HashMap<String, String>resultMap, String batchDate);
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<bean id="processor" class="tw.com.hyweb.svc.yhdp.batch.impfiles.ImpPersoFeedback.ImpPersoFeedback">
+
+		<constructor-arg index="0">
+			<bean class="tw.com.hyweb.core.cp.common.impfiles.ImpPersoFeedbackFactory" >
+				<property name="threadFlag" value="true" />
+			</bean>
+		</constructor-arg>
+
+		<constructor-arg index="1" value="/home/svcadmin/HOST_BATCH/batch_file/work_file" />
+		<!--<constructor-arg index="1" value="E:\JavaProject\Hyweb\workspace\遠鑫_電子票證系統_20160420\batch_file\work_file" /> -->
+		<constructor-arg index="2" ref="dataSource" />
+
+	</bean>
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:config/dbservice.properties</value>
+			</list>
+		</property>
+	</bean>		  
+
+	<bean id="dataSource" class="tw.com.hyweb.service.db.SecureDataSource" destroy-method="close">
+		<property name="driverClassName" value="${dbservice.connection.driverClass}" />
+		<property name="url" value="${dbservice.connection.url}" />
+		<property name="username" value="${dbservice.connection.username.common}" />
+		<property name="password" value="${dbservice.connection.password.common}" />
+		<property name="defaultAutoCommit" value="false" />
+	</bean>
+
+	<bean id="threadPoolJobExecutor" class="tw.com.hyweb.core.cp.common.impfiles.ImpPersoFeedback.JobExecutor.ThreadPoolJobExecutor">
+		<constructor-arg index="0" type="int"><value>0</value></constructor-arg>    <!--  0為LinkedBlockingQueue/其他ArrayBlockingQueue -->
+		<constructor-arg index="1" type="int"><value>10</value></constructor-arg>    <!--  corePoolSize -->
+		<constructor-arg index="2" type="int"><value>10</value></constructor-arg>    <!--  maximumPoolSize -->
+		<constructor-arg index="3" type="long"><value>60</value></constructor-arg>  <!--  keepAliveTime -->
+	</bean>
+
+</beans>

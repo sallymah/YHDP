@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="labelTxErrCntDef" pref="116" max="32767" attributes="0"/>
+                          <Component id="labelApErrDef" alignment="0" min="0" pref="0" max="32767" attributes="1"/>
+                          <Component id="labelDbErrDef" alignment="0" pref="116" max="32767" attributes="1"/>
+                          <Component id="labelNotifyPeriod" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelNightPeriod" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelDayChkPeriod" alignment="0" pref="116" max="32767" attributes="0"/>
+                          <Component id="labelTel" alignment="0" pref="116" max="32767" attributes="0"/>
+                          <Component id="labelMailServer" alignment="0" pref="116" max="32767" attributes="0"/>
+                          <Component id="labelEMail" alignment="0" pref="116" max="32767" attributes="0"/>
+                          <Component id="labelHostPort" alignment="0" pref="116" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="tfHostPort" alignment="1" pref="302" max="32767" attributes="0"/>
+                          <Component id="tfTel" alignment="1" pref="302" max="32767" attributes="0"/>
+                          <Component id="tfMailServer" alignment="1" pref="302" max="32767" attributes="0"/>
+                          <Component id="tfEMail" alignment="1" pref="302" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="tfNightChkPeriod" pref="61" max="32767" attributes="0"/>
+                                  <Component id="tfTxErrCntDef" alignment="0" pref="61" max="32767" attributes="0"/>
+                                  <Component id="tfNotifyPeriod" alignment="1" pref="61" max="32767" attributes="0"/>
+                                  <Component id="tfDayChkPeriod" alignment="0" pref="61" max="32767" attributes="0"/>
+                                  <Component id="tfApErrDef" alignment="1" pref="61" max="32767" attributes="0"/>
+                                  <Component id="tfDbErrDef" alignment="0" pref="61" max="32767" attributes="1"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="111" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="labelTxTimeoutCntDef" min="0" pref="0" max="32767" attributes="1"/>
+                                          <Component id="labelHsmErrDef" alignment="1" max="32767" attributes="1"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="tfTxTimeoutCntDef" pref="41" max="32767" attributes="0"/>
+                                          <Component id="tfHsmErrDef" alignment="0" pref="41" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="lblTimeE" pref="51" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="tfNightChkTime" min="-2" pref="75" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="lblTimeS" pref="51" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="tfDayChkTime" min="-2" pref="75" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="labelDisplay" pref="422" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="-2" pref="149" max="-2" attributes="0"/>
+                      <Component id="btnConnect" pref="148" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="135" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="tfHostPort" pref="21" max="32767" attributes="0"/>
+                  <Component id="labelHostPort" alignment="0" pref="21" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="labelEMail" pref="21" max="32767" attributes="0"/>
+                  <Component id="tfEMail" alignment="0" max="32767" attributes="0"/>
+              </Group>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                      <Component id="tfMailServer" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="labelMailServer" pref="20" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="tfTel" max="32767" attributes="0"/>
+                  <Component id="labelTel" alignment="1" pref="21" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="lblTimeS" pref="21" max="32767" attributes="0"/>
+                  <Component id="tfDayChkPeriod" alignment="0" max="32767" attributes="0"/>
+                  <Component id="tfDayChkTime" alignment="2" max="32767" attributes="0"/>
+                  <Component id="labelDayChkPeriod" alignment="1" pref="21" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="tfNightChkTime" alignment="2" pref="22" max="32767" attributes="0"/>
+                  <Component id="labelNightPeriod" alignment="0" pref="22" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="1" pref="1" max="1" attributes="0"/>
+                      <Component id="lblTimeE" pref="21" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="tfNightChkPeriod" alignment="0" pref="22" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="tfNotifyPeriod" pref="21" max="32767" attributes="0"/>
+                  <Component id="labelNotifyPeriod" alignment="1" pref="21" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="tfDbErrDef" max="32767" attributes="0"/>
+                  <Component id="labelDbErrDef" pref="21" max="32767" attributes="0"/>
+                  <Component id="tfHsmErrDef" alignment="1" max="32767" attributes="1"/>
+                  <Component id="labelHsmErrDef" pref="21" max="32767" attributes="1"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="labelTxTimeoutCntDef" pref="21" max="32767" attributes="0"/>
+                  <Component id="tfTxTimeoutCntDef" max="32767" attributes="0"/>
+                  <Component id="labelApErrDef" alignment="0" pref="21" max="32767" attributes="2"/>
+                  <Component id="tfApErrDef" alignment="0" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="labelTxErrCntDef" pref="23" max="32767" attributes="2"/>
+                  <Component id="tfTxErrCntDef" alignment="0" pref="23" max="32767" attributes="1"/>
+              </Group>
+              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+              <Component id="labelDisplay" min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="btnConnect" min="-2" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="labelHostPort">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="IP:PORT"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="tfHostPort">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="localhost:5678"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelEMail">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="EMail"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="tfEMail">
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelTel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Mobile"/>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[42, 15]"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="tfTel">
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelNotifyPeriod">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Notify Period"/>
+        <Property name="alignmentY" type="float" value="0.0"/>
+        <Property name="iconTextGap" type="int" value="0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelDayChkPeriod">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Check Period (Day)"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="tfDayChkPeriod">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="300"/>
+        <Property name="toolTipText" type="java.lang.String" value="input second value"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="tfDayChkTime">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="070000"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="tfNotifyPeriod">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="3600"/>
+        <Property name="toolTipText" type="java.lang.String" value="input second value"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelDbErrDef">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="DB Alert Limit"/>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[85, 15]"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="tfDbErrDef">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelHsmErrDef">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="HSM Alert Limit"/>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[85, 15]"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="tfHsmErrDef">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="tfApErrDef">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelApErrDef">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="AP Alert Limit"/>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[85, 15]"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelTxTimeoutCntDef">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="LNG Alert Limit"/>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[110, 15]"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="tfTxTimeoutCntDef">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelTxErrCntDef">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tx Err Alert Limit"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="tfTxErrCntDef">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelDisplay">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="Display Message Here"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JToggleButton" name="btnConnect">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Connect"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConnectActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelMailServer">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="MailServer"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="tfMailServer">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="tpemail.hyweb.com.tw"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelNightPeriod">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Check Period (Night)"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="tfNightChkPeriod">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="3600"/>
+        <Property name="toolTipText" type="java.lang.String" value="input second value"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="tfNightChkTime">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="220000"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblTimeS">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Time"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblTimeE">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Time"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>

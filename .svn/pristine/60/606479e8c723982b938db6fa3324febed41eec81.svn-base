@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+  <bean id="expRegenTrnTxn" class="tw.com.hyweb.svc.yhdp.batch.expfiles.ExpRegenTrnTxn">
+    <property name="encoding"><value>UTF-8</value></property>
+    <property name="expTxnDtlFlag"><value>false</value></property>
+    
+    <property name="filenameBeans">
+           <list>
+               <value>TXN</value>
+               <value>TXNS_TRTC</value>                
+               <value>TXNS_TYRTC</value>
+               <value>TXNS_KRTC</value>
+               <value>TXNS_TRA</value>
+               <value>TXNS_CARPARK</value>
+               <value>TXNS_DHLRT</value>
+               <value>TXNS_CBike</value>
+               <value>TXNS_KLRT</value>
+               <value>TXNS_NMNS</value>
+               <value>TXNS_TMRT</value>
+               <value>TXNS_TPZOO</value>
+               <value>TXNS_HCZOO</value>
+               <value>TXNS_SYMRT</value>
+           </list>
+    </property>
+  </bean>
+</beans>
